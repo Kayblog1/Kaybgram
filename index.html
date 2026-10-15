@@ -1,100 +1,175 @@
 <!DOCTYPE html>
-<html lang="<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kaybgram - Share Your World</title>
+<title>Kaybgram — The New Wave</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto}
-body{background:#000;color:#fff}
-header{position:sticky;top:0;background:#000;border-bottom:1px solid #222;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:10}
-.logo{font-family:cursive;font-size:28px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:bold}
-.btn{padding:8px 16px;background:#0095f6;border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer}
-.feed{max-width:470px;margin:0 auto}
-.post{background:#000;border-bottom:1px solid #222;padding-bottom:12px}
-.post-head{padding:12px;display:flex;align-items:center;gap:10px}
-.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(45deg,#feda75,#d62976);display:flex;align-items:center;justify-content:center;font-weight:bold}
-.post img{width:100%;max-height:600px;object-fit:cover}
-.post-actions{padding:12px;display:flex;gap:16px;font-size:22px}
-.post-caption{padding:0 12px 12px}
-.upload-box{max-width:470px;margin:20px auto;background:#111;border:1px solid #222;border-radius:12px;padding:16px;display:none}
-.upload-box.active{display:block}
-input,textarea{width:100%;background:#222;border:1px solid #333;color:#fff;padding:10px;border-radius:8px;margin:8px 0}
-#preview{width:100%;border-radius:8px;margin-top:10px;display:none}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#080808;color:#fff;font-family:'Space Grotesk',system-ui;overflow-x:hidden}
+::selection{background:#CCFF00;color:#000}
+header{position:sticky;top:0;z-index:20;background:rgba(8,8,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid #1a1a1a;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:28px;letter-spacing:-1px}
+.logo span{color:#CCFF00}
+.logo i{font-style:normal;font-weight:500;font-size:13px;opacity:0.6;margin-left:6px;vertical-align:middle}
+.btn-neon{background:#CCFF00;color:#000;border:none;padding:11px 22px;border-radius:100px;font-weight:700;font-family:'Space Grotesk';cursor:pointer;transition:0.2s}
+.btn-neon:active{transform:scale(0.95)}
+.main{max-width:680px;margin:0 auto;padding:0 14px}
+.create{margin:18px 0;background:#111;border:1px solid #222;border-radius:24px;padding:18px;position:relative;overflow:hidden}
+.create:before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 20%, #CCFF0020, transparent 50%);pointer-events:none}
+.create h2{font-family:'Syne';font-size:18px;margin-bottom:12px}
+.create h2 small{font-family:'Space Grotesk';opacity:0.5;font-size:12px;display:block;margin-top:2px}
+.file-zone{border:1.5px dashed #333;border-radius:16px;padding:18px;text-align:center;cursor:pointer;background:#0d0d0d}
+.file-zone:hover{border-color:#CCFF00}
+#preview{width:100%;border-radius:16px;margin-top:12px;display:none;max-height:400px;object-fit:cover}
+#previewVideo{width:100%;border-radius:16px;margin-top:12px;display:none;max-height:400px}
+.row{display:flex;gap:10px;margin-top:10px}
+.row input{flex:1}
+input,textarea{background:#1a1a1a;border:1px solid #2a2a2a;color:#fff;padding:14px 16px;border-radius:12px;font-family:'Space Grotesk';outline:none;width:100%;font-size:14px}
+input:focus,textarea:focus{border-color:#CCFF00}
+.feed{padding-bottom:100px}
+.card{background:#111;border:1px solid #1e1e1e;border-radius:28px;overflow:hidden;margin-bottom:18px;transition:0.2s}
+.card:hover{border-color:#2a2a2a}
+.card-top{padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.user{display:flex;align-items:center;gap:10px}
+.avatar{width:36px;height:36px;border-radius:50%;background:#CCFF00;color:#000;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px}
+.user b{font-size:14px}
+.user p{font-size:11px;opacity:0.5}
+.card img,.card video{width:100%;display:block;background:#000;max-height:600px;object-fit:cover}
+.card-bottom{padding:12px 16px}
+.actions{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.act-left{display:flex;gap:14px;align-items:center}
+.act{font-size:22px;cursor:pointer;user-select:none;transition:0.15s}
+.act:active{transform:scale(1.3)}
+.likes{font-weight:700;font-size:13px;margin-bottom:4px}
+.caption{font-size:14px;line-height:1.4;opacity:0.9}
+.caption b{opacity:1}
+.comment-box{display:flex;gap:8px;margin-top:12px;background:#0d0d0d;border-radius:100px;padding:4px 4px 4px 14px;border:1px solid #222}
+.comment-box input{background:transparent;border:none;padding:8px 0;flex:1}
+.del{font-size:11px;opacity:0.4;cursor:pointer}
+.del:hover{opacity:1;color:#ff4d4d}
+#status{font-size:12px;margin-top:8px;text-align:center}
+.tag{position:absolute;top:16px;right:16px;background:#CCFF00;color:#000;font-size:10px;font-weight:700;padding:4px 8px;border-radius:100px}
 </style>
 </head>
 <body>
 <header>
-<div class="logo">Kaybgram</div>
-<button class="btn" onclick="toggleUpload()">+ Post</button>
+<div class="logo">KAYBGRAM<span>.</span><i>new wave social</i></div>
+<button class="btn-neon" onclick="document.getElementById('create').scrollIntoView({behavior:'smooth'})">+ New Drop</button>
 </header>
 
-<div id="uploadBox" class="upload-box">
-<h3 style="margin-bottom:10px">Create New Post</h3>
-<input type="file" id="fileInput" accept="image/*">
+<div class="main">
+<div id="create" class="create">
+<h2>Drop something real <small>Photo or Video — compressed for speed</small></h2>
+<div class="file-zone" onclick="document.getElementById('fileInput').click()">
+<span id="zoneText">Tap to pick photo/video 📸🎥</span>
+<input type="file" id="fileInput" accept="image/*,video/*" hidden>
+</div>
 <img id="preview">
-<input type="text" id="username" placeholder="Your name (e.g. Kayb)">
-<textarea id="caption" placeholder="Write a caption..."></textarea>
-<button class="btn" style="width:100%" onclick="createPost()">Share to Kaybgram</button>
-<p id="status" style="text-align:center;margin-top:10px;color:#aaa"></p>
+<video id="previewVideo" controls></video>
+<div class="row"><input id="username" placeholder="Your name e.g. Kayb"><input id="caption" placeholder="Caption... what’s the vibe?"></div>
+<button class="btn-neon" style="width:100%;margin-top:12px" id="shareBtn" onclick="createPost()">Drop to Kaybgram →</button>
+<p id="status"></p>
+<div class="tag">BETA 2.0</div>
 </div>
 
 <div id="feed" class="feed"></div>
+</div>
 
 <script>
 const SUPABASE_URL = "https://qpwmlpisveearglmagvt.supabase.co";
 const SUPABASE_KEY = "sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let fileData = ""; let fileType = "image";
 
-let selectedImageBase64 = "";
+const usernameInput = document.getElementById('username');
+usernameInput.value = localStorage.getItem('kayb_name') || 'Kayb';
+usernameInput.addEventListener('input', ()=>localStorage.setItem('kayb_name', usernameInput.value));
 
 document.getElementById('fileInput').addEventListener('change', e=>{
-  const file = e.target.files[0];
-  const reader = new FileReader();
-  reader.onload = ev=>{
-    selectedImageBase64 = ev.target.result;
-    document.getElementById('preview').src = selectedImageBase64;
-    document.getElementById('preview').style.display='block';
-  };
-  reader.readAsDataURL(file);
+ const file = e.target.files[0]; if(!file) return;
+ fileType = file.type.startsWith('video')? 'video' : 'image';
+ const reader = new FileReader();
+ reader.onload = ev=>{
+  if(fileType==='image'){
+    const img=new Image(); img.onload=()=>{
+     const canvas=document.createElement('canvas'); const max=700;
+     let w=img.width,h=img.height; if(w>h){if(w>max){h*=max/w;w=max}}else{if(h>max){w*=max/h;h=max}}
+     canvas.width=w; canvas.height=h; canvas.getContext('2d').drawImage(img,0,0,w,h);
+     fileData=canvas.toDataURL('image/jpeg',0.65);
+     document.getElementById('preview').src=fileData; document.getElementById('preview').style.display='block';
+     document.getElementById('previewVideo').style.display='none';
+    }; img.src=ev.target.result;
+  } else {
+    fileData = ev.target.result;
+    document.getElementById('previewVideo').src=fileData; document.getElementById('previewVideo').style.display='block';
+    document.getElementById('preview').style.display='none';
+  }
+  document.getElementById('zoneText').textContent = file.name + " • ready";
+ };
+ if(fileType==='image') reader.readAsDataURL(file);
+ else {
+   if(file.size > 8*1024*1024){ alert('Video too big! Pick <8MB'); return; }
+   reader.readAsDataURL(file);
+ }
 });
 
-function toggleUpload(){
-  document.getElementById('uploadBox').classList.toggle('active');
-  window.scrollTo(0,0);
-}
-
 async function loadPosts(){
-  const {data, error} = await supabaseClient.from('posts').select('*').order('created_at',{ascending:false});
-  if(error){console.log(error);return;}
-  const feed = document.getElementById('feed');
-  feed.innerHTML = "";
-  data.forEach(p=>{
-    feed.innerHTML+=`
-    <div class="post">
-      <div class="post-head"><div class="avatar">${(p.username||'K')[0].toUpperCase()}</div><b>${p.username||'kayb_user'}</b></div>
-      <img src="${p.image_url}" onerror="this.style.display='none'">
-      <div class="post-actions">❤️ 💬 ✈️ <span style="margin-left:auto">🔖</span></div>
-      <div class="post-caption"><b>${p.username||'kayb_user'}</b> ${p.caption||''}</div>
-    </div>`;
-  });
+ const {data,error} = await supabaseClient.from('posts').select('*').order('created_at',{ascending:false});
+ if(error){console.log(error);return;}
+ const feed=document.getElementById('feed'); feed.innerHTML="";
+ data.forEach(p=>{
+  const isVideo = p.type==='video' || (p.image_url && p.image_url.startsWith('data:video'));
+  const media = isVideo? `<video src="${p.image_url}" controls playsinline></video>` : `<img src="${p.image_url}">`;
+  feed.innerHTML+=`
+  <div class="card">
+    <div class="card-top">
+      <div class="user"><div class="avatar">${(p.username||'K')[0].toUpperCase()}</div><div><b>${p.username}</b><p>${new Date(p.created_at).toLocaleTimeString()}</p></div></div>
+      <span class="del" onclick="deletePost(${p.id})">Delete ✕</span>
+    </div>
+    ${media}
+    <div class="card-bottom">
+      <div class="actions">
+        <div class="act-left">
+          <span class="act" onclick="likePost(${p.id}, ${p.likes||0})">❤️</span>
+          <span class="act">💬</span>
+          <span class="act">↗️</span>
+        </div>
+        <span class="act" style="font-size:14px">◍</span>
+      </div>
+      <div class="likes">${p.likes||0} likes</div>
+      <div class="caption"><b>${p.username}</b> ${p.caption||''}</div>
+      <div class="comment-box"><input placeholder="Add a comment..."><button class="btn-neon" style="padding:8px 14px;font-size:12px">Post</button></div>
+    </div>
+  </div>`;
+ });
 }
 
 async function createPost(){
-  const caption = document.getElementById('caption').value;
-  const username = document.getElementById('username').value || 'Kayb';
-  const status = document.getElementById('status');
-  if(!selectedImageBase64){status.textContent="Please select an image";return;}
-  status.textContent="Posting...";
-  const {error} = await supabaseClient.from('posts').insert([{caption, image_url:selectedImageBase64, username}]);
-  if(error){status.textContent="Error: "+error.message;}
-  else{status.textContent="Posted! 🎉";document.getElementById('caption').value="";selectedImageBase64="";document.getElementById('preview').style.display='none';toggleUpload();loadPosts();}
+ const caption=document.getElementById('caption').value;
+ const username=document.getElementById('username').value||'Kayb';
+ const status=document.getElementById('status'); const btn=document.getElementById('shareBtn');
+ if(!fileData){status.textContent="Pick a photo or video first!"; return;}
+ btn.textContent="Dropping..."; btn.disabled=true;
+ const {error}=await supabaseClient.from('posts').insert([{caption,image_url:fileData,username,type:fileType,likes:0}]);
+ if(error){status.style.color="#ff4d4d"; status.textContent="Error: "+error.message; btn.textContent="Drop to Kaybgram →"; btn.disabled=false;}
+ else{status.style.color="#CCFF00"; status.textContent="Dropped! 🔥"; btn.textContent="Drop to Kaybgram →"; btn.disabled=false; fileData=""; document.getElementById('preview').style.display='none'; document.getElementById('previewVideo').style.display='none'; document.getElementById('caption').value=""; document.getElementById('zoneText').textContent="Tap to pick photo/video 📸🎥"; loadPosts();}
 }
 
+async function likePost(id, currentLikes){
+ await supabaseClient.from('posts').update({likes: currentLikes+1}).eq('id', id);
+ loadPosts();
+}
+async function deletePost(id){
+ if(!confirm('Delete this drop?')) return;
+ await supabaseClient.from('posts').delete().eq('id', id);
+ loadPosts();
+}
 loadPosts();
-setInterval(loadPosts, 5000);
+setInterval(loadPosts, 8000);
 </script>
 </body>
 </html>￼Enter
