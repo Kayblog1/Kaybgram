@@ -1,20 +1,31 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Kaybgram</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=99">
+<style>
+/* FORCE FIX - hides ugly button forever */
+input[type="file"]{display:none!important; opacity:0!important; position:absolute!important; width:0!important; height:0!important;}
+</style>
 </head>
 <body>
 <header><div class="container" style="display:flex;justify-content:space-between;width:100%"><div class="logo">KAYBGRAM<span>.</span></div><div class="badge" id="u"></div></div></header>
 <div class="container">
 <div class="create">
-<div style="display:flex;gap:10px;align-items:center;margin-bottom:14px"><div style="width:36px;height:36px;border-radius:50%;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;font-weight:800" id="av">K</div><div><b style="font-size:13px">Create New Post</b><div style="font-size:11px;color:var(--muted)">Share your vibe</div></div></div>
-<label class="file-drop" id="drop"><span id="dropText">📸 Tap to add photo / video</span><span id="fileName" style="display:none;color:var(--lime);font-size:12px;margin-top:6px"></span><input type="file" id="f" accept="image/*,video/*"></label>
+<div style="display:flex;gap:10px;align-items:center;margin-bottom:14px"><div style="width:38px;height:38px;border-radius:50%;background:#CCFF00;color:#000;display:flex;align-items:center;justify-content:center;font-weight:800" id="av">K</div><div><b style="font-size:14px">Create New Post</b><div style="font-size:11px;color:#a1a1aa">Share your vibe</div></div></div>
+
+<!-- THIS IS THE ONLY UPLOAD - BEAUTIFUL, NO WHITE BUTTON -->
+<div onclick="document.getElementById('f').click()" style="border:1.5px dashed #2a2a2e;background:#1c1c1f;border-radius:16px;padding:24px;text-align:center;cursor:pointer">
+<div id="dropText" style="font-size:14px">📸 Tap to add photo / video</div>
+<div id="fileName" style="display:none;color:#CCFF00;font-size:12px;margin-top:8px;font-weight:600"></div>
+</div>
+<input type="file" id="f" accept="image/*,video/*" style="display:none!important;">
+
 <img id="prev" style="width:100%;border-radius:16px;margin-top:12px;display:none;max-height:420px;object-fit:cover">
-<input id="cap" class="input" placeholder="Caption... what's the mood?">
-<button class="btn btn-lime" onclick="post()">Post →</button><p id="st" style="text-align:center;font-size:11px;color:var(--lime);margin-top:8px"></p>
+<input id="cap" class="input" placeholder="Caption... what's the mood?" style="margin-top:12px">
+<button class="btn btn-lime" onclick="post()">Post →</button><p id="st" style="text-align:center;font-size:11px;color:#CCFF00;margin-top:8px"></p>
 </div>
 <div id="feed"></div>
 </div>
@@ -26,12 +37,12 @@ document.getElementById('u').textContent='@'+user; document.getElementById('av')
 let fileData="";
 document.getElementById('f').addEventListener('change',e=>{
  const file=e.target.files[0]; if(!file) return;
- document.getElementById('dropText').textContent='✓ Ready to post'; document.getElementById('fileName').style.display='block'; document.getElementById('fileName').textContent=file.name;
+ document.getElementById('dropText').textContent='✓ Photo ready to post'; document.getElementById('fileName').style.display='block'; document.getElementById('fileName').textContent='📎 '+file.name;
  const r=new FileReader(); r.onload=ev=>{ fileData=ev.target.result; const p=document.getElementById('prev'); p.src=fileData; p.style.display='block'; }; r.readAsDataURL(file);
 });
 async function load(){ const {data}=await supa.from('posts').select('*').order('created_at',{ascending:false}); document.getElementById('feed').innerHTML=(data||[]).map(p=>`<div class="post"><div style="padding:12px 14px;display:flex;gap:10px;align-items:center"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#CCFF00,#FF2D95);display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:12px">${p.username[0].toUpperCase()}</div><b style="font-size:13px">${p.username}</b></div><img src="${p.image_url}" style="width:100%;display:block"><div style="padding:12px"><b>${p.username}</b> ${p.caption||''}<div style="margin-top:6px">❤️ ${p.likes||0}</div></div></div>`).join(''); }
-async function post(){ if(!fileData) return alert('Add photo!'); document.getElementById('st').textContent='Posting...'; await supa.from('posts').insert([{username:user,image_url:fileData,caption:document.getElementById('cap').value,likes:0}]); document.getElementById('st').textContent='🔥 Posted!'; fileData=''; document.getElementById('prev').style.display='none'; document.getElementById('cap').value=''; load(); }
+async function post(){ if(!fileData) return alert('Add photo first!'); document.getElementById('st').textContent='Posting...'; await supa.from('posts').insert([{username:user,image_url:fileData,caption:document.getElementById('cap').value,likes:0}]); document.getElementById('st').textContent='🔥 Posted!'; fileData=''; document.getElementById('prev').style.display='none'; document.getElementById('cap').value=''; document.getElementById('dropText').textContent='📸 Tap to add photo / video'; document.getElementById('fileName').style.display='none'; load(); }
 load();
 </script>
 </body>
-</html>
+</html>￼Enter
