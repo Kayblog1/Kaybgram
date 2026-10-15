@@ -1,160 +1,162 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=devi<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kaybgram 3.0 — New Wave</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kaybgram — Real Social</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#080808;--card:#111;--card2:#0d0d0d;--border:#1e1e1e;--border2:#2a2a2a;--text:#fff;--muted:#888;--lime:#CCFF00}
-.light{--bg:#f5f5f0;--card:#fff;--card2:#f0f0ea;--border:#e5e5e0;--border2:#d5d5d0;--text:#0a0a0a;--muted:#666}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',system-ui;transition:0.3s}
-header{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--bg) 90%, transparent);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne';font-weight:800;font-size:24px;letter-spacing:-1px}
-.logo span{color:var(--lime)}
-.btn{border:none;padding:10px 18px;border-radius:100px;font-weight:700;font-family:'Space Grotesk';cursor:pointer}
-.btn-lime{background:var(--lime);color:#000}
-.btn-ghost{background:var(--card2);color:var(--text);border:1px solid var(--border)}
-.main{max-width:680px;margin:0 auto;padding:0 12px}
-.stories{display:flex;gap:12px;overflow-x:auto;padding:14px 0;scrollbar-width:none}
-.stories::-webkit-scrollbar{display:none}
-.story{flex:0 0 64px;text-align:center;cursor:pointer}
-.story-ring{width:64px;height:64px;border-radius:50%;padding:3px;background:conic-gradient(var(--lime), #00ff88, var(--lime));display:flex;align-items:center;justify-content:center}
-.story-ring img,.story-ring video{width:100%;height:100%;border-radius:50%;object-fit:cover;background:var(--card);border:2px solid var(--bg)}
-.story b{font-size:11px;margin-top:4px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:64px}
-.story.add.story-ring{background:var(--border2);border:1.5px dashed var(--muted)}
-.create{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:16px;margin:10px 0;position:relative}
-.file-zone{border:1.5px dashed var(--border2);border-radius:16px;padding:16px;text-align:center;cursor:pointer;background:var(--card2)}
-#preview,#previewVideo{width:100%;border-radius:16px;margin-top:10px;display:none;max-height:380px;object-fit:cover}
-.row{display:flex;gap:8px;margin-top:10px}
-.row input{flex:1}
-input,textarea{background:var(--card2);border:1px solid var(--border2);color:var(--text);padding:12px 14px;border-radius:12px;font-family:'Space Grotesk';outline:none;width:100%}
-.feed{padding-bottom:80px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:24px;overflow:hidden;margin-bottom:14px}
-.card-top{padding:12px 14px;display:flex;justify-content:space-between;align-items:center}
-.user{display:flex;gap:10px;align-items:center}
-.avatar{width:36px;height:36px;border-radius:50%;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;font-weight:800}
-.card img.feed-media,.card video.feed-media{width:100%;max-height:600px;object-fit:cover;background:#000;display:block}
-.card-bottom{padding:10px 14px}
-.act{font-size:20px;cursor:pointer}
-.likes{font-weight:700;font-size:13px}
-.caption{font-size:13px;opacity:0.9;margin-top:2px}
-.profile-modal{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
-.profile-box{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:24px;width:100%;max-width:400px;text-align:center}
-.stat{display:flex;justify-content:space-around;margin:16px 0}
-.stat b{font-size:22px;font-family:'Syne';display:block}
-.stat span{font-size:11px;opacity:0.6}
+:root{--bg:#000;--card:#111;--card2:#1a1a1a;--border:#222;--text:#fff;--muted:#888;--lime:#CCFF00;--pink:#FF2D95}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;padding-bottom:80px}
+header{position:sticky;top:0;z-index:30;background:rgba(0,0,0,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:10px 14px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-family:'Syne';font-weight:800;font-size:26px;letter-spacing:-1px}.logo span{color:var(--lime)}
+.main{max-width:680px;margin:0 auto}
+.top-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:36px;height:36px;border-radius:50%;background:var(--card2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px}
+.stories{display:flex;gap:10px;overflow-x:auto;padding:12px 14px;scrollbar-width:none}.stories::-webkit-scrollbar{display:none}
+.story{flex:0 0 62px;text-align:center;cursor:pointer}.ring{width:62px;height:62px;border-radius:50%;padding:2.5px;background:linear-gradient(45deg,var(--lime),var(--pink),var(--lime));display:flex;align-items:center;justify-content:center}.ring img,.ring video{width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid #000;background:#111}.story b{font-size:10px;margin-top:4px;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.search-bar{margin:10px 14px;background:var(--card2);border:1px solid var(--border);border-radius:100px;padding:10px 16px;display:flex;gap:10px;align-items:center}.search-bar input{background:transparent;border:none;color:var(--text);outline:none;width:100%;font-family:'Space Grotesk'}
+.create{background:var(--card);border:1px solid var(--border);border-radius:20px;margin:10px 14px;padding:14px}
+.tabs{display:flex;gap:8px;margin-bottom:10px}.tab{flex:1;padding:10px;border-radius:100px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--border)}.tab.active{background:var(--lime);color:#000;border-color:var(--lime)}
+.file-zone{border:1.5px dashed var(--border);border-radius:14px;padding:14px;text-align:center;cursor:pointer;background:var(--card2);font-size:13px}
+#preview,#previewVideo{width:100%;border-radius:14px;margin-top:8px;display:none;max-height:380px;object-fit:cover}
+.row{display:flex;gap:8px;margin-top:8px}.row input{flex:1}
+input,select{background:var(--card2);border:1px solid var(--border);color:var(--text);padding:11px 13px;border-radius:10px;outline:none;font-family:'Space Grotesk';width:100%;font-size:13px}
+.music-picker{margin-top:8px;background:var(--card2);border-radius:12px;padding:10px;border:1px solid var(--border)}
+.music-picker p{font-size:11px;opacity:0.6;margin-bottom:6px}.music-list{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.music-chip{flex:0 0 auto;background:#000;border:1px solid var(--border);padding:6px 10px;border-radius:100px;font-size:11px;cursor:pointer;white-space:nowrap}.music-chip.active{background:var(--lime);color:#000;border-color:var(--lime)}
+.btn-lime{background:var(--lime);color:#000;border:none;padding:12px;border-radius:100px;font-weight:700;cursor:pointer;width:100%;margin-top:8px}
+.feed{padding:0 0 20px}.card{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:8px}
+.card-top{padding:10px 14px;display:flex;justify-content:space-between;align-items:center}.user{display:flex;gap:10px;align-items:center}.avatar{width:36px;height:36px;border-radius:50%;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;font-weight:800}
+.media-wrap{position:relative;background:#000}.media-wrap img,.media-wrap video{width:100%;max-height:650px;object-fit:cover;display:block}
+.music-bar{position:absolute;bottom:10px;left:10px;right:10px;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);border-radius:100px;padding:6px 12px;display:flex;align-items:center;gap:8px;font-size:11px}
+.music-bar audio{height:24px;flex:1}
+.card-bottom{padding:8px 14px}.actions{display:flex;gap:14px;margin-bottom:4px}.act{font-size:21px;cursor:pointer}.likes{font-weight:700;font-size:13px}.caption{font-size:13px;opacity:0.9;margin-top:2px}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,0.92);backdrop-filter:blur(20px);border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:8px 0 14px;z-index:40}
+.nav-item{text-align:center;cursor:pointer;opacity:0.5;font-size:11px}.nav-item.active{opacity:1}.nav-item div{font-size:22px;margin-bottom:2px}
+#searchResults{padding:0 14px}
+.result{padding:10px;background:var(--card);border:1px solid var(--border);border-radius:14px;margin-bottom:8px;display:flex;gap:10px;align-items:center}
 </style>
 </head>
 <body>
-<header>
-<div class="logo">KAYBGRAM<span>.</span></div>
-<div style="display:flex;gap:8px"><button class="btn btn-ghost" onclick="toggleTheme()" id="themeBtn">☀️</button><button class="btn btn-ghost" onclick="openProfile()">👤</button><button class="btn btn-lime" onclick="document.getElementById('create').scrollIntoView({behavior:'smooth'})">+ Drop</button></div>
-</header>
+<header><div class="logo">KAYBGRAM<span>.</span></div><div class="top-actions"><div class="icon-btn" onclick="toggleTheme()">🌙</div><div class="icon-btn" onclick="openProfile()">👤</div></div></header>
 <div class="main">
 <div class="stories" id="stories"></div>
+<div class="search-bar"><span>🔍</span><input id="searchInput" placeholder="Search people, vibes, music..." oninput="doSearch()"></div>
+<div id="searchResults" style="display:none"></div>
 
-<div id="create" class="create">
-<div style="display:flex;gap:8px;margin-bottom:10px">
-<button class="btn btn-lime" style="flex:1;font-size:12px" onclick="setMode('feed')">📸 Feed Post</button>
-<button class="btn btn-ghost" style="flex:1;font-size:12px" id="storyModeBtn" onclick="setMode('story')">✨ Story (24h)</button>
-</div>
-<div class="file-zone" onclick="document.getElementById('fileInput').click()"><span id="zoneText">Tap to pick photo/video 📸</span><input type="file" id="fileInput" accept="image/*,video/*" hidden></div>
+<div id="mainContent">
+<div class="create" id="createBox">
+<div class="tabs"><div class="tab active" id="tabFeed" onclick="setMode('feed')">📸 Feed</div><div class="tab" id="tabStory" onclick="setMode('story')">✨ Story 24h</div></div>
+<div class="file-zone" onclick="document.getElementById('fileInput').click()"><span id="zoneText">Tap to pick photo/video 📸🎥</span><input type="file" id="fileInput" accept="image/*,video/*" hidden></div>
 <img id="preview"><video id="previewVideo" controls></video>
-<div class="row"><input id="username" placeholder="Name"><input id="caption" placeholder="Vibe..."></div>
-<button class="btn btn-lime" style="width:100%;margin-top:10px" id="shareBtn" onclick="createPost()">Drop to Kaybgram →</button>
-<p id="status" style="font-size:12px;text-align:center;margin-top:6px"></p>
+<div class="row"><input id="username" placeholder="Your name"><input id="caption" placeholder="Caption... what's the vibe?"></div>
+
+<div class="music-picker">
+<p>🎵 ADD MUSIC TO POST (Afrobeats & More)</p>
+<div class="music-list" id="musicList">
+<div class="music-chip" data-title="No Music" data-url="">🔇 No Music</div>
+<div class="music-chip" data-title="Ayra Starr - Rush" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3">Ayra Starr - Rush</div>
+<div class="music-chip" data-title="Burna Boy - Last Last" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3">Burna Boy - Last Last</div>
+<div class="music-chip" data-title="Rema - Calm Down" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3">Rema - Calm Down</div>
+<div class="music-chip" data-title="Asake - Lonely At Top" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3">Asake - Lonely At Top</div>
+<div class="music-chip" data-title="Davido - Feel" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3">Davido - Feel</div>
+<div class="music-chip" data-title="Omah Lay - Soso" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3">Omah Lay - Soso</div>
+</div>
+<input id="customMusic" placeholder="Or paste your own music link (mp3)" style="margin-top:8px;font-size:11px" oninput="selectCustomMusic()">
 </div>
 
-<div id="feed" class="feed"></div>
+<button class="btn-lime" id="shareBtn" onclick="createPost()">Drop to Kaybgram →</button>
+<p id="status" style="font-size:11px;text-align:center;margin-top:6px"></p>
 </div>
 
-<div class="profile-modal" id="profileModal" onclick="if(event.target==this)closeProfile()">
-<div class="profile-box">
-<div class="avatar" style="width:64px;height:64px;font-size:28px;margin:0 auto" id="pAvatar">K</div>
-<h2 id="pName" style="font-family:'Syne';margin-top:10px">Kayb</h2>
-<p style="opacity:0.6;font-size:12px" id="pHandle">@kayb • Edo, NG</p>
-<div class="stat"><div><b id="pPosts">0</b><span>POSTS</span></div><div><b id="pLikes">0</b><span>LIKES</span></div><div><b id="pStories">0</b><span>STORIES</span></div></div>
-<button class="btn btn-ghost" style="width:100%" onclick="closeProfile()">Close</button>
+<div class="feed" id="feed"></div>
 </div>
+</div>
+
+<div class="bottom-nav">
+<div class="nav-item active" onclick="showHome()"><div>⌂</div>Home</div>
+<div class="nav-item" onclick="focusSearch()"><div>⌕</div>Search</div>
+<div class="nav-item" onclick="document.getElementById('createBox').scrollIntoView({behavior:'smooth'})"><div>+</div>Create</div>
+<div class="nav-item" onclick="showMusicFeed()"><div>♫</div>Music</div>
+<div class="nav-item" onclick="openProfile()"><div>◍</div>You</div>
 </div>
 
 <script>
-const SUPABASE_URL = "https://qpwmlpisveearglmagvt.supabase.co";
-const SUPABASE_KEY = "sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
-const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-let fileData="", fileType="image", mode="feed";
+const SUPABASE_URL="https://qpwmlpisveearglmagvt.supabase.co";
+const SUPABASE_KEY="sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
+const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+let fileData="",fileType="image",mode="feed",selectedMusicUrl="",selectedMusicTitle="";
 const usernameInput=document.getElementById('username');
 usernameInput.value=localStorage.getItem('kayb_name')||'Kayb';
 usernameInput.addEventListener('input',()=>localStorage.setItem('kayb_name',usernameInput.value));
-let theme=localStorage.getItem('kayb_theme')||'dark';
-function applyTheme(){document.body.classList.toggle('light',theme==='light');document.getElementById('themeBtn').textContent=theme==='light'?'🌙':'☀️';}
-function toggleTheme(){theme=theme==='dark'?'light':'dark';localStorage.setItem('kayb_theme',theme);applyTheme();}applyTheme();
-function setMode(m){mode=m;document.getElementById('storyModeBtn').className=m==='story'?'btn btn-lime':'btn btn-ghost';document.getElementById('shareBtn').textContent=m==='story'?'Add to Story →':'Drop to Kaybgram →';document.getElementById('shareBtn').style.background=m==='story'?'#fff':'var(--lime)'}
+document.querySelectorAll('.music-chip').forEach(c=>{
+ c.onclick=()=>{
+  document.querySelectorAll('.music-chip').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');
+  selectedMusicUrl=c.dataset.url; selectedMusicTitle=c.dataset.title;
+  if(selectedMusicUrl) document.getElementById('customMusic').value=selectedMusicUrl;
+ }
+});
+function selectCustomMusic(){selectedMusicUrl=document.getElementById('customMusic').value;selectedMusicTitle="Custom Track";document.querySelectorAll('.music-chip').forEach(x=>x.classList.remove('active'));}
+function setMode(m){mode=m;document.getElementById('tabFeed').className=m==='feed'?'tab active':'tab';document.getElementById('tabStory').className=m==='story'?'tab active':'tab';document.getElementById('shareBtn').textContent=m==='story'?'Add to Story ✨':'Drop to Kaybgram →';}
 document.getElementById('fileInput').addEventListener('change',e=>{
  const file=e.target.files[0];if(!file)return;fileType=file.type.startsWith('video')?'video':'image';
- const reader=new FileReader();
- reader.onload=ev=>{
+ const reader=new FileReader();reader.onload=ev=>{
   if(fileType==='image'){
    const img=new Image();img.onload=()=>{
-    const canvas=document.createElement('canvas');const max=700;let w=img.width,h=img.height;if(w>h){if(w>max){h*=max/w;w=max}}else{if(h>max){w*=max/h;h=max}}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);
-    fileData=canvas.toDataURL('image/jpeg',0.65);
-    document.getElementById('preview').src=fileData;document.getElementById('preview').style.display='block';document.getElementById('previewVideo').style.display='none';
+    const canvas=document.createElement('canvas');const max=720;let w=img.width,h=img.height;if(w>h){if(w>max){h*=max/w;w=max}}else{if(h>max){w*=max/h;h=max}}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);
+    fileData=canvas.toDataURL('image/jpeg',0.68);document.getElementById('preview').src=fileData;document.getElementById('preview').style.display='block';document.getElementById('previewVideo').style.display='none';
    };img.src=ev.target.result;
-  }else{if(file.size>8*1024*1024){alert('Video too big <8MB');return;}fileData=ev.target.result;document.getElementById('previewVideo').src=fileData;document.getElementById('previewVideo').style.display='block';document.getElementById('preview').style.display='none';}
+  }else{if(file.size>10*1024*1024){alert('Video <10MB pls');return;}fileData=ev.target.result;document.getElementById('previewVideo').src=fileData;document.getElementById('previewVideo').style.display='block';document.getElementById('preview').style.display='none';}
   document.getElementById('zoneText').textContent=file.name;
- };
- reader.readAsDataURL(file);
+ };reader.readAsDataURL(file);
 });
 async function loadAll(){
  const {data:posts}=await supabaseClient.from('posts').select('*').order('created_at',{ascending:false});
  const {data:storiesData}=await supabaseClient.from('stories').select('*').order('created_at',{ascending:false});
- // filter stories <24h
- const now=Date.now();
- const validStories=(storiesData||[]).filter(s=> (now - new Date(s.created_at).getTime()) < 24*60*60*1000);
- const expired=(storiesData||[]).filter(s=> (now - new Date(s.created_at).getTime()) >= 24*60*60*1000);
- if(expired.length>0){expired.forEach(s=>supabaseClient.from('stories').delete().eq('id',s.id).then())}
- // render stories
+ const now=Date.now();const valid=(storiesData||[]).filter(s=>(now-new Date(s.created_at).getTime())<24*60*60*1000);
  const storiesEl=document.getElementById('stories');
- let html=`<div class="story add" onclick="document.getElementById('fileInput').click();setMode('story')"><div class="story-ring"><span style="font-size:24px">+</span></div><b>Add Story</b></div>`;
- validStories.forEach(s=>{
-  const isV=s.type==='video'||s.image_url.startsWith('data:video');
-  html+=`<div class="story" onclick="viewStory('${s.image_url}','${s.type}')"><div class="story-ring">${isV?`<video src="${s.image_url}"></video>`:`<img src="${s.image_url}">`}</div><b>${s.username}</b></div>`;
+ let html=`<div class="story" onclick="document.getElementById('fileInput').click();setMode('story')"><div class="ring" style="background:var(--border)"><span>+</span></div><b>Add Story</b></div>`;
+ valid.forEach(s=>{
+  const isV=s.type==='video'||s.image_url?.startsWith('data:video');
+  html+=`<div class="story" onclick="viewStory('${s.image_url}','${s.type}','${s.music_url||''}','${s.music_title||''}')"><div class="ring">${isV?`<video src="${s.image_url}"></video>`:`<img src="${s.image_url}">`}</div><b>${s.username}</b></div>`;
  });
  storiesEl.innerHTML=html;
- // feed
  const feed=document.getElementById('feed');feed.innerHTML="";
  (posts||[]).forEach(p=>{
-  const isVideo=p.type==='video'||(p.image_url&&p.image_url.startsWith('data:video'));
-  const media=isVideo?`<video src="${p.image_url}" controls playsinline class="feed-media"></video>`:`<img src="${p.image_url}" class="feed-media">`;
-  feed.innerHTML+=`<div class="card"><div class="card-top"><div class="user"><div class="avatar">${(p.username||'K')[0].toUpperCase()}</div><div><b>${p.username}</b><div style="font-size:11px;opacity:0.5">${new Date(p.created_at).toLocaleTimeString()}</div></div></div><span style="font-size:11px;opacity:0.4;cursor:pointer" onclick="deletePost(${p.id},'posts')">Delete ✕</span></div>${media}<div class="card-bottom"><div style="display:flex;gap:12px;margin-bottom:6px"><span class="act" onclick="likePost(${p.id},${p.likes||0})">❤️</span><span class="act">💬</span><span class="act">↗️</span></div><div class="likes">${p.likes||0} likes</div><div class="caption"><b>${p.username}</b> ${p.caption||''}</div></div></div>`;
+  const isVideo=p.type==='video'||p.image_url?.startsWith('data:video');
+  const media=isVideo?`<video src="${p.image_url}" controls playsinline></video>`:`<img src="${p.image_url}">`;
+  const music=p.music_url?`<div class="music-bar"><span>🎵 ${p.music_title||'Music'}</span><audio controls src="${p.music_url}"></audio></div>`:"";
+  feed.innerHTML+=`<div class="card"><div class="card-top"><div class="user"><div class="avatar">${(p.username||'K')[0].toUpperCase()}</div><div><b>${p.username}</b><div style="font-size:11px;opacity:0.5">${new Date(p.created_at).toLocaleString()}</div></div></div><span style="font-size:11px;opacity:0.4" onclick="deletePost(${p.id},'posts')">Delete ✕</span></div><div class="media-wrap">${media}${music}</div><div class="card-bottom"><div class="actions"><span class="act" onclick="likePost(${p.id},${p.likes||0})">❤️</span><span class="act">💬</span><span class="act">↗️</span></div><div class="likes">${p.likes||0} likes ${p.music_title?`• 🎵 ${p.music_title}`:''}</div><div class="caption"><b>${p.username}</b> ${p.caption||''}</div></div></div>`;
  });
- // profile stats
- document.getElementById('pPosts').textContent=posts?posts.length:0;
- document.getElementById('pLikes').textContent=posts?posts.reduce((a,b)=>a+(b.likes||0),0):0;
- document.getElementById('pStories').textContent=validStories.length;
+ window.allPosts=posts||[];window.allStories=valid;
 }
 async function createPost(){
  const caption=document.getElementById('caption').value;const username=document.getElementById('username').value||'Kayb';const status=document.getElementById('status');const btn=document.getElementById('shareBtn');
- if(!fileData){status.textContent="Pick file first!";return;}
+ if(!fileData){status.textContent="Pick photo/video first!";return;}
  btn.textContent="Posting...";btn.disabled=true;
  const table=mode==='story'?'stories':'posts';
- const {error}=await supabaseClient.from(table).insert([{caption,image_url:fileData,username,type:fileType,likes:0}]);
- if(error){status.textContent="Error: "+error.message;btn.disabled=false;btn.textContent=mode==='story'?'Add to Story →':'Drop to Kaybgram →';}
- else{status.textContent=mode==='story'?'Story added! ✨':'Dropped! 🔥';fileData="";document.getElementById('preview').style.display='none';document.getElementById('previewVideo').style.display='none';document.getElementById('caption').value="";document.getElementById('zoneText').textContent="Tap to pick photo/video 📸";btn.disabled=false;setMode('feed');loadAll();}
+ const {error}=await supabaseClient.from(table).insert([{caption,image_url:fileData,username,type:fileType,likes:0,music_url:selectedMusicUrl,music_title:selectedMusicTitle}]);
+ if(error){status.textContent="Error: "+error.message;btn.disabled=false;btn.textContent=mode==='story'?'Add to Story ✨':'Drop to Kaybgram →';}
+ else{status.textContent=mode==='story'?'Story + Music added! 🔥':'Dropped with music! 🔥';fileData="";document.getElementById('preview').style.display='none';document.getElementById('previewVideo').style.display='none';document.getElementById('caption').value="";document.getElementById('zoneText').textContent="Tap to pick photo/video 📸🎥";btn.disabled=false;setMode('feed');loadAll();}
 }
 async function likePost(id,c){await supabaseClient.from('posts').update({likes:c+1}).eq('id',id);loadAll();}
-async function deletePost(id,table){if(!confirm('Delete?'))return;await supabaseClient.from(table).delete().eq('id',id);loadAll();}
-function openProfile(){document.getElementById('pName').textContent=usernameInput.value;document.getElementById('pAvatar').textContent=(usernameInput.value[0]||'K').toUpperCase();document.getElementById('profileModal').style.display='flex';}
-function closeProfile(){document.getElementById('profileModal').style.display='none';}
-function viewStory(url,type){const w=window.open();w.document.write(type==='video'?`<video src="${url}" controls autoplay style="width:100%;height:100vh;object-fit:contain;background:#000"></video>`:`<img src="${url}" style="width:100%;height:100vh;object-fit:contain;background:#000">`);}
-loadAll();setInterval(loadAll,10000);
+async function deletePost(id,t){if(!confirm('Delete?'))return;await supabaseClient.from(t).delete().eq('id',id);loadAll();}
+function doSearch(){
+ const q=document.getElementById('searchInput').value.toLowerCase();const resEl=document.getElementById('searchResults');const main=document.getElementById('mainContent');
+ if(!q){resEl.style.display='none';main.style.display='block';return;}
+ main.style.display='none';resEl.style.display='block';
+ const filtered=(window.allPosts||[]).filter(p=> (p.username?.toLowerCase().includes(q) || p.caption?.toLowerCase().includes(q) || p.music_title?.toLowerCase().includes(q)));
+ resEl.innerHTML=`<h3 style="margin:10px 0">Search for "${q}" - ${filtered.length} found</h3>`+filtered.map(p=>`<div class="result"><div class="avatar" style="width:32px;height:32px">${(p.username||'K')[0]}</div><div><b>${p.username}</b><div style="font-size:12px;opacity:0.7">${p.caption||''} ${p.music_title?'🎵 '+p.music_title:''}</div></div></div>`).join('')||'<p style="opacity:0.6">No results</p>';
+}
+function focusSearch(){document.getElementById('searchInput').focus();document.getElementById('searchInput').scrollIntoView({behavior:'smooth'});}
+function showHome(){document.getElementById('searchResults').style.display='none';document.getElementById('mainContent').style.display='block';loadAll();}
+function showMusicFeed(){document.getElementById('searchInput').value='🎵';doSearch();const q='';const filtered=(window.allPosts||[]).filter(p=>p.music_url);const resEl=document.getElementById('searchResults');resEl.style.display='block';document.getElementById('mainContent').style.display='none';resEl.innerHTML=`<h3 style="margin:10px 0">🎵 Music Feed - ${filtered.length} posts with music</h3>`+filtered.map(p=>`<div class="card" style="border-radius:14px;overflow:hidden;margin-bottom:8px"><div class="media-wrap"><img src="${p.image_url}" style="width:100%;height:200px;object-fit:cover"><div class="music-bar"><span>🎵 ${p.music_title}</span><audio controls src="${p.music_url}"></audio></div></div><div style="padding:8px 12px"><b>${p.username}</b> ${p.caption||''}</div></div>`).join('');}
+function viewStory(url,type,musicUrl,musicTitle){const w=window.open();w.document.write(`<body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;color:#fff;font-family:sans-serif">${type==='video'?`<video src="${url}" controls autoplay style="max-width:100%;max-height:80vh"></video>`:`<img src="${url}" style="max-width:100%;max-height:80vh">`}${musicUrl?`<div style="margin-top:12px;background:rgba(255,255,255,0.15);padding:10px 16px;border-radius:100px">🎵 ${musicTitle} <audio controls autoplay src="${musicUrl}" style="vertical-align:middle;margin-left:8px"></audio></div>`:''}</body>`);}
+function openProfile(){const n=usernameInput.value||'Kayb';alert(`👤 ${n}\n📍 Edo, Nigeria\n\nPosts: ${(window.allPosts||[]).length}\nStories: ${(window.allStories||[]).length}\nLikes: ${(window.allPosts||[]).reduce((a,b)=>a+(b.likes||0),0)}\n\nKaybgram 4.0 • Real Social`);}
+function toggleTheme(){document.body.style.filter=document.body.style.filter?'':'invert(1)';}
+loadAll();setInterval(loadAll,12000);
 </script>
 </body>
 </html>￼Enter
