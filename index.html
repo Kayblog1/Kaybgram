@@ -1,313 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kaybgram 6.0 Login</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@800&display=swap" rel="stylesheet">
+<html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kaybgram 6.1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#000;--card:#111;--card2:#1a1a1a;--border:#222;--lime:#CCFF00;--pink:#FF2D95}
-*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:#fff;font-family:'Space Grotesk';padding-bottom:70px}
-header{position:sticky;top:0;z-index:20;background:#000;border-bottom:1px solid var(--border);padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne';font-size:18px;white-space:nowrap}.logo span{color:var(--lime)}
-.login-screen{position:fixed;inset:0;background:#000;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
-.login-box{background:#121212;border:1px solid #222;border-radius:20px;padding:18px;width:100%;max-width:330px;text-align:center}
-.login-box h1{font-family:'Syne';font-size:22px;letter-spacing:-0.5px}.login-box h1 span{color:var(--lime)}
-.login-box input{margin-top:10px;background:#1E1E1E;border:1px solid #2A2A2A;color:#fff;padding:12px;border-radius:12px;width:100%;font-size:14px;outline:none}
-.btn{border:none;padding:12px;border-radius:100px;font-weight:700;cursor:pointer;width:100%;font-family:'Space Grotesk';font-size:13px}.btn-lime{background:var(--lime);color:#000;margin-top:12px}
-.stories{display:flex;gap:10px;overflow-x:auto;padding:10px 12px}.story{flex:0 0 58px;text-align:center}.ring{width:58px;height:58px;border-radius:50%;padding:2px;background:linear-gradient(45deg,var(--lime),var(--pink));display:flex;align-items:center;justify-content:center}.ring img{width:100%;height:100%;border-radius:50%;border:2px solid #000;object-fit:cover}
-.search-bar{margin:8px 12px;background:var(--card2);border:1px solid var(--border);border-radius:100px;padding:8px 14px;display:flex;gap:8px}.search-bar input{background:transparent;border:none;color:#fff;outline:none;width:100%;font-size:13px}
-.create{background:var(--card);border:1px solid var(--border);border-radius:18px;margin:8px 12px;padding:12px}
-.file-zone{border:1.5px dashed var(--border);border-radius:12px;padding:10px;text-align:center;background:var(--card2);font-size:12px}
-#preview,#previewVideo{width:100%;border-radius:12px;margin-top:8px;display:none;max-height:300px;object-fit:cover}
-.music-list{display:flex;gap:6px;overflow-x:auto;margin-top:8px}.music-chip{flex:0 0 auto;background:#000;border:1px solid var(--border);padding:5px 10px;border-radius:100px;font-size:11px;cursor:pointer;white-space:nowrap}.music-chip.active{background:var(--lime);color:#000}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 0 10px;z-index:40}.nav-item{text-align:center;opacity:0.5;font-size:9px;cursor:pointer}.nav-item.active{opacity:1}.nav-item div{font-size:18px}
-.chat-modal{position:fixed;inset:0;background:#000;z-index:60;display:none;flex-direction:column}.chat-header{padding:10px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;background:var(--card)}.chat-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}.msg{max-width:75%;padding:8px 10px;border-radius:14px;font-size:13px}.msg.me{background:var(--lime);color:#000;align-self:flex-end}.msg.other{background:var(--card2);border:1px solid var(--border);align-self:flex-start}.chat-input{padding:8px 12px;border-top:1px solid var(--border);display:flex;gap:6px;background:var(--card)}
-</style>
-</head>
-<body>
+body{margin:0;background:#000;color:#fff;font-family:Arial;display:flex;align-items:center;justify-content:center;min-height:100vh}
+.box{background:#121212;border:1px solid #222;border-radius:20px;padding:20px;width:90%;max-width:320px;text-align:center}
+h1{font-family:'Syne';font-size:26px;margin:0}h1 span{color:#CCFF00}
+p{font-size:11px;opacity:.6;margin:5px 0 15px}
+input{width:100%;background:#1E1E1E;border:1px solid #2A2A2A;color:#fff;padding:12px;border-radius:12px;margin-top:10px;box-sizing:border-box}
+button{width:100%;border:none;padding:12px;border-radius:100px;font-weight:700;margin-top:10px;cursor:pointer}
+.lime{background:#CCFF00;color:#000}
+.dark{background:#222;color:#fff;border:1px solid #333}
+#msg{font-size:12px;margin-top:10px;color:#CCFF00;min-height:16px}
+</style></head><body>
 
-<div class="login-screen" id="loginScreen">
-<div class="login-box">
+<div class="box">
 <h1>KAYBGRAM<span>.</span></h1>
-<p style="font-size:11px;opacity:0.6;margin:4px 0 12px">Real Login - No Guest</p>
-<input id="loginUser" placeholder="Username">
-<input id="loginPass" type="password" placeholder="Password">
-<button class="btn btn-lime" id="loginBtn" onclick="realLogin()">Login →</button>
-<button class="btn" style="background:#222;color:#fff;margin-top:8px;border:1px solid #333" id="signupBtn" onclick="realSignup()">Create New Account →</button>
-<p id="loginStatus" style="font-size:11px;margin-top:10px;color:var(--lime);min-height:14px"></p>
-</div>
-</div>
-
-<header><div class="logo">KAYBGRAM<span>.</span></div><div style="display:flex;gap:6px;align-items:center"><span id="currentUserLabel" style="font-size:11px"></span><button style="background:#1a1a1a;color:#fff;border:1px solid #222;padding:5px 10px;border-radius:100px;font-size:11px" onclick="logout()">Logout</button></div></header>
-
-<div style="max-width:700px;margin:0 auto">
-<div class="stories" id="stories"></div>
-<div class="search-bar"><span>🔍</span><input id="searchInput" placeholder="Search..." oninput="doSearch()"></div>
-<div id="searchResults" style="display:none;padding:0 12px"></div>
-<div id="mainContent">
-<div class="create">
-<div style="display:flex;gap:6px;margin-bottom:8px"><div style="flex:1;text-align:center;padding:7px;background:var(--lime);color:#000;border-radius:100px;font-size:11px;font-weight:700">📸 Feed</div><div style="flex:1;text-align:center;padding:7px;border:1px solid var(--border);border-radius:100px;font-size:11px" onclick="setMode('story')" id="storyTab">✨ Story</div></div>
-<div class="file-zone" onclick="document.getElementById('fileInput').click()"><span id="zoneText">Tap photo/video 📸</span><input type="file" id="fileInput" accept="image/*,video/*" hidden></div>
-<img id="preview"><video id="previewVideo" controls></video>
-<input id="caption" placeholder="Caption..." style="margin-top:8px;background:var(--card2);border:1px solid var(--border);color:#fff;padding:9px;border-radius:10px;width:100%;font-size:13px">
-<div class="music-list">
-<div class="music-chip active" data-url="" data-title="">🔇 No Music</div>
-<div class="music-chip" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-title="Ayra Starr">Ayra</div>
-<div class="music-chip" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" data-title="Burna Boy">Burna</div>
-<div class="music-chip" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" data-title="Rema">Rema</div>
-</div>
-<button class="btn btn-lime" style="margin-top:8px;font-size:13px" id="shareBtn" onclick="createPost()">Drop to Kaybgram →</button>
-<p id="status" style="font-size:10px;text-align:center;margin-top:4px"></p>
-</div>
-<div id="feed"></div>
-</div>
-</div>
-
-<div class="chat-modal" id="chatModal">
-<div class="chat-header"><div><b>Global Chat 💬</b></div><button style="background:var(--card2);color:#fff;border:1px solid var(--border);padding:5px 10px;border-radius:100px" onclick="closeChat()">✕</button></div>
-<div class="chat-messages" id="chatMessages"></div>
-<div class="chat-input"><input id="chatInput" placeholder="Type..." style="flex:1;background:var(--card2);border:1px solid var(--border);color:#fff;padding:9px 12px;border-radius:100px;outline:none"><button class="btn btn-lime" style="width:auto;padding:9px 16px;border-radius:100px" onclick="sendMessage()">Send</button></div>
-</div>
-
-<div class="bottom-nav">
-<div class="nav-item active" onclick="showHome()"><div>⌂</div>Home</div>
-<div class="nav-item" onclick="openChat()"><div>💬</div>Chat</div>
-<div class="nav-item" onclick="document.getElementById('fileInput').click()"><div>+</div>Post</div>
-<div class="nav-item" onclick="logout()"><div>◍</div>Logout</div>
+<p>Real Login - No Guest</p>
+<input id="u" placeholder="Username e.g Kayb">
+<input id="p" type="password" placeholder="Password e.g 1234">
+<button class="lime" onclick="login()">Login →</button>
+<button class="dark" onclick="signup()">Create New Account →</button>
+<div id="msg"></div>
 </div>
 
 <script>
-const SUPABASE_URL="https://qpwmlpisveearglmagvt.supabase.co";
-const SUPABASE_KEY="sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let currentUser=localStorage.getItem('kayb_user')||null;
-let fileData="",fileType="image",mode="feed",selectedMusicUrl="",selectedMusicTitle="",allPosts=[];
+let users = JSON.parse(localStorage.getItem('kayb_users')||'{}');
+let current = localStorage.getItem('kayb_user');
+if(current){ location.href = 'app.html'; }
 
-function checkLogin(){
- const screen=document.getElementById('loginScreen');
- if(currentUser){
-  screen.style.display='none';
-  document.getElementById('currentUserLabel').textContent='@'+currentUser;
- }else{
-  screen.style.display='flex';
- }
-}
-checkLogin();
-
-// PURE LOCAL LOGIN - NO FREEZE, WORKS OFFLINE
-function realSignup(){
- const u=document.getElementById('loginUser').value.trim();
- const p=document.getElementById('loginPass').value.trim();
- const s=document.getElementById('loginStatus');
- if(!u||!p){s.textContent='Type username & password!';return;}
- let users=JSON.parse(localStorage.getItem('kayb_users')||'{}');
- if(users[u]){s.textContent='Username exists! Try Login.';return;}
+function signup(){
+ let u=document.getElementById('u').value.trim();
+ let p=document.getElementById('p').value.trim();
+ let m=document.getElementById('msg');
+ if(!u||!p){m.textContent='Fill username & password!';return;}
+ if(users[u]){m.textContent='Exists! Tap Login';return;}
  users[u]=p;
  localStorage.setItem('kayb_users',JSON.stringify(users));
  localStorage.setItem('kayb_user',u);
- currentUser=u;
- s.textContent='Account created! Welcome '+u+' 🔥';
- setTimeout(()=>{checkLogin();loadAll();},500);
- // Also save to Supabase in background
- try{supabaseClient.from('profiles').upsert([{username:u,password:p}],{onConflict:'username'});}catch(e){}
+ m.textContent='Created! Entering...';
+ setTimeout(()=>{location.href='app.html';},600);
 }
-
-function realLogin(){
- const u=document.getElementById('loginUser').value.trim();
- const p=document.getElementById('loginPass').value.trim();
- const s=document.getElementById('loginStatus');
- if(!u||!p){s.textContent='Type username & password!';return;}
- let users=JSON.parse(localStorage.getItem('kayb_users')||'{}');
- // If no local users, allow first login to create
- if(Object.keys(users).length===0){
-  realSignup();return;
- }
- if(users[u] && users[u]===p){
+function login(){
+ let u=document.getElementById('u').value.trim();
+ let p=document.getElementById('p').value.trim();
+ let m=document.getElementById('msg');
+ if(!u||!p){m.textContent='Fill username & password!';return;}
+ if(Object.keys(users).length===0){m.textContent='No account yet, tap Create!';return;}
+ if(users[u]===p){
   localStorage.setItem('kayb_user',u);
-  currentUser=u;
-  s.textContent='Welcome back '+u+'!';
-  checkLogin();loadAll();
- }else if(users[u]){
-  s.textContent='Wrong password for '+u;
- }else{
-  s.textContent='User not found! Tap Create New Account';
- }
+  m.textContent='Welcome '+u+'! Entering...';
+  setTimeout(()=>{location.href='app.html';},600);
+ }else{ m.textContent='Wrong password!'; }
 }
-
-function logout(){localStorage.removeItem('kayb_user');currentUser=null;checkLogin();document.getElementById('loginUser').value='';document.getElementById('loginPass').value='';document.getElementById('loginStatus').textContent='';}
-
-document.querySelectorAll('.music-chip').forEach(c=>{c.onclick=()=>{document.querySelectorAll('.music-chip').forEach(x=>x.classList.remove('active'));c.classList.add('active');selectedMusicUrl=c.dataset.url;selectedMusicTitle=c.dataset.title;}});
-function setMode(m){mode=m;const tab=document.getElementById('storyTab');tab.style.background=m==='story'?'var(--lime)':'transparent';tab.style.color=m==='story'?'#000':'#fff';document.getElementById('shareBtn').textContent=m==='story'?'Add to Story ✨':'Drop to Kaybgram →';}
-document.getElementById('fileInput').addEventListener('change',e=>{
- const file=e.target.files[0];if(!file)return;fileType=file.type.startsWith('video')?'video':'image';
- const reader=new FileReader();reader.onload=ev=>{
-  if(fileType==='image'){
-   const img=new Image();img.onload=()=>{
-    const canvas=document.createElement('canvas');const max=720;let w=img.width,h=img.height;if(w>max){h*=max/w;w=max}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);
-    fileData=canvas.toDataURL('image/jpeg',0.68);document.getElementById('preview').src=fileData;document.getElementById('preview').style.display='block';document.getElementById('previewVideo').style.display='none';
-   };img.src=ev.target.result;
-  }else{fileData=ev.target.result;document.getElementById('previewVideo').src=fileData;document.getElementById('previewVideo').style.display='block';document.getElementById('preview').style.display='none';}
-  document.getElementById('zoneText').textContent=file.name;
- };reader.readAsDataURL(file);
-});
-async function loadAll(){
- const {data:posts}=await supabaseClient.from('posts').select('*').order('created_at',{ascending:false});
- allPosts=posts||[];
- const feed=document.getElementById('feed');feed.innerHTML="";
- (posts||[]).forEach(p=>{
-  const isV=p.image_url?.startsWith('data:video');
-  const media=isV?`<video src="${p.image_url}" controls playsinline style="width:100%"></video>`:`<img src="${p.image_url}" style="width:100%">`;
-  const music=p.music_url?`<div style="position:absolute;bottom:6px;left:6px;right:6px;background:rgba(0,0,0,0.7);border-radius:100px;padding:4px 8px;font-size:10px">🎵 ${p.music_title}</div>`:"";
-  feed.innerHTML+=`<div style="background:#111;border-top:1px solid #222;border-bottom:1px solid #222;margin-bottom:6px"><div style="padding:8px 12px;display:flex;justify-content:space-between"><div style="display:flex;gap:8px;align-items:center"><div style="width:32px;height:32px;border-radius:50%;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;font-weight:800">${(p.username||'K')[0]}</div><b style="font-size:13px">${p.username}</b></div><span style="font-size:10px;opacity:0.4" onclick="deletePost(${p.id})">Delete</span></div><div style="position:relative">${media}${music}</div><div style="padding:6px 12px"><span onclick="likePost(${p.id},${p.likes||0})" style="font-size:13px">❤️ ${p.likes||0}</span><div style="font-size:12px;margin-top:2px"><b>${p.username}</b> ${p.caption||''}</div></div></div>`;
- });
- const {data:storiesData}=await supabaseClient.from('stories').select('*').order('created_at',{ascending:false});
- const valid=(storiesData||[]).filter(s=>(Date.now()-new Date(s.created_at).getTime())<86400000);
- document.getElementById('stories').innerHTML=`<div class="story" onclick="document.getElementById('fileInput').click();setMode('story')"><div class="ring" style="background:#222"><span>+</span></div><b style="font-size:9px">Add</b></div>`+valid.map(s=>`<div class="story"><div class="ring"><img src="${s.image_url}"></div><b style="font-size:9px">${s.username}</b></div>`).join('');
-}
-async function createPost(){
- if(!currentUser){checkLogin();return;}
- const caption=document.getElementById('caption').value;const btn=document.getElementById('shareBtn');const status=document.getElementById('status');
- if(!fileData){status.textContent="Pick photo first!";return;}
- btn.textContent="Posting...";btn.disabled=true;
- const table=mode==='story'?'stories':'posts';
- const {error}=await supabaseClient.from(table).insert([{caption,image_url:fileData,username:currentUser,type:fileType,likes:0,music_url:selectedMusicUrl,music_title:selectedMusicTitle}]);
- if(error){status.textContent=error.message;btn.disabled=false;}
- else{status.textContent="Done! 🔥";fileData="";document.getElementById('preview').style.display='none';document.getElementById('previewVideo').style.display='none';document.getElementById('caption').value="";btn.disabled=false;setMode('feed');loadAll();}
-}
-async function likePost(id,c){await supabaseClient.from('posts').update({likes:c+1}).eq('id',id);loadAll();}
-async function deletePost(id){if(!confirm('Delete?'))return;await supabaseClient.from('posts').delete().eq('id',id);loadAll();}
-function doSearch(){
- const q=document.getElementById('searchInput').value.toLowerCase();const res=document.getElementById('searchResults');const main=document.getElementById('mainContent');
- if(!q){res.style.display='none';main.style.display='block';return;}
- main.style.display='none';res.style.display='block';
- const filtered=allPosts.filter(p=>p.username?.toLowerCase().includes(q)||p.caption?.toLowerCase().includes(q));
- res.innerHTML=filtered.map(p=>`<div style="padding:8px;background:#111;border:1px solid #222;border-radius:12px;margin-bottom:6px;font-size:13px"><b>${p.username}</b> - ${p.caption||''}</div>`).join('')||'No results';
-}
-function showHome(){document.getElementById('searchResults').style.display='none';document.getElementById('mainContent').style.display='block';}
-async function openChat(){document.getElementById('chatModal').style.display='flex';loadMessages();}
-function closeChat(){document.getElementById('chatModal').style.display='none';}
-async function loadMessages(){
- const {data}=await supabaseClient.from('messages').select('*').order('created_at',{ascending:true}).limit(100);
- const box=document.getElementById('chatMessages');box.innerHTML="";
- (data||[]).forEach(m=>{
-  const me=m.sender===currentUser;
-  box.innerHTML+=`<div class="msg ${me?'me':'other'}"><b style="font-size:10px">${m.sender}</b><div>${m.text}</div></div>`;
- });
- box.scrollTop=box.scrollHeight;
-}
-async function sendMessage(){
- const input=document.getElementById('chatInput');const text=input.value.trim();if(!text||!currentUser)return;
- await supabaseClient.from('messages').insert([{sender:currentUser,receiver:'global',text}]);
- input.value="";loadMessages();
-}
-loadAll();
 </script>
-</body>
-</html>￼Enter<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
->Kaybgram 6.0 Login</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Syne:wght@800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#000;--card:#111;--card2:#1a1a1a;--border:#222;--lime:#CCFF00;--pink:#FF2D95}
-*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:#fff;font-family:'Space Grotesk';padding-bottom:70px}
-header{position:sticky;top:0;z-index:20;background:#000;border-bottom:1px solid var(--border);padding:10px 12px;display:flex;justify-content:space-between;align-items:center}
-.logo{font-family:'Syne';font-size:18px;white-space:nowrap}.logo span{color:var(--lime)}
-.login-screen{position:fixed;inset:0;background:#000;z-index:100;display:flex;align-items:center;justify-content:center;padding:16px}
-.login-box{background:#121212;border:1px solid #222;border-radius:20px;padding:18px;width:100%;max-width:330px;text-align:center}
-.login-box h1{font-family:'Syne';font-size:22px;letter-spacing:-0.5px}.login-box h1 span{color:var(--lime)}
-.login-box input{margin-top:10px;background:#1E1E1E;border:1px solid #2A2A2A;color:#fff;padding:12px;border-radius:12px;width:100%;font-size:14px;outline:none}
-.btn{border:none;padding:12px;border-radius:100px;font-weight:700;cursor:pointer;width:100%;font-family:'Space Grotesk';font-size:13px}.btn-lime{background:var(--lime);color:#000;margin-top:12px}
-.stories{display:flex;gap:10px;overflow-x:auto;padding:10px 12px}.story{flex:0 0 58px;text-align:center}.ring{width:58px;height:58px;border-radius:50%;padding:2px;background:linear-gradient(45deg,var(--lime),var(--pink));display:flex;align-items:center;justify-content:center}.ring img{width:100%;height:100%;border-radius:50%;border:2px solid #000;object-fit:cover}
-.search-bar{margin:8px 12px;background:var(--card2);border:1px solid var(--border);border-radius:100px;padding:8px 14px;display:flex;gap:8px}.search-bar input{background:transparent;border:none;color:#fff;outline:none;width:100%;font-size:13px}
-.create{background:var(--card);border:1px solid var(--border);border-radius:18px;margin:8px 12px;padding:12px}
-.file-zone{border:1.5px dashed var(--border);border-radius:12px;padding:10px;text-align:center;background:var(--card2);font-size:12px}
-#preview,#previewVideo{width:100%;border-radius:12px;margin-top:8px;display:none;max-height:300px;object-fit:cover}
-.music-list{display:flex;gap:6px;overflow-x:auto;margin-top:8px}.music-chip{flex:0 0 auto;background:#000;border:1px solid var(--border);padding:5px 10px;border-radius:100px;font-size:11px;cursor:pointer;white-space:nowrap}.music-chip.active{background:var(--lime);color:#000}
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:6px 0 10px;z-index:40}.nav-item{text-align:center;opacity:0.5;font-size:9px;cursor:pointer}.nav-item.active{opacity:1}.nav-item div{font-size:18px}
-.chat-modal{position:fixed;inset:0;background:#000;z-index:60;display:none;flex-direction:column}.chat-header{padding:10px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;background:var(--card)}.chat-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:6px}.msg{max-width:75%;padding:8px 10px;border-radius:14px;font-size:13px}.msg.me{background:var(--lime);color:#000;align-self:flex-end}.msg.other{background:var(--card2);border:1px solid var(--border);align-self:flex-start}.chat-input{padding:8px 12px;border-top:1px solid var(--border);display:flex;gap:6px;background:var(--card)}
-</style>
-</head>
-<body>
-
-<div class="login-screen" id="loginScreen">
-<div class="login-box">
-<h1>KAYBGRAM<span>.</span></h1>
-<p style="font-size:11px;opacity:0.6;margin:4px 0 12px">Real Login - No Guest</p>
-<input id="loginUser" placeholder="Username">
-<input id="loginPass" type="password" placeholder="Password">
-<button class="btn btn-lime" id="loginBtn" onclick="realLogin()">Login →</button>
-<button class="btn" style="background:#222;color:#fff;margin-top:8px;border:1px solid #333" id="signupBtn" onclick="realSignup()">Create New Account →</button>
-<p id="loginStatus" style="font-size:11px;margin-top:10px;color:var(--lime);min-height:14px"></p>
-</div>
-</div>
-
-<header><div class="logo">KAYBGRAM<span>.</span></div><div style="display:flex;gap:6px;align-items:center"><span id="currentUserLabel" style="font-size:11px"></span><button style="background:#1a1a1a;color:#fff;border:1px solid #222;padding:5px 10px;border-radius:100px;font-size:11px" onclick="logout()">Logout</button></div></header>
-
-<div style="max-width:700px;margin:0 auto">
-<div class="stories" id="stories"></div>
-<div class="search-bar"><span>🔍</span><input id="searchInput" placeholder="Search..." oninput="doSearch()"></div>
-<div id="searchResults" style="display:none;padding:0 12px"></div>
-<div id="mainContent">
-<div class="create">
-<div style="display:flex;gap:6px;margin-bottom:8px"><div style="flex:1;text-align:center;padding:7px;background:var(--lime);color:#000;border-radius:100px;font-size:11px;font-weight:700">📸 Feed</div><div style="flex:1;text-align:center;padding:7px;border:1px solid var(--border);border-radius:100px;font-size:11px" onclick="setMode('story')" id="storyTab">✨ Story</div></div>
-<div class="file-zone" onclick="document.getElementById('fileInput').click()"><span id="zoneText">Tap photo/video 📸</span><input type="file" id="fileInput" accept="image/*,video/*" hidden></div>
-<img id="preview"><video id="previewVideo" controls></video>
-<input id="caption" placeholder="Caption..." style="margin-top:8px;background:var(--card2);border:1px solid var(--border);color:#fff;padding:9px;border-radius:10px;width:100%;font-size:13px">
-<div class="music-list">
-<div class="music-chip active" data-url="" data-title="">🔇 No Music</div>
-<div class="music-chip" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" data-title="Ayra Starr">Ayra</div>
-<div class="music-chip" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" data-title="Burna Boy">Burna</div>
-<div class="music-chip" data-url="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" data-title="Rema">Rema</div>
-</div>
-<button class="btn btn-lime" style="margin-top:8px;font-size:13px" id="shareBtn" onclick="createPost()">Drop to Kaybgram →</button>
-<p id="status" style="font-size:10px;text-align:center;margin-top:4px"></p>
-</div>
-<div id="feed"></div>
-</div>
-</div>
-
-<div class="chat-modal" id="chatModal">
-<div class="chat-header"><div><b>Global Chat 💬</b></div><button style="background:var(--card2);color:#fff;border:1px solid var(--border);padding:5px 10px;border-radius:100px" onclick="closeChat()">✕</button></div>
-<div class="chat-messages" id="chatMessages"></div>
-<div class="chat-input"><input id="chatInput" placeholder="Type..." style="flex:1;background:var(--card2);border:1px solid var(--border);color:#fff;padding:9px 12px;border-radius:100px;outline:none"><button class="btn btn-lime" style="width:auto;padding:9px 16px;border-radius:100px" onclick="sendMessage()">Send</button></div>
-</div>
-
-<div class="bottom-nav">
-<div class="nav-item active" onclick="showHome()"><div>⌂</div>Home</div>
-<div class="nav-item" onclick="openChat()"><div>💬</div>Chat</div>
-<div class="nav-item" onclick="document.getElementById('fileInput').click()"><div>+</div>Post</div>
-<div class="nav-item" onclick="logout()"><div>◍</div>Logout</div>
-</div>
-
-<script>
-const SUPABASE_URL="https://qpwmlpisveearglmagvt.supabase.co";
-const SUPABASE_KEY="sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
-const supabaseClient=supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-let currentUser=localStorage.getItem('kayb_user')||null;
-let fileData="",fileType="image",mode="feed",selectedMusicUrl="",selectedMusicTitle="",allPosts=[];
-
-function checkLogin(){
- const screen=document.getElementById('loginScreen');
- if(currentUser){
-  screen.style.display='none';
-  document.getElementById('currentUserLabel').textContent='@'+currentUser;
- }else{
-  screen.style.display='flex';
- }
-}
-checkLogin();
-
-// PURE LOCAL LOGIN - NO FREEZE, WORKS OFFLINE
-function realSignup(){
- const u=document.getElementById('loginUser').value.trim();
- const p=document.getElementById('loginPass').value.trim();
- const s=document.getElementById('loginStatus');
- if(!u||!p){s.textContent='Type username & password!';return;}
- let users=JSON.parse(localStorage.getItem('kayb_users')||'{}');
- if(users[u]){s.textContent='Username exists! Try Login.';return;}
+</body></html>￼Enter
