@@ -2,50 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kaybgram - Feed</title>
+<title>Kaybgram</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
-<style>
-body{margin:0;background:#000;color:#fff;font-family:Arial;padding-bottom:70px}
-header{padding:12px;background:#000;border-bottom:1px solid #222;display:flex;justify-content:space-between;position:sticky;top:0;z-index:10}
-.nav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;padding:10px}
-.nav a{color:#fff;text-decoration:none;font-size:11px;text-align:center;opacity:.5}.nav a.active{opacity:1;color:#CCFF00}
-.card{background:#111;border:1px solid #222;margin:10px;border-radius:16px;overflow:hidden}
-.btn{width:100%;background:#CCFF00;color:#000;border:none;padding:12px;border-radius:100px;font-weight:700;margin-top:10px}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header><b style="font-family:'Syne'">KAYBGRAM<span style="color:#CCFF00">.</span></b><span id="u" style="font-size:11px"></span></header>
-
-<div style="max-width:600px;margin:0 auto;padding:10px">
-<div style="background:#111;border:1px solid #222;border-radius:16px;padding:12px">
-<input type="file" id="f" accept="image/*,video/*" style="width:100%">
-<input id="cap" placeholder="Caption..." style="width:100%;margin-top:8px;background:#1a1a1a;border:1px solid #222;color:#fff;padding:10px;border-radius:10px">
-<button class="btn" onclick="post()">Post →</button>
-<p id="st" style="font-size:11px;color:#CCFF00;text-align:center"></p>
+<header><div class="container" style="display:flex;justify-content:space-between;width:100%"><div class="logo">KAYBGRAM<span>.</span></div><div class="badge" id="u"></div></div></header>
+<div class="container">
+<div class="create">
+<div style="display:flex;gap:10px;align-items:center;margin-bottom:14px"><div style="width:36px;height:36px;border-radius:50%;background:var(--lime);color:#000;display:flex;align-items:center;justify-content:center;font-weight:800" id="av">K</div><div><b style="font-size:13px">Create New Post</b><div style="font-size:11px;color:var(--muted)">Share your vibe</div></div></div>
+<label class="file-drop" id="drop"><span id="dropText">📸 Tap to add photo / video</span><span id="fileName" style="display:none;color:var(--lime);font-size:12px;margin-top:6px"></span><input type="file" id="f" accept="image/*,video/*"></label>
+<img id="prev" style="width:100%;border-radius:16px;margin-top:12px;display:none;max-height:420px;object-fit:cover">
+<input id="cap" class="input" placeholder="Caption... what's the mood?">
+<button class="btn btn-lime" onclick="post()">Post →</button><p id="st" style="text-align:center;font-size:11px;color:var(--lime);margin-top:8px"></p>
 </div>
 <div id="feed"></div>
 </div>
-
-<div class="nav">
-<a href="app.html" class="active"><div>⌂</div>Feed</a>
-<a href="chat.html"><div>💬</div>Chat</a>
-<a href="stories.html"><div>✨</div>Story</a>
-<a href="music.html"><div>🎵</div>Music</a>
-</div>
-
+<div class="nav"><a href="app.html" class="active"><div>⌂</div>Feed</a><a href="chat.html"><div>💬</div>Chat</a><a href="stories.html"><div>✦</div>Story</a><a href="music.html"><div>♫</div>Music</a></div>
 <script>
 const supa=supabase.createClient("https://qpwmlpisveearglmagvt.supabase.co","sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB");
 let user=localStorage.getItem('kayb_user'); if(!user) location.href='index.html';
-document.getElementById('u').textContent='@'+user;
+document.getElementById('u').textContent='@'+user; document.getElementById('av').textContent=user[0].toUpperCase();
 let fileData="";
 document.getElementById('f').addEventListener('change',e=>{
- const r=new FileReader(); r.onload=ev=>{ fileData=ev.target.result; }; r.readAsDataURL(e.target.files[0]);
+ const file=e.target.files[0]; if(!file) return;
+ document.getElementById('dropText').textContent='✓ Ready to post'; document.getElementById('fileName').style.display='block'; document.getElementById('fileName').textContent=file.name;
+ const r=new FileReader(); r.onload=ev=>{ fileData=ev.target.result; const p=document.getElementById('prev'); p.src=fileData; p.style.display='block'; }; r.readAsDataURL(file);
 });
-async function load(){ const {data}=await supa.from('posts').select('*').order('created_at',{ascending:false}); document.getElementById('feed').innerHTML=(data||[]).map(p=>`<div class="card"><img src="${p.image_url}" style="width:100%"><div style="padding:10px"><b>${p.username}</b> ${p.caption||''}<br><span onclick="like(${p.id},${p.likes||0})" style="cursor:pointer">❤️ ${p.likes||0}</span></div></div>`).join(''); }
-async function post(){ if(!fileData) return alert('Pick photo'); document.getElementById('st').textContent='Posting...'; await supa.from('posts').insert([{username:user,image_url:fileData,caption:document.getElementById('cap').value,likes:0}]); document.getElementById('st').textContent='Done!'; fileData=''; load(); }
-async function like(id,c){ await supa.from('posts').update({likes:c+1}).eq('id',id); load(); }
+async function load(){ const {data}=await supa.from('posts').select('*').order('created_at',{ascending:false}); document.getElementById('feed').innerHTML=(data||[]).map(p=>`<div class="post"><div style="padding:12px 14px;display:flex;gap:10px;align-items:center"><div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#CCFF00,#FF2D95);display:flex;align-items:center;justify-content:center;color:#000;font-weight:800;font-size:12px">${p.username[0].toUpperCase()}</div><b style="font-size:13px">${p.username}</b></div><img src="${p.image_url}" style="width:100%;display:block"><div style="padding:12px"><b>${p.username}</b> ${p.caption||''}<div style="margin-top:6px">❤️ ${p.likes||0}</div></div></div>`).join(''); }
+async function post(){ if(!fileData) return alert('Add photo!'); document.getElementById('st').textContent='Posting...'; await supa.from('posts').insert([{username:user,image_url:fileData,caption:document.getElementById('cap').value,likes:0}]); document.getElementById('st').textContent='🔥 Posted!'; fileData=''; document.getElementById('prev').style.display='none'; document.getElementById('cap').value=''; load(); }
 load();
 </script>
 </body>
-</html>￼Enter
+</html>
