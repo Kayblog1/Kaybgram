@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kaybgram - Music</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#000;color:#fff;font-family:Arial;padding-bottom:80px}
+header{padding:12px;background:#111;border-bottom:1px solid #222;display:flex;justify-content:space-between}
+.card{background:#111;border:1px solid #222;border-radius:16px;padding:12px;margin:10px;display:flex;gap:12px;align-items:center;cursor:pointer}
+.card.active{border-color:#CCFF00;background:#1a1a1a}
+.card img{width:50px;height:50px;border-radius:10px;object-fit:cover;background:#222}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;padding:10px}
+.nav a{color:#fff;text-decoration:none;font-size:11px;text-align:center;opacity:.5}.nav a.active{opacity:1;color:#CCFF00}
+</style>
+</head>
+<body>
+<header><b style="font-family:'Syne'">MUSIC 🎵</b><a href="app.html" style="color:#fff;text-decoration:none;border:1px solid #333;padding:6px 12px;border-radius:100px;font-size:11px">Back</a></header>
+
+<div style="max-width:600px;margin:0 auto">
+<p style="padding:12px;font-size:12px;opacity:.5">Tap to play - Add to your post from feed</p>
+
+<div class="card" onclick="play(this,'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3','Ayra Starr - Rush')">
+<img src="https://i.scdn.co/image/ab67616d0000b273c5649add07a1482d3a8af3c7"><div><b>Ayra Starr</b><div style="font-size:11px;opacity:.5">Rush</div></div><span style="margin-left:auto">▶️</span>
+</div>
+
+<div class="card" onclick="play(this,'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3','Burna Boy - Ye')">
+<img src="https://i.scdn.co/image/ab67616d00001e02d0a691a94e2d7b6d7d2a8c6f3"><div><b>Burna Boy</b><div style="font-size:11px;opacity:.5">Ye</div></div><span style="margin-left:auto">▶️</span>
+</div>
+
+<div class="card" onclick="play(this,'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3','Rema - Calm Down')">
+<img src="https://i.scdn￼Enter
