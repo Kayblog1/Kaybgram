@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaybgram - Share Your World</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto}
+body{background:#000;color:#fff}
+header{position:sticky;top:0;background:#000;border-bottom:1px solid #222;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:10}
+.logo{font-family:cursive;font-size:28px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:bold}
+.btn{padding:8px 16px;background:#0095f6;border:none;border-radius:8px;color:#fff;font-weight:600;cursor:pointer}
+.feed{max-width:470px;margin:0 auto}
+.post{background:#000;border-bottom:1px solid #222;padding-bottom:12px}
+.post-head{padding:12px;display:flex;align-items:center;gap:10px}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(45deg,#feda75,#d62976);display:flex;align-items:center;justify-content:center;font-weight:bold}
+.post img{width:100%;max-height:600px;object-fit:cover}
+.post-actions{padding:12px;display:flex;gap:16px;font-size:22px}
+.post-caption{padding:0 12px 12px}
+.upload-box{max-width:470px;margin:20px auto;background:#111;border:1px solid #222;border-radius:12px;padding:16px;display:none}
+.upload-box.active{display:block}
+input,textarea{width:100%;background:#222;border:1px solid #333;color:#fff;padding:10px;border-radius:8px;margin:8px 0}
+#preview{width:100%;border-radius:8px;margin-top:10px;display:none}
+</style>
+</head>
+<body>
+<header>
+<div class="logo">Kaybgram</div>
+<button class="btn" onclick="toggleUpload()">+ Post</button>
+</header>
+
+<div id="uploadBox" class="upload-box">
+<h3 style="margin-bottom:10px">Create New Post</h3>
+<input type="file" id="fileInput" accept="image/*">
+<img id="preview">
+<input type="text" id="username" placeholder="Your name (e.g. Kayb)">
+<textarea id="caption" placeholder="Write a caption..."></textarea>
+<button class="btn" style="width:100%" onclick="createPost()">Share to Kaybgram</button>
+<p id="status" style="text-align:center;margin-top:10px;color:#aaa"></p>
+</div>
+
+<div id="feed" class="feed"></div>
+
+<script>
+const SUPABASE_URL = "https://qpwmlpisveearglmagvt.supabase.co";
+const SUPABASE_KEY = "sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let selectedImageBase64 = "";
+
+document.getElementById('fileInput').addEventListener('change', e=>{
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = ev=>{
+    selectedImageBase64 = ev.target.result;
+    document.getElementById('preview').src = selectedImageBase64;
+    document.getElementById('preview').style.display='block';
+  };
+  reader.readAsDataURL(file);
+});
+
+function toggleUpload(){
+  document.getElementById('uploadBox').classList.toggle('active');
+  window.scrollTo(0,0);
+}
+
+async function loadPosts(){
+  const {data, error} = await supabaseClient.from('posts').select('*').order('created_at',{ascending:false});
+  if(error){console.log(error);return;}
+  const feed = document.getElementById('feed');
+  feed.innerHTML = "";
+  data.forEach(p=>{
+    feed.innerHTML+=`
+    <div class="post">
+      <div class="post-head"><div class="avatar">${(p.username||'K')[0].toUpperCase()}</div><b>${p.username||'kayb_user'}</b></div>
+      <img src="${p.image_url}" onerror="this.style.display='none'">
+      <div class="post-actions">❤️ 💬 ✈️ <span style="margin-left:auto">🔖</span></div>
+      <div class="post-caption"><b>${p.username||'kayb_user'}</b> ${p.caption||''}</div>
+    </div>`;
+  });
+}
+
+async function createPost(){
+  const caption = document.getElementById('caption').value;
+  const username = document.getElementById('username').value || 'Kayb';
+  const status = document.getElementById('status');
+  if(!selectedImageBase64){status.textContent="Please select an image";return;}
+  status.textContent="Posting...";
+  const {error} = await supabaseClient.from('posts').insert([{caption, image_url:selectedImageBase64, username}]);
+  if(error){status.textContent="Error: "+error.message;}
+  else{status.textContent="Posted! 🎉";document.getElementById('caption').value="";selectedImageBase64="";document.getElementById('preview').style.display='none';toggleUpload();loadPosts();}
+}
+
+loadPosts();
+setInterval(loadPosts, 5000);
+</script>
+</body>
+</html>￼Enter
