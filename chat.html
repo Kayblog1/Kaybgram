@@ -1,619 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#101010">
-<title>Kaybgram | Messages</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaybgram Chat</title>
 <style>
-:root {
-  --bg: #101010;
-  --panel: #191919;
-  --panel2: #252525;
-  --text: #f8f5ee;
-  --muted: #aaa49a;
-  --gold: #d8b56d;
-  --border: #38332a;
-  --input: #222222;
-}
-
-body.light {
-  --bg: #f6f1e8;
-  --panel: #fffdf8;
-  --panel2: #eee5d7;
-  --text: #252019;
-  --muted: #756d61;
-  --gold: #a77a2d;
-  --border: #e1d5c2;
-  --input: #f4eee5;
-}
-
 * {
   box-sizing: border-box;
-}
-
-html, body {
   margin: 0;
   padding: 0;
-  width: 100%;
-  min-height: 100%;
-  max-width: 100%;
+}:root {
+--gold: #d4af37;
+--background: #080808;
+--panel: #151515;
+--border: #333333;
+--text: #ffffff;
+--muted: #aaaaaa;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  overflow-x: hidden;
+font-family: Arial, sans-serif;
+background: var(--background);
+color: var(--text);
+min-height: 100vh;
 }
 
-button, input {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
+body.light {
+--background: #f4f4f4;
+--panel: #ffffff;
+--border: #dddddd;
+--text: #171717;
+--muted: #666666;
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+color: inherit;
+text-decoration: none;
 }
 
-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  width: 100%;
-  padding: 12px 15px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--border);
+button, input {
+font: inherit;
 }
 
-.logo {
-  color: var(--gold);
-  font-family: Georgia, serif;
-  font-size: 24px;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-.header-title {
-  font-weight: bold;
-}
-
-.theme-button {
-  flex-shrink: 0;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  background: var(--panel2);
-  color: var(--gold);
-  font-size: 20px;
-}
-
-.page {
-  display: grid;
-  grid-template-columns: 200px minmax(0, 1fr);
-  gap: 16px;
-  width: 100%;
-  max-width: 1050px;
-  margin: 0 auto;
-  padding: 16px;
-}
-
-.panel {
-  min-width: 0;
-  padding: 15px;
-  background: var(--panel);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+button {
+cursor: pointer;
 }
 
 .gold {
-  color: var(--gold);
+color: var(--gold);
 }
 
 .muted {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.side-menu a {
-  display: block;
-  padding: 12px 9px;
-  border-radius: 8px;
-  color: var(--muted);
-}
-
-.side-menu a:hover {
-  background: var(--panel2);
-  color: var(--gold);
-}
-
-.workspace {
-  min-width: 0;
-}
-
-.contacts-panel {
-  margin-bottom: 12px;
-}
-
-.contacts {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.contact {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-  padding: 12px 4px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--panel);
-  color: var(--text);
-  overflow-wrap: anywhere;
-}
-
-.contact.active {
-  border-color: var(--gold);
-  background: var(--panel2);
-}
-
-.avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 43px;
-  height: 43px;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  background: var(--panel2);
-  color: var(--gold);
-  font-weight: bold;
-  font-size: 17px;
-}
-
-.contact .avatar {
-  width: 39px;
-  height: 39px;
-}
-
-.contact-name {
-  font-size: 13px;
-  text-align: center;
-}
-
-.chat-panel {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  height: 490px;
-  min-height: 350px;
-  max-height: 65vh;
-  padding: 0;
-  overflow: hidden;
-}
-
-.chat-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-  padding: 12px;
-  border-bottom: 1px solid var(--border);
-}
-
-.chat-person {
-  min-width: 0;
-  overflow-wrap: anywhere;
-}
-
-.chat-person strong {
-  display: block;
-  margin-bottom: 3px;
-}
-
-.messages {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  gap: 10px;
-  min-height: 0;
-  padding: 13px;
-  overflow-y: auto;
-  overflow-wrap: anywhere;
-}
-
-.welcome-message {
-  margin: auto 0;
-  text-align: center;
-  color: var(--muted);
-  line-height: 1.6;
-}
-
-.bubble {
-  align-self: flex-start;
-  max-width: 85%;
-  padding: 11px 13px;
-  border-radius: 14px 14px 14px 4px;
-  background: var(--panel2);
-  color: var(--text);
-  line-height: 1.5;
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-}
-
-.bubble.mine {
-  align-self: flex-end;
-  border-radius: 14px 14px 4px 14px;
-  background: var(--gold);
-  color: #17130c;
-}
-
-.message-form {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-  width: 100%;
-  min-width: 0;
-  padding: 11px;
-  background: var(--panel);
-  border-top: 1px solid var(--border);
-}
-
-.message-input {
-  flex: 1 1 0;
-  width: 0;
-  min-width: 0;
-  height: 46px;
-  padding: 0 12px;
-  border: 1px solid var(--border);
-  border-radius: 24px;
-  outline: none;
-  background: var(--input);
-  color: var(--text);
-  font-size: 16px;
-}
-
-.message-input:focus {
-  border-color: var(--gold);
-}
-
-.send-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 76px;
-  width: 76px;
-  min-width: 76px;
-  height: 46px;
-  padding: 0 8px;
-  border: 0;
-  border-radius: 24px;
-  background: var(--gold);
-  color: #17130c;
-  font-weight: bold;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-.bottom-nav {
-  display: none;
-}
-
-@media (max-width: 650px) {
-  header {
-    padding: 11px 10px;
-    gap: 6px;
-  }
-
-  .logo {
-    font-size: 21px;
-  }
-
-  .header-title {
-    font-size: 14px;
-  }
-
-  .page {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px 8px 80px;
-  }
-
-  .sidebar {
-    display: none;
-  }
-
-  .contacts-panel {
-    padding: 12px;
-    margin-bottom: 10px;
-  }
-
-  .contacts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 7px;
-  }
-
-  .contact {
-    padding: 10px 2px;
-  }
-
-  .chat-panel {
-    height: 55vh;
-    min-height: 350px;
-    max-height: 520px;
-  }
-
-  .message-form {
-    gap: 7px;
-    padding: 10px;
-  }
-
-  .bottom-nav {
-    position: fixed;
-    z-index: 10;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: flex;
-    justify-content: space-around;
-    gap: 2px;
-    width: 100%;
-    padding: 8px 3px;
-    border-top: 1px solid var(--border);
-    background: var(--panel);
-  }
-
-  .bottom-nav a {
-    flex: 1;
-    min-width: 0;
-    text-align: center;
-    color: var(--muted);
-    font-size: 11px;
-  }
-
-  .bottom-nav span {
-    display: block;
-    margin-bottom: 3px;
-    font-size: 19px;
-  }
-}
-
-@media (max-width: 360px) {
-  .logo {
-    font-size: 19px;
-  }
-
-  .header-title {
-    font-size: 12px;
-  }
-
-  .page {
-    padding-right: 5px;
-    padding-left: 5px;
-  }
-
-  .message-form {
-    gap: 5px;
-    padding: 7px;
-  }
-
-  .send-button {
-    flex-basis: 68px;
-    width: 68px;
-    min-width: 68px;
-  }
-
-  .message-input {
-    padding: 0 9px;
-  }
+color: var(--muted);
 }
 </style>
+
 </head>
+<body>￼Enter
+  <header style="
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 5%;
+  border-bottom:1px solid var(--border);
+  background:var(--panel);
+">
+  <a href="index.html" style="
+    font-size:24px;
+    font-weight:bold;
+    color:var(--gold);
+  ">Kaybgram</a><button id="themeButton" type="button" style="
+background:transparent;
+border:1px solid var(--gold);
+color:var(--gold);
+padding:8px 12px;
+border-radius:8px;
+">☼</button>
 
-<body>
-
-<header>
-  <a class="logo" href="index.html">Kaybgram✦</a>
-  <div class="header-title">Messages</div>
-  <button class="theme-button" id="themeButton"
-          type="button" aria-label="Change theme">☼</button>
-</header>
-
-<div class="page">
-
-  <aside class="panel sidebar">
-    <h2>Kaybgram <span class="gold">✦</span></h2>
-    <p class="muted">Your world. Your people. Your style.</p>
-
-    <nav class="side-menu">
-      <a href="index.html">⌂ Home</a>
-      <a href="stories.html">◉ Stories</a>
-      <a href="chat.html">✉ Messages</a>
-      <a href="music.html">♫ Music</a>
-      <a href="app.html">✦ Explore</a>
-    </nav>
-  </aside>
-
-  <main class="workspace">
-
-    <section class="panel contacts-panel">
-      <h2>Conversations <span class="gold">✦</span></h2>
-      <p class="muted">Choose someone to start a conversation.</p>
-
-      <div class="contacts">
-        <button class="contact active" type="button"
-                data-name="Amara" data-letter="A">
-          <span class="avatar">A</span>
-          <span class="contact-name">Amara</span>
-        </button>
-
-        <button class="contact" type="button"
-                data-name="David" data-letter="D">
-          <span class="avatar">D</span>
-          <span class="contact-name">David</span>
-        </button>
-
-        <button class="contact" type="button"
-                data-name="Zina" data-letter="Z">
-          <span class="avatar">Z</span>
-          <span class="contact-name">Zina</span>
-        </button>
-      </div>
-  </section>
-      <section class="panel chat-panel">
-
-      <div class="chat-header">
-        <div class="avatar" id="chatAvatar">A</div>
-
-        <div class="chat-person">
-          <strong id="chatName">Amara</strong>
-          <span class="muted">Kaybgram conversation</span>
-        </div>
-      </div>
-
-      <div class="messages" id="messages" aria-live="polite">
-        <div class="welcome-message">
-          <div class="gold" style="font-size:28px">✦</div>
-          <strong>Say hello!</strong>
-          <p>Type your message below and press Send.</p>
-        </div>
-      </div>
-
-      <form class="message-form" id="messageForm">
-        <input
-          class="message-input"
-          id="messageInput"
-          type="text"
-          placeholder="Write a message..."
-          aria-label="Write a message"
-          autocomplete="off"
-        >
-
-        <button class="send-button" type="submit">
-          Send ➤
-        </button>
-      </form>
-
-    </section>
-
-  </main>
-</div>
-
-<nav class="bottom-nav">
-  <a href="index.html"><span>⌂</span>Home</a>
-  <a href="stories.html"><span>◉</span>Stories</a>
-  <a href="app.html"><span>✦</span>Explore</a>
-  <a href="chat.html"><span>✉</span>Chat</a>
-  <a href="music.html"><span>♫</span>Music</a>
+</header><div class="page" style="
+  display:grid;
+  grid-template-columns:230px minmax(0, 1fr);
+  gap:20px;
+  max-width:1200px;
+  margin:25px auto;
+  padding:0 16px;
+">
+  <aside style="
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:20px;
+    align-self:start;
+  ">
+    <h2 style="color:var(--gold);margin-bottom:20px;">
+      Menu
+    </h2><nav style="display:grid;gap:18px;">
+  <a href="index.html">⌂ Home</a>
+  <a href="profile.html">♙ Profile</a>
+  <a href="app.html">✦ Explore</a>
+  <a href="stories.html">◉ Stories</a>
+  <a href="chat.html" style="color:var(--gold);">✉ Messages</a>
+  <a href="music.html">♫ Music</a>
 </nav>
 
-<script>
-(function () {
-  const body = document.body;
-  const themeButton = document.getElementById('themeButton');
-  const messageForm = document.getElementById('messageForm');
-  const messageInput = document.getElementById('messageInput');
-  const messages = document.getElementById('messages');
-  const chatName = document.getElementById('chatName');
-  const chatAvatar = document.getElementById('chatAvatar');
-
-  if (localStorage.getItem('kaybgram-theme') === 'light') {
-    body.classList.add('light');
-  }
-
-  function updateThemeIcon() {
-    themeButton.textContent =
-      body.classList.contains('light') ? '☾' : '☼';
-  }
-
-  updateThemeIcon();
-
-  themeButton.addEventListener('click', function () {
-    body.classList.toggle('light');
-
-    localStorage.setItem(
-      'kaybgram-theme',
-      body.classList.contains('light') ? 'light' : 'dark'
-    );
-
-    updateThemeIcon();
-  });
-
-  const conversations = {
-    Amara: [],
-    David: [],
-    Zina: []
-  };
-
-  let currentContact = 'Amara';
-
-  function renderMessages() {
-    messages.replaceChildren();
-
-    const conversation = conversations[currentContact];
-
-    if (conversation.length === 0) {
-      const welcome = document.createElement('div');
-      welcome.className = 'welcome-message';
-
-      const symbol = document.createElement('div');
-      symbol.className = 'gold';
-      symbol.style.fontSize = '28px';
-      symbol.textContent = '✦';
-
-      const title = document.createElement('strong');
-      title.textContent = 'Chat with ' + currentContact;
-
-      const description = document.createElement('p');
-      description.textContent =
-        'Write a message below and press Send to test the chat.';
-
-      welcome.append(symbol, title, description);
-      messages.appendChild(welcome);
-      return;
-    }
-
-    conversation.forEach(function (message) {
-      const bubble = document.createElement('div');
-      bubble.className = 'bubble mine';
-      bubble.textContent = message;
-      messages.appendChild(bubble);
-    });
-
-    messages.scrollTop = messages.scrollHeight;
-  }
-
-  document.querySelectorAll('.contact').forEach(function (contact) {
-    contact.addEventListener('click', function () {
-      document.querySelectorAll('.contact').forEach(function (item) {
-        item.classList.remove('active');
-      });
-
-      contact.classList.add('active');
-
-      currentContact = contact.dataset.name;
-      chatName.textContent = currentContact;
-      chatAvatar.textContent = contact.dataset.letter;
-
-      renderMessages();
-      messageInput.focus();
-    });
-  });
-
-  messageForm.addEventListener('submit', function (event)
+  </aside>  <main style="
+    display:grid;
+    grid-template-columns:minmax(180px, 250px) minmax(0, 1fr);
+    gap:16px;
+    min-width:0;
+  ">
