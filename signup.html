@@ -103,3 +103,58 @@
     }
   </style>
 </head>
+<body>
+  <main class="signup-box">
+    <h1>Kaybgram</h1>
+
+    <p class="subtitle">
+      Create your account and join the community.
+    </p>
+
+    <form id="signupForm">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        minlength="3"
+        maxlength="30"
+        pattern="[A-Za-z0-9_]+"
+        autocomplete="username"
+        placeholder="Choose a username"
+        required
+      >
+
+      <label for="email">Email address</label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        placeholder="Enter your email"
+        required
+      >
+
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        minlength="8"
+        autocomplete="new-password"
+        placeholder="At least 8 characters"
+        required
+      >
+
+      <button id="signupButton" type="submit">
+        Create Account
+      </button>
+
+      <p id="message" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a href="login.html">Log in</a>
+    </p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
