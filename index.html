@@ -1500,4 +1500,31 @@ themeButton.setAttribute('aria-label','Switch to dark mode');
 } catch(e) {}
 </script>
 </body>
+  <style>
+/* Kaybgram mobile screen fix */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+img, video, iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 768px) {
+  body {
+    min-width: 0 !important;
+  }
+
+  .container, .wrapper, main, header, nav {
+    max-width: 100%;
+  }
+}
+  </style>
   </html>
