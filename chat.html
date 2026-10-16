@@ -33,20 +33,20 @@ body.light {
   box-sizing: border-box;
 }
 
-html {
+html, body {
+  margin: 0;
+  padding: 0;
   width: 100%;
   min-height: 100%;
+  max-width: 100%;
 }
 
 body {
-  margin: 0;
-  width: 100%;
-  min-height: 100vh;
-  overflow-x: hidden;
   background: var(--bg);
   color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15px;
+  overflow-x: hidden;
 }
 
 button, input {
@@ -112,12 +112,6 @@ header {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: 14px;
-}
-
-.sidebar h2,
-.contacts-panel h2 {
-  font-family: Georgia, serif;
-  font-weight: normal;
 }
 
 .gold {
@@ -205,8 +199,8 @@ header {
   flex-direction: column;
   min-width: 0;
   height: 490px;
-  max-height: 65vh;
   min-height: 350px;
+  max-height: 65vh;
   padding: 0;
   overflow: hidden;
 }
@@ -276,7 +270,6 @@ header {
   width: 100%;
   min-width: 0;
   padding: 11px;
-  padding-bottom: max(11px, env(safe-area-inset-bottom));
   background: var(--panel);
   border-top: 1px solid var(--border);
 }
@@ -351,10 +344,6 @@ header {
     margin-bottom: 10px;
   }
 
-  .contacts-panel h2 {
-    margin-top: 3px;
-  }
-
   .contacts {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 7px;
@@ -372,4 +361,259 @@ header {
 
   .message-form {
     gap: 7px;
-    padding: 10
+    padding: 10px;
+  }
+
+  .bottom-nav {
+    position: fixed;
+    z-index: 10;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-around;
+    gap: 2px;
+    width: 100%;
+    padding: 8px 3px;
+    border-top: 1px solid var(--border);
+    background: var(--panel);
+  }
+
+  .bottom-nav a {
+    flex: 1;
+    min-width: 0;
+    text-align: center;
+    color: var(--muted);
+    font-size: 11px;
+  }
+
+  .bottom-nav span {
+    display: block;
+    margin-bottom: 3px;
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 360px) {
+  .logo {
+    font-size: 19px;
+  }
+
+  .header-title {
+    font-size: 12px;
+  }
+
+  .page {
+    padding-right: 5px;
+    padding-left: 5px;
+  }
+
+  .message-form {
+    gap: 5px;
+    padding: 7px;
+  }
+
+  .send-button {
+    flex-basis: 68px;
+    width: 68px;
+    min-width: 68px;
+  }
+
+  .message-input {
+    padding: 0 9px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a class="logo" href="index.html">Kaybgram✦</a>
+  <div class="header-title">Messages</div>
+  <button class="theme-button" id="themeButton"
+          type="button" aria-label="Change theme">☼</button>
+</header>
+
+<div class="page">
+
+  <aside class="panel sidebar">
+    <h2>Kaybgram <span class="gold">✦</span></h2>
+    <p class="muted">Your world. Your people. Your style.</p>
+
+    <nav class="side-menu">
+      <a href="index.html">⌂ Home</a>
+      <a href="stories.html">◉ Stories</a>
+      <a href="chat.html">✉ Messages</a>
+      <a href="music.html">♫ Music</a>
+      <a href="app.html">✦ Explore</a>
+    </nav>
+  </aside>
+
+  <main class="workspace">
+
+    <section class="panel contacts-panel">
+      <h2>Conversations <span class="gold">✦</span></h2>
+      <p class="muted">Choose someone to start a conversation.</p>
+
+      <div class="contacts">
+        <button class="contact active" type="button"
+                data-name="Amara" data-letter="A">
+          <span class="avatar">A</span>
+          <span class="contact-name">Amara</span>
+        </button>
+
+        <button class="contact" type="button"
+                data-name="David" data-letter="D">
+          <span class="avatar">D</span>
+          <span class="contact-name">David</span>
+        </button>
+
+        <button class="contact" type="button"
+                data-name="Zina" data-letter="Z">
+          <span class="avatar">Z</span>
+          <span class="contact-name">Zina</span>
+        </button>
+      </div>
+  </section>
+      <section class="panel chat-panel">
+
+      <div class="chat-header">
+        <div class="avatar" id="chatAvatar">A</div>
+
+        <div class="chat-person">
+          <strong id="chatName">Amara</strong>
+          <span class="muted">Kaybgram conversation</span>
+        </div>
+      </div>
+
+      <div class="messages" id="messages" aria-live="polite">
+        <div class="welcome-message">
+          <div class="gold" style="font-size:28px">✦</div>
+          <strong>Say hello!</strong>
+          <p>Type your message below and press Send.</p>
+        </div>
+      </div>
+
+      <form class="message-form" id="messageForm">
+        <input
+          class="message-input"
+          id="messageInput"
+          type="text"
+          placeholder="Write a message..."
+          aria-label="Write a message"
+          autocomplete="off"
+        >
+
+        <button class="send-button" type="submit">
+          Send ➤
+        </button>
+      </form>
+
+    </section>
+
+  </main>
+</div>
+
+<nav class="bottom-nav">
+  <a href="index.html"><span>⌂</span>Home</a>
+  <a href="stories.html"><span>◉</span>Stories</a>
+  <a href="app.html"><span>✦</span>Explore</a>
+  <a href="chat.html"><span>✉</span>Chat</a>
+  <a href="music.html"><span>♫</span>Music</a>
+</nav>
+
+<script>
+(function () {
+  const body = document.body;
+  const themeButton = document.getElementById('themeButton');
+  const messageForm = document.getElementById('messageForm');
+  const messageInput = document.getElementById('messageInput');
+  const messages = document.getElementById('messages');
+  const chatName = document.getElementById('chatName');
+  const chatAvatar = document.getElementById('chatAvatar');
+
+  if (localStorage.getItem('kaybgram-theme') === 'light') {
+    body.classList.add('light');
+  }
+
+  function updateThemeIcon() {
+    themeButton.textContent =
+      body.classList.contains('light') ? '☾' : '☼';
+  }
+
+  updateThemeIcon();
+
+  themeButton.addEventListener('click', function () {
+    body.classList.toggle('light');
+
+    localStorage.setItem(
+      'kaybgram-theme',
+      body.classList.contains('light') ? 'light' : 'dark'
+    );
+
+    updateThemeIcon();
+  });
+
+  const conversations = {
+    Amara: [],
+    David: [],
+    Zina: []
+  };
+
+  let currentContact = 'Amara';
+
+  function renderMessages() {
+    messages.replaceChildren();
+
+    const conversation = conversations[currentContact];
+
+    if (conversation.length === 0) {
+      const welcome = document.createElement('div');
+      welcome.className = 'welcome-message';
+
+      const symbol = document.createElement('div');
+      symbol.className = 'gold';
+      symbol.style.fontSize = '28px';
+      symbol.textContent = '✦';
+
+      const title = document.createElement('strong');
+      title.textContent = 'Chat with ' + currentContact;
+
+      const description = document.createElement('p');
+      description.textContent =
+        'Write a message below and press Send to test the chat.';
+
+      welcome.append(symbol, title, description);
+      messages.appendChild(welcome);
+      return;
+    }
+
+    conversation.forEach(function (message) {
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble mine';
+      bubble.textContent = message;
+      messages.appendChild(bubble);
+    });
+
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  document.querySelectorAll('.contact').forEach(function (contact) {
+    contact.addEventListener('click', function () {
+      document.querySelectorAll('.contact').forEach(function (item) {
+        item.classList.remove('active');
+      });
+
+      contact.classList.add('active');
+
+      currentContact = contact.dataset.name;
+      chatName.textContent = currentContact;
+      chatAvatar.textContent = contact.dataset.letter;
+
+      renderMessages();
+      messageInput.focus();
+    });
+  });
+
+  messageForm.addEventListener('submit', function (event)
