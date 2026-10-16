@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Join Kaybgram</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #111111;
+      color: #ffffff;
+      font-family: Arial, sans-serif;
+    }
+
+    .signup-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 30px 24px;
+      background: #1d1d1d;
+      border: 1px solid #b88a35;
+      border-radius: 18px;
+      box-shadow: 0 8px 30px #00000066;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #e7b84b;
+      text-align: center;
+      font-size: 32px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #cccccc;
+      margin-bottom: 25px;
+    }
+
+    label {
+      display: block;
+      margin: 16px 0 7px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #555555;
+      border-radius: 9px;
+      background: #292929;
+      color: white;
+      font-size: 16px;
+    }
+
+    input:focus {
+      outline: 2px solid #e7b84b;
+      border-color: #e7b84b;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 24px;
+      padding: 14px;
+      background: #e7b84b;
+      color: #111111;
+      font-weight: bold;
+      font-size: 16px;
+      border: none;
+      border-radius: 9px;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    #message {
+      margin-top: 16px;
+      text-align: center;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .login-link {
+      margin-top: 20px;
+      text-align: center;
+      color: #cccccc;
+      font-size: 14px;
+    }
+
+    a {
+      color: #e7b84b;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="signup-box">
+    <h1>Kaybgram</h1>
+
+    <p class="subtitle">Create your account and join the community.</p>
+
+    <form id="signupForm">
+      <label for="username">Username</label>
+      <input
+        id="username"
+        type="text"
+        minlength="3"
+        maxlength="30"
+        pattern="[A-Za-z0-9_]+"
+        autocomplete="username"
+        placeholder="Choose a username"
+        required
+      >
+
+      <label for="email">Email address</label>
+      <input
+        id="email"
+        type="email"
+        autocomplete="email"
+        placeholder="Enter your email"
+        required
+      >
+
+      <label for="password">Password</label>
+      <input
+        id="password"
+        type="password"
+        minlength="8"
+        autocomplete="new-password"
+        placeholder="At least 8 characters"
+        required
+      >
+
+      <button id="signupButton" type="submit">
+        Create Account
+      </button>
+
+      <p id="message" role="status" aria-live="polite"></p>
+    </form>
+
+    <p class="login-link">
+      Already have an account?
+      <a href="login.html">Log in</a>
+    </p>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <script>
+    const form = document.getElementById("signupForm");
+    const message = document.getElementById("message");
+    const button = document.getElementById("signupButton");
+
+    form.addEventListener("submit", async function(event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username")
+        .value.trim();
+
+      const email = document.getElementById("email")
+        .value.trim();
+
+      const password = document.getElementById("password")
+        .value;
+
+      if (!window.supabase || typeof supabaseClient === "undefined") {
+        message.textContent =
+          "Connection setup failed. Please check supabase.js.";
+        return;
+      }
+
+      button.disabled = true;
+      message.textContent = "Creating your account...";
+
+      try {
+        const { data, error } = await supabaseClient.auth.signUp({
+          email: email,
+          password: password,
+          options: {
+            data: {
+              username: username
+            }
+          }
+        });
+
+        if (error) {
+          throw error;
+        }
+
+        if (data.session) {
+          message.textContent =
+            "Account created! Your login is ready. We'll set up your profile next.";
+        } else {
+          message.textContent =
+            "Registration submitted! Check your email for a confirmation link if required by your Supabase settings.";
+        }
+
+        form.reset();
+
+      } catch (error) {
+        message.textContent = error.message ||
+          "Registration failed. Please try again.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+  </html>
