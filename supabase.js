@@ -1,9 +1,18 @@
-// Kaybgram Supabase connection
+// =====================================
+// KAYBGRAM - SUPABASE CONNECTION
+// =====================================
 
-const SUPABASE_URL = "YOUR_SUPABASE_PROJECT_URL";
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_PUBLISHABLE_KEY";
+// Your Supabase project URL
+const SUPABASE_URL = "https://qpwmlpisveearglmagvt.supabase.co";
 
+// Your Supabase publishable key
+const SUPABASE_ANON_KEY = "sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
+
+// Create the Supabase connection
 const supabaseClient = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_ANON_KEY
-);￼Enter
+);
+
+// Check the connection setup
+console.log("Kaybgram Supabase client is ready!");
