@@ -9,9 +9,9 @@ const SUPABASE_URL = "https://qpwmlpisveearglmagvt.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB";
 
 // Create the Supabase connection
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_ANON_KEY
+window.supabaseClient = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_ANON_KEY
 );
 
 // Check the connection setup
