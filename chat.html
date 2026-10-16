@@ -290,3 +290,162 @@ border-radius:8px;
 
   </main>
 </div>
+<nav style="
+  display:none;
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  z-index:10;
+  justify-content:space-around;
+  padding:12px 4px;
+  background:var(--panel);
+  border-top:1px solid var(--border);
+">
+  <a href="index.html">⌂ Home</a>
+  <a href="stories.html">◉ Stories</a>
+  <a href="app.html">✦ Explore</a>
+  <a href="chat.html">✉ Chat</a>
+</nav><style>
+@media (max-width: 700px) {
+  .page {
+    display:block !important;
+    margin:12px auto 80px !important;
+  }
+
+  .page > aside {
+    display:none;
+  }
+
+  .page > main {
+    display:grid !important;
+    grid-template-columns:1fr !important;
+  }
+
+  .page > main > section:first-child {
+    display:flex;
+    flex-direction:column;
+  }
+
+  .page > main > section:first-child .contact {
+    width:100%;
+  }
+
+  .page > main > section:last-child {
+    height:60vh !important;
+    min-height:380px !important;
+  }
+
+  body > nav {
+    display:flex !important;
+  }
+}
+</style><script>
+(function () {
+  const themeButton = document.getElementById('themeButton');
+  const messageForm = document.getElementById('messageForm');
+  const messageInput = document.getElementById('messageInput');
+  const messages = document.getElementById('messages');
+  const chatName = document.getElementById('chatName');
+  const chatAvatar = document.getElementById('chatAvatar');
+
+  if (localStorage.getItem('kaybgram-theme') === 'light') {
+    document.body.classList.add('light');
+  }
+
+  function updateThemeButton() {
+    themeButton.textContent =
+      document.body.classList.contains('light') ? '☾' : '☼';
+  }
+
+  updateThemeButton();
+
+  themeButton.addEventListener('click', function () {
+    document.body.classList.toggle('light');
+
+    localStorage.setItem(
+      'kaybgram-theme',
+      document.body.classList.contains('light') ? 'light' : 'dark'
+    );
+
+    updateThemeButton();
+  });
+
+  const conversations = {
+    Amara: [],
+    David: [],
+    Zina: []
+  };
+
+  let currentContact = 'Amara';
+
+  function renderMessages() {
+    messages.replaceChildren();
+
+    const conversation = conversations[currentContact];
+
+    if (conversation.length === 0) {
+      const empty = document.createElement('p');
+      empty.className = 'muted';
+      empty.style.textAlign = 'center';
+      empty.style.margin = 'auto';
+      empty.textContent = 'Say hello to ' + currentContact + '!';
+
+      messages.appendChild(empty);
+      return;
+    }
+
+    conversation.forEach(function (message) {
+      const bubble = document.createElement('div');
+
+      bubble.textContent = message;
+      bubble.style.alignSelf = 'flex-end';
+      bubble.style.maxWidth = '85%';
+      bubble.style.padding = '10px 14px';
+      bubble.style.borderRadius = '14px 14px 3px 14px';
+      bubble.style.background = 'var(--gold)';
+      bubble.style.color = '#111';
+      bubble.style.overflowWrap = 'anywhere';
+
+      messages.appendChild(bubble);
+    });
+
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  document.querySelectorAll('.contact').forEach(function (contact) {
+    contact.addEventListener('click', function () {
+      document.querySelectorAll('.contact').forEach(function (item) {
+        item.style.borderColor = 'var(--border)';
+      });
+
+      contact.style.borderColor = 'var(--gold)';
+
+      currentContact = contact.dataset.name;
+      chatName.textContent = currentContact;
+      chatAvatar.textContent = contact.dataset.letter;
+
+      renderMessages();
+    });
+  });
+
+  messageForm.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    const text = messageInput.value.trim();
+
+    if (!text) {
+      messageInput.focus();
+      return;
+    }
+
+    conversations[currentContact].push(text);
+    messageInput.value = '';
+
+    renderMessages();
+    messageInput.focus();
+  });
+})();
+</script>
+</body>
+</html>
