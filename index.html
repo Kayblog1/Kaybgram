@@ -1,224 +1,1503 @@
-‎<!doctype html>
-‎<html lang="en">
-‎<head>
-‎  <meta charset="utf-8">
-‎  <meta name="viewport" content="width=device-width, initial-scale=1">
-‎  <meta name="theme-color" content="#090d0b">
-‎  <title>Kaybgram — Connect your world</title>
-‎  <style>
-‎    :root {
-‎      --bg:#080b09; --panel:#101713; --panel2:#151e18; --line:#26352b;
-‎      --green:#8cf04a; --green2:#b5ff82; --text:#f3f7f2; --muted:#9ba99e;
-‎      --danger:#ff8e8e;
-‎    }
-‎    *{box-sizing:border-box}
-‎    body{margin:0;background:radial-gradient(ellipse at top,#14251a 0,#080b09 45%);color:var(--text);font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
-‎    button,input{font:inherit}
-‎    button{cursor:pointer}
-‎    .wrap{max-width:1080px;margin:auto;padding:20px 16px 90px}
-‎    header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0 24px}
-‎    .brand{font-size:25px;font-weight:900;letter-spacing:-1px}.brand span{color:var(--green)}
-‎    .badge{font-size:11px;color:var(--green2);border:1px solid #395a39;border-radius:99px;padding:5px 9px}
-‎    .layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:20px}
-‎    .card{background:linear-gradient(145deg,rgba(20,29,23,.97),rgba(12,17,14,.98));border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 18px 50px #0002}
-‎    h1,h2,h3,p{margin-top:0} h1{font-size:clamp(28px,5vw,42px);line-height:1.08;letter-spacing:-1.5px;margin-bottom:12px}
-‎    .accent{color:var(--green)} .muted{color:var(--muted)} .small{font-size:13px}
-‎    .hero{padding:28px 24px;margin-bottom:18px;background:linear-gradient(135deg,#17271b,#101713 68%);position:relative;overflow:hidden}
-‎    .hero:after{content:"K";position:absolute;right:15px;bottom:-65px;font-size:220px;font-weight:900;color:#8cf04a0b;pointer-events:none}
-‎    .hero p{max-width:520px;color:#c1cec3}
-‎    .auth-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-‎    label{display:block;color:#c5d0c7;font-size:13px;margin:12px 0 6px}
-‎    input{width:100%;padding:13px 14px;border-radius:12px;border:1px solid #33443a;background:#080d0a;color:var(--text);outline:none}
-‎    input:focus{border-color:var(--green);box-shadow:0 0 0 3px #8cf04a18}
-‎    .btn{border:0;border-radius:12px;padding:12px 16px;font-weight:750;transition:transform .15s,opacity .15s}
-‎    .btn:active{transform:scale(.98)} .primary{background:var(--green);color:#0b1308}.secondary{background:#1a261e;color:var(--text);border:1px solid #35483a}
-‎    .full{width:100%;margin-top:14px}.actions{display:flex;gap:10px;flex-wrap:wrap}
-‎    .status{min-height:22px;margin:10px 0 0;font-size:13px;color:var(--green2)}
-‎    .status.error{color:var(--danger)}
-‎    .feed-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
-‎    .feed-head h2{margin:0;font-size:20px}
-‎    .post{padding:17px;margin-bottom:13px}
-‎    .userrow{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-‎    .avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#9bf65e,#295f35);color:#081009;font-weight:900}
-‎    .userrow strong{display:block}.userrow .muted{font-size:12px}
-‎    .post p{margin-bottom:14px;white-space:pre-wrap;overflow-wrap:anywhere}
-‎    .post-actions{display:flex;gap:8px;border-top:1px solid #243229;padding-top:12px}
-‎    .post-actions button{flex:1;background:#172119;color:#dce8dd;border:1px solid #2c3c30;border-radius:10px;padding:9px}
-‎    .post-actions button.liked{color:var(--green);border-color:#628d48}
-‎    .side h3{margin-bottom:12px}.feature{display:flex;gap:10px;margin:13px 0;color:#d0d9d1}.dot{width:9px;height:9px;background:var(--green);border-radius:50%;margin-top:7px;flex-shrink:0}
-‎    .hidden{display:none!important}
-‎    footer{text-align:center;color:#748277;font-size:12px;margin-top:24px}
-‎    .notice{background:#201d10;border:1px solid #514622;color:#e8dca9;border-radius:12px;padding:12px;font-size:12px;margin-top:12px}
-‎    @media(max-width:760px){.layout{grid-template-columns:1fr}.side{order:2}.hero{padding:24px 20px}.auth-grid{grid-template-columns:1fr}.wrap{padding:14px 12px 90px}.card{padding:17px}}
-‎  </style>
-‎</head>
-‎<body>
-‎  <div class="wrap">
-‎    <header>
-‎      <div class="brand">KAYB<span>GRAM</span></div>
-‎      <div class="badge">YOUR PEOPLE. YOUR WORLD.</div>
-‎    </header>
-‎
-‎    <section class="card hero">
-‎      <h1>A little closer.<br><span class="accent">A lot more connected.</span></h1>
-‎      <p>Share your moments, discover people, and build your community on Kaybgram.</p>
-‎      <div id="welcomeLine" class="muted small">A fresh home for your social life.</div>
-‎    </section>
-‎
-‎    <div class="layout">
-‎      <main>
-‎        <section id="authCard" class="card">
-‎          <h2>Welcome to Kaybgram</h2>
-‎          <p class="muted small">Create an account or sign in to join the community.</p>
-‎          <div class="auth-grid">
-‎            <div><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com"></div>
-‎            <div><label for="password">Password</label><input id="password" type="password" autocomplete="current-password" placeholder="At least 6 characters"></div>
-‎          </div>
-‎          <div class="actions">
-‎            <button class="btn primary" id="signInBtn">Sign in</button>
-‎            <button class="btn secondary" id="signUpBtn">Create account</button>
-‎          </div>
-‎          <div id="authStatus" class="status" role="status"></div>
-‎          <div id="setupNotice" class="notice">Setup needed: add your Supabase Project URL and publishable/anon key in the code before using real accounts. Never put a service-role or secret key here.</div>
-‎        </section>
-‎
-‎        <section id="appArea" class="hidden">
-‎          <section class="card" style="margin-bottom:16px">
-‎            <div class="feed-head"><h2>Create a post</h2><span class="badge">COMMUNITY</span></div>
-‎            <label for="postText">What's happening?</label>
-‎            <input id="postText" maxlength="500" placeholder="Share a thought with your people…">
-‎            <button class="btn primary full" id="publishBtn">Publish post</button>
-‎            <div id="postStatus" class="status" role="status"></div>
-‎          </section>
-‎          <div class="feed-head"><h2>Your feed</h2><button class="btn secondary" id="signOutBtn">Sign out</button></div>
-‎          <div id="feed"></div>
-‎        </section>
-‎      </main>
-‎
-‎      <aside class="side">
-‎        <section class="card">
-‎          <h3>Made for connection <span class="accent">✦</span></h3>
-‎          <div class="feature"><span class="dot"></span><div><strong>Share your moments</strong><div class="muted small">Post updates and let your voice be heard.</div></div></div>
-‎          <div class="feature"><span class="dot"></span><div><strong>Find your people</strong><div class="muted small">A welcoming space for your community.</div></div></div>
-‎          <div class="feature"><span class="dot"></span><div><strong>Designed for mobile</strong><div class="muted small">A clean layout that fits your phone.</div></div></div>
-‎        </section>
-‎        <section class="card" style="margin-top:16px">
-‎          <h3>Next for Kaybgram</h3>
-‎          <p class="muted small">Once sign-in is connected, we can add profile photos, stories, image uploads, comments, follows, and notifications.</p>
-‎        </section>
-‎      </aside>
-‎    </div>
-‎    <footer>© <span id="year"></span> Kaybgram · Connect with care.</footer>
-‎  </div>
-‎
-‎  <script type="module">
-‎    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-‎
-‎    // STEP 1: Replace these two placeholders with your Supabase Project URL
-‎    // and publishable key (or legacy anon key). Never use a service_role/secret key.
-‎    const SUPABASE_URL = 'https://qpwmlpisveearglmagvt.supabase.co';
-‎    const SUPABASE_KEY = 'sb_publishable_-Qo13brD7ZoeOwwtC4sQMQ_X2k8fnlB';
-‎
-‎    const configured = SUPABASE_URL.startsWith('https://') &&
-‎      !SUPABASE_URL.includes('PASTE_YOUR') &&
-‎      !SUPABASE_KEY.includes('PASTE_YOUR') && SUPABASE_KEY.length > 20;
-‎
-‎    const $ = (id) => document.getElementById(id);
-‎    $('year').textContent = new Date().getFullYear();
-‎
-‎    let supabase = null;
-‎    let currentUser = null;
-‎    let posts = [
-‎      { id: 1, name: 'Kaybgram Team', handle: '@kaybgram', text: 'Welcome to Kaybgram 💚 Your community starts here. Share something positive today!', likes: 12, liked: false, demo: true },
-‎      { id: 2, name: 'Community Notes', handle: '@community', text: 'Good things grow when we connect, encourage one another, and show up as ourselves. 🌱', likes: 7, liked: false, demo: true }
-‎    ];
-‎
-‎    function status(message, error = false) {
-‎      $('authStatus').textContent = message;
-‎      $('authStatus').classList.toggle('error', error);
-‎    }
-‎    function postStatus(message, error = false) {
-‎      $('postStatus').textContent = message;
-‎      $('postStatus').classList.toggle('error', error);
-‎    }
-‎    function setSignedIn(user) {
-‎      currentUser = user;
-‎      $('authCard').classList.toggle('hidden', !!user);
-‎      $('appArea').classList.toggle('hidden', !user);
-‎      $('welcomeLine').textContent = user ? `Welcome back, ${user.email || 'Kaybgram member'}.` : 'A fresh home for your social life.';
-‎      renderFeed();
-‎    }
-‎    function renderFeed() {
-‎      $('feed').innerHTML = '';
-‎      posts.forEach((post) => {
-‎        const article = document.createElement('article');
-‎        article.className = 'card post';
-‎        const row = document.createElement('div'); row.className = 'userrow';
-‎        const avatar = document.createElement('div'); avatar.className = 'avatar'; avatar.textContent = (post.name[0] || 'K').toUpperCase();
-‎        const user = document.createElement('div');
-‎        const name = document.createElement('strong'); name.textContent = post.name;
-‎        const handle = document.createElement('div'); handle.className = 'muted'; handle.textContent = post.handle;
-‎        user.append(name, handle); row.append(avatar, user);
-‎        const body = document.createElement('p'); body.textContent = post.text;
-‎        const actions = document.createElement('div'); actions.className = 'post-actions';
-‎        const like = document.createElement('button'); like.className = post.liked ? 'liked' : ''; like.textContent = `♥ ${post.likes} Like`;
-‎        like.addEventListener('click', () => { post.liked = !post.liked; post.likes += post.liked ? 1 : -1; renderFeed(); });
-‎        const comment = document.createElement('button'); comment.textContent = 'Comment'; comment.addEventListener('click', () => alert('Comments are a next-step feature for Kaybgram.'));
-‎        const share = document.createElement('button'); share.textContent = 'Share'; share.addEventListener('click', async () => {
-‎          try { await navigator.clipboard.writeText(post.text); share.textContent = 'Copied!'; } catch { share.textContent = 'Ready to share'; }
-‎        });
-‎        actions.append(like, comment, share); article.append(row, body, actions); $('feed').append(article);
-‎      });
-‎    }
-‎
-‎    if (configured) {
-‎      $('setupNotice').classList.add('hidden');
-‎      supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-‎      const { data: { session } } = await supabase.auth.getSession();
-‎      setSignedIn(session?.user || null);
-‎      supabase.auth.onAuthStateChange((_event, sessionNow) => setSignedIn(sessionNow?.user || null));
-‎    } else {
-‎      status('Add your Supabase URL and publishable/anon key in the code to enable real sign-in.');
-‎      renderFeed();
-‎    }
-‎
-‎    $('signInBtn').addEventListener('click', async () => {
-‎      if (!supabase) return status('Setup needed: add your Supabase URL and key in the code first.', true);
-‎      const email = $('email').value.trim(), password = $('password').value;
-‎      if (!email || !password) return status('Enter your email and password.', true);
-‎      const { error } = await supabase.auth.signInWithPassword({ email, password });
-‎      status(error ? error.message : 'Signed in successfully.');
-‎      if (error) $('authStatus').classList.add('error');
-‎    });
-‎    $('signUpBtn').addEventListener('click', async () => {
-‎      if (!supabase) return status('Setup needed: add your Supabase URL and key in the code first.', true);
-‎      const email = $('email').value.trim(), password = $('password').value;
-‎      if (!email || !password) return status('Enter your email and password.', true);
-‎      if (password.length < 6) return status('Use a password with at least 6 characters.', true);
-‎      const { data, error } = await supabase.auth.signUp({ email, password });
-‎      if (error) return status(error.message, true);
-‎      status(data.session ? 'Account created. You are signed in.' : 'Account created. Check your email to confirm your account.');
-‎    });
-‎    $('signOutBtn').addEventListener('click', async () => {
-‎      if (supabase) await supabase.auth.signOut();
-‎      setSignedIn(null);
-‎      status('You have signed out.');
-‎    });
-‎    $('publishBtn').addEventListener('click', () => {
-‎      const text = $('postText').value.trim();
-‎      if (!text) return postStatus('Write something before publishing.', true);
-‎      posts.unshift({ id: Date.now(), name: currentUser?.email?.split('@')[0] || 'You', handle: '@you', text, likes: 0, liked: false });
-‎      $('postText').value = '';
-‎      postStatus('Post added to this preview feed. Saving posts to the database is the next step.');
-‎      renderFeed();
-‎    });
-‎    renderFeed();
-‎  </script>
-‎</body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>Kaybgram | Noir</title>
 
-  
-  ‎
-‎    
-‎
-‎    
-‎      
+<style>
+:root {
+--bg:#090a0d;
+--panel:#121419;
+--panel2:#191c22;
+--line:#2a2d35;
+--text:#f6f5f2;
+--muted:#8e929c;
+--accent:#e8d7b4;
+--hot:#c8b28b;
+}
+
+* {
+box-sizing:border-box;
+}
+
+body {
+margin:0;
+background:radial-gradient(ellipse at 0 0,#26221c 0,transparent 28%),var(--bg);
+color:var(--text);
+font:15px/1.5 Inter,system-ui,sans-serif;
+}
+
+button,input,textarea {
+font:inherit;
+}
+
+button {
+cursor:pointer;
+}
+
+.app {
+max-width:1400px;
+margin:auto;
+padding:24px;
+display:grid;
+grid-template-columns:220px minmax(0,1fr) 275px;
+gap:24px;
+}
+
+.side,.right {
+position:sticky;
+top:24px;
+height:calc(100vh - 48px);
+}
+
+.logo {
+display:flex;
+gap:10px;
+align-items:center;
+font-size:23px;
+font-weight:900;
+letter-spacing:-1px;
+margin:5px 0 32px;
+}
+
+.mark {
+width:38px;
+height:38px;
+border:1px solid #bca77e;
+border-radius:12px;
+display:grid;
+place-items:center;
+color:#e8d7b4;
+font-family:Georgia,serif;
+font-size:24px;
+}
+
+.logo span span {
+font-family:Georgia,serif;
+font-style:italic;
+color:var(--accent);
+font-weight:500;
+}
+
+.nav {
+display:grid;
+gap:7px;
+}
+
+.nav button {
+border:1px solid transparent;
+background:none;
+color:#a6a7ae;
+text-align:left;
+padding:13px 14px;
+border-radius:12px;
+}
+
+.nav button.active,
+.nav button:hover {
+background:#ffffff08;
+border-color:#ffffff0b;
+color:#fff;
+}
+
+.nav .new {
+margin-top:14px;
+background:linear-gradient(120deg,#e8d7b4,#bca77e);
+color:#171512;
+text-align:center;
+font-weight:850;
+}
+
+.user {
+position:absolute;
+bottom:0;
+left:0;
+right:0;
+display:flex;
+align-items:center;
+gap:10px;
+border:1px solid var(--line);
+padding:12px;
+border-radius:15px;
+}
+
+.avatar {
+width:38px;
+height:38px;
+flex-shrink:0;
+border-radius:50%;
+display:grid;
+place-items:center;
+background:linear-gradient(135deg,#d7c5a0,#8b7551);
+color:#171512;
+font-weight:900;
+}
+
+.muted {
+font-size:11px;
+color:var(--muted);
+}
+
+main {
+min-width:0;
+}
+
+.top {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:5px 0 24px;
+}
+
+.label {
+font-size:10px;
+letter-spacing:2.5px;
+color:var(--accent);
+font-weight:800;
+}
+
+.top h1 {
+font-size:32px;
+letter-spacing:-1.3px;
+margin:4px 0;
+}
+
+.icon {
+background:#ffffff06;
+color:white;
+border:1px solid var(--line);
+width:42px;
+height:42px;
+border-radius:13px;
+}
+
+.hero {
+padding:30px;
+border:1px solid #75654a55;
+border-radius:20px;
+background:linear-gradient(120deg,#29251e,#151619 65%,#242019);
+position:relative;
+overflow:hidden;
+margin-bottom:25px;
+}
+
+.hero:after {
+content:"K";
+position:absolute;
+right:9%;
+top:-42px;
+font:italic 230px Georgia,serif;
+color:#e8d7b4;
+opacity:.09;
+}
+
+.hero h2 {
+font:normal clamp(31px,4vw,49px)/1.03 Georgia,serif;
+letter-spacing:-1.5px;
+margin:13px 0;
+}
+
+.hero h2 em {
+color:var(--accent);
+font-weight:normal;
+}
+
+.hero p {
+max-width:390px;
+color:#b4b2ac;
+font-size:13px;
+}
+
+.cta {
+border:0;
+border-radius:10px;
+background:var(--accent);
+color:#171512;
+padding:12px 16px;
+font-weight:850;
+margin-top:10px;
+}
+
+.head {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:22px 1px 13px;
+}
+
+.head h3 {
+font-size:16px;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090a0d">
+<title>Kaybgram | Noir</title>
+
+<style>
+:root {
+--bg:#090a0d;
+--panel:#121419;
+--panel2:#191c22;
+--line:#2a2d35;
+--text:#f6f5f2;
+--muted:#8e929c;
+--accent:#e8d7b4;
+--hot:#c8b28b;
+}
+
+* {
+box-sizing:border-box;
+}
+
+body {
+margin:0;
+background:radial-gradient(ellipse at 0 0,#26221c 0,transparent 28%),var(--bg);
+color:var(--text);
+font:15px/1.5 Inter,system-ui,sans-serif;
+}
+
+button,input,textarea {
+font:inherit;
+}
+
+button {
+cursor:pointer;
+}
+
+.app {
+max-width:1400px;
+margin:auto;
+padding:24px;
+display:grid;
+grid-template-columns:220px minmax(0,1fr) 275px;
+gap:24px;
+}
+
+.side,.right {
+position:sticky;
+top:24px;
+height:calc(100vh - 48px);
+}
+
+.logo {
+display:flex;
+gap:10px;
+align-items:center;
+font-size:23px;
+font-weight:900;
+letter-spacing:-1px;
+margin:5px 0 32px;
+}
+
+.mark {
+width:38px;
+height:38px;
+border:1px solid #bca77e;
+border-radius:12px;
+display:grid;
+place-items:center;
+color:#e8d7b4;
+font-family:Georgia,serif;
+font-size:24px;
+}
+
+.logo span span {
+font-family:Georgia,serif;
+font-style:italic;
+color:var(--accent);
+font-weight:500;
+}
+
+.nav {
+display:grid;
+gap:7px;
+}
+
+.nav button {
+border:1px solid transparent;
+background:none;
+color:#a6a7ae;
+text-align:left;
+padding:13px 14px;
+border-radius:12px;
+}
+
+.nav button.active,
+.nav button:hover {
+background:#ffffff08;
+border-color:#ffffff0b;
+color:#fff;
+}
+
+.nav .new {
+margin-top:14px;
+background:linear-gradient(120deg,#e8d7b4,#bca77e);
+color:#171512;
+text-align:center;
+font-weight:850;
+}
+
+.user {
+position:absolute;
+bottom:0;
+left:0;
+right:0;
+display:flex;
+align-items:center;
+gap:10px;
+border:1px solid var(--line);
+padding:12px;
+border-radius:15px;
+}
+
+.avatar {
+width:38px;
+height:38px;
+flex-shrink:0;
+border-radius:50%;
+display:grid;
+place-items:center;
+background:linear-gradient(135deg,#d7c5a0,#8b7551);
+color:#171512;
+font-weight:900;
+}
+
+.muted {
+font-size:11px;
+color:var(--muted);
+}
+
+main {
+min-width:0;
+}
+
+.top {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:5px 0 24px;
+}
+
+.label {
+font-size:10px;
+letter-spacing:2.5px;
+color:var(--accent);
+font-weight:800;
+}
+
+.top h1 {
+font-size:32px;
+letter-spacing:-1.3px;
+margin:4px 0;
+}
+
+.icon {
+background:#ffffff06;
+color:white;
+border:1px solid var(--line);
+width:42px;
+height:42px;
+border-radius:13px;
+}
+
+.hero {
+padding:30px;
+border:1px solid #75654a55;
+border-radius:20px;
+background:linear-gradient(120deg,#29251e,#151619 65%,#242019);
+position:relative;
+overflow:hidden;
+margin-bottom:25px;
+}
+
+.hero:after {
+content:"K";
+position:absolute;
+right:9%;
+top:-42px;
+font:italic 230px Georgia,serif;
+color:#e8d7b4;
+opacity:.09;
+}
+
+.hero h2 {
+font:normal clamp(31px,4vw,49px)/1.03 Georgia,serif;
+letter-spacing:-1.5px;
+margin:13px 0;
+}
+
+.hero h2 em {
+color:var(--accent);
+font-weight:normal;
+}
+
+.hero p {
+max-width:390px;
+color:#b4b2ac;
+font-size:13px;
+}
+
+.cta {
+border:0;
+border-radius:10px;
+background:var(--accent);
+color:#171512;
+padding:12px 16px;
+font-weight:850;
+margin-top:10px;
+}
+
+.head {
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:22px 1px 13px;
+}
+
+.head h3 {
+font-size:16px;
+margin:0;
+}
+
+.link {
+background:none;
+border:0;
+color:var(--accent);
+font-size:12px;
+}
+
+.stories {
+display:flex;
+gap:15px;
+overflow:auto;
+padding:4px 0 12px;
+}
+
+.story {
+min-width:62px;
+text-align:center;
+font-size:11px;
+color:#c1c0bc;
+}
+
+.ring {
+width:58px;
+height:58px;
+margin:0 auto 6px;
+border:1px solid var(--accent);
+padding:3px;
+border-radius:50%;
+}
+
+.ring div {
+height:100%;
+border-radius:50%;
+display:grid;
+place-items:center;
+background:#27251f;
+font-family:Georgia,serif;
+}
+
+.composer,.post,.widget {
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:17px;
+}
+
+.composer {
+padding:15px;
+margin-bottom:18px;
+}
+
+.compose-row {
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.composer textarea {
+width:100%;
+resize:vertical;
+min-height:45px;
+background:none;
+border:0;
+outline:0;
+color:white;
+padding:10px;
+}
+
+.composer textarea::placeholder {
+color:#777b85;
+}
+
+.compose-bottom {
+border-top:1px solid var(--line);
+padding-top:12px;
+margin-top:8px;
+display:flex;
+justify-content:space-between;
+gap:8px;
+}
+
+.smallbtn {
+background:#ffffff06;
+border:1px solid var(--line);
+border-radius:9px;
+padding:8px 10px;
+color:#b8b8b5;
+font-size:12px;
+}
+
+.publish {
+background:var(--accent);
+border:0;
+color:#171512;
+font-weight:850;
+padding:9px 14px;
+border-radius:9px;
+}
+
+.feed {
+display:grid;
+gap:17px;
+}
+
+.post {
+overflow:hidden;
+}
+
+.posthead {
+display:flex;
+align-items:center;
+gap:10px;
+padding:16px 16px 8px;
+}
+
+.posthead .who {
+flex:1;
+}
+
+.posthead strong {
+font-size:12px;
+}
+
+.copy {
+padding:0 16px 14px;
+font-size:13px;
+color:#dddcd8;
+}
+
+.art {
+margin:0 12px;
+border-radius:12px;
+min-height:230px;
+position:relative;
+overflow:hidden;
+display:flex;
+align-items:end;
+padding:20px;
+}
+
+.art small {
+position:absolute;
+top:15px;
+left:16px;
+letter-spacing:2px;
+font-size:9px;
+}
+
+.art.one {
+background:linear-gradient(135deg,#b9a27c,#d9c9aa 48%,#3a342b);
+}
+
+.art.one:before {
+content:"";
+position:absolute;
+right:10%;
+top:24px;
+width:145px;
+height:145px;
+border-radius:50%;
+background:linear-gradient(135deg,#ece2cd,#74634b);
+box-shadow:0 0 0 18px #ffffff15;
+}
+
+.art.one:after {
+content:"THE ART\A OF BEING\A YOURSELF";
+white-space:pre;
+position:relative;
+font:bold 35px/.9 Georgia,serif;
+color:#171512;
+}
+
+.art.two {
+background:linear-gradient(130deg,#24252a,#625747,#b6a17b);
+}
+
+.art.two:after {
+content:"MAKE IT\A MEAN SOMETHING";
+white-space:pre;
+position:relative;
+font:normal 37px/.92 Georgia,serif;
+color:#f7f0e4;
+}
+
+.foot {
+display:flex;
+gap:18px;
+padding:14px 16px;
+}
+
+.foot button {
+background:none;
+border:0;
+color:#a7a8ad;
+font-size:12px;
+}
+
+.foot .save {
+margin-left:auto;
+}
+
+.widget {
+padding:16px;
+margin-bottom:15px;
+}
+
+.widget h3 {
+font-size:13px;
+margin:0 0 13px;
+}
+
+.search {
+width:100%;
+padding:11px;
+border:1px solid var(--line);
+border-radius:10px;
+background:#ffffff05;
+color:white;
+}
+
+.trend {
+padding:11px 0;
+border-bottom:1px solid #ffffff0a;
+font-size:12px;
+}
+
+.trend:last-child {
+border:0;
+}
+
+.trend small {
+display:block;
+color:var(--muted);
+margin-top:3px;
+}
+
+.person {
+display:flex;
+align-items:center;
+gap:9px;
+padding:9px 0;
+}
+
+.person .info {
+flex:1;
+}
+
+.person strong {
+display:block;
+font-size:12px;
+}
+
+.follow {
+background:none;
+border:1px solid #75654a;
+color:var(--accent);
+border-radius:9px;
+padding:6px 9px;
+font-size:11px;
+}
+
+.note {
+color:#656872;
+font-size:10px;
+line-height:1.9;
+}
+
+.mobile {
+display:none;
+}
+
+.toast {
+position:fixed;
+bottom:25px;
+left:50%;
+transform:translate(-50%,15px);
+opacity:0;
+background:#eee4d0;
+color:#171512;
+padding:12px 17px;
+border-radius:10px;
+font-size:12px;
+font-weight:800;
+transition:.2s;
+}
+
+.toast.show {
+opacity:1;
+transform:translate(-50%,0);
+}￼Entermargin:0;
+}
+
+.link {
+background:none;
+border:0;
+color:var(--accent);
+font-size:12px;
+}
+
+.stories {
+display:flex;
+gap:15px;
+overflow:auto;
+padding:4px 0 12px;
+}
+
+.story {
+min-width:62px;
+text-align:center;
+font-size:11px;
+color:#c1c0bc;
+}
+
+.ring {
+width:58px;
+height:58px;
+margin:0 auto 6px;
+border:1px solid var(--accent);
+padding:3px;
+border-radius:50%;
+}
+
+.ring div {
+height:100%;
+border-radius:50%;
+display:grid;
+place-items:center;
+background:#27251f;
+font-family:Georgia,serif;
+}
+
+.composer,.post,.widget {
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:17px;
+}
+
+.composer {
+padding:15px;
+margin-bottom:18px;
+}
+
+.compose-row {
+display:flex;
+gap:12px;
+align-items:center;
+}
+
+.composer textarea {
+width:100%;
+resize:vertical;
+min-height:45px;
+background:none;
+border:0;
+outline:0;
+color:white;
+padding:10px;
+}
+
+.composer textarea::placeholder {
+color:#777b85;
+}
+
+.compose-bottom {
+border-top:1px solid var(--line);
+padding-top:12px;
+margin-top:8px;
+display:flex;
+justify-content:space-between;
+gap:8px;
+}
+
+.smallbtn {
+background:#ffffff06;
+border:1px solid var(--line);
+border-radius:9px;
+padding:8px 10px;
+color:#b8b8b5;
+font-size:12px;
+}
+
+.publish {
+background:var(--accent);
+border:0;
+color:#171512;
+font-weight:850;
+g:9px 14px;
+border-radius:9px;
+}
+
+.feed {
+display:grid;
+gap:17px;
+}
+
+.post {
+overflow:hidden;
+}
+
+.posthead {
+display:flex;
+align-items:center;
+gap:10px;
+padding:16px 16px 8px;
+}
+
+.posthead .who {
+flex:1;
+}
+
+.posthead strong {
+font-size:12px;
+}
+
+.copy {
+padding:0 16px 14px;
+font-size:13px;
+color:#dddcd8;
+}
+
+.art {
+margin:0 12px;
+border-radius:12px;
+min-height:230px;
+position:relative;
+overflow:hidden;
+display:flex;
+align-items:end;
+padding:20px;
+}
+
+.art small {
+position:absolute;
+top:15px;
+left:16px;
+letter-spacing:2px;
+font-size:9px;
+}
+
+.art.one {
+background:linear-gradient(135deg,#b9a27c,#d9c9aa 48%,#3a342b);
+}
+
+.art.one:before {
+content:"";
+position:absolute;
+right:10%;
+top:24px;
+width:145px;
+height:145px;
+border-radius:50%;
+background:linear-gradient(135deg,#ece2cd,#74634b);
+box-shadow:0 0 0 18px #ffffff15;
+}
+
+.art.one:after {
+content:"THE ART\A OF BEING\A YOURSELF";
+white-space:pre;
+position:relative;
+font:bold 35px/.9 Georgia,serif;
+color:#171512;
+}
+
+.art.two {
+background:linear-gradient(130deg,#24252a,#625747,#b6a17b);
+}
+
+.art.two:after {
+content:"MAKE IT\A MEAN SOMETHING";
+white-space:pre;
+position:relative;
+font:normal 37px/.92 Georgia,serif;
+color:#f7f0e4;
+}
+
+.foot {
+display:flex;
+gap:18px;
+padding:14px 16px;
+}
+
+.foot button {
+background:none;
+body.light-theme {
+--bg:#f4f0e8;
+--panel:#fffdf9;
+--panel2:#f0ebe2;
+--line:#e3ddd1;
+--text:#20201e;
+--muted:#77756e;
+--accent:#a57c42;
+--hot:#c8b28b;
+background:radial-gradient(ellipse at 0 0,#e8ddca 0,transparent 28%),var(--bg);
+color:var(--text);
+}
+
+body.light-theme .nav button {
+color:#6d6b65;
+}
+
+body.light-theme .nav button.active,
+body.light-theme .nav button:hover {
+background:#eee8de;
+border-color:#e3ddd1;
+color:#20201e;
+}
+
+body.light-theme .hero {
+background:linear-gradient(120deg,#e8ddca,#fffdf9 65%,#e8ddca);
+border-color:#d8c8ad;
+}
+
+body.light-theme .hero p {
+color:#716a5e;
+}
+
+body.light-theme .composer textarea {
+color:#20201e;
+}
+
+body.light-theme .composer textarea::placeholder {
+color:#8b867d;
+}
+
+body.light-theme .smallbtn,
+body.light-theme .icon,
+body.light-theme .search {
+background:#f7f3ec;
+color:#20201e;
+}
+
+body.light-theme .copy {
+color:#373631;
+}
+
+body.light-theme .stories .story {
+color:#66635d;
+}
+
+body.light-theme .ring div {
+background:#eee8de;
+}
+
+body.light-theme .mobile {
+background:#fffdf9ee;
+}
+
+body.light-theme .mobile button {
+color:#6d6b65;
+}
+
+body.light-theme .foot button {
+color:#706d66;
+}
+
+body.light-theme .trend {
+border-color:#e8e2d8;
+}
+
+body.light-theme .note {
+color:#77756e;
+}
+
+body.light-theme .user {
+background:#fffdf9;
+}
+
+body.light-theme .posthead .muted {
+color:#77756e;
+}
+
+body.light-theme .art.one {
+background:linear-gradient(135deg,#b9a27c,#e5d8c0 48%,#a89b86);
+}
+
+body.light-theme .art.two {
+background:linear-gradient(130deg,#d6c9b4,#f0e7d8,#b6a17b);
+}
+
+@media(max-width:1050px) {
+.app {
+grid-template-columns:190px minmax(0,1fr);
+}
+
+.right {
+display:none;
+}
+}
+
+@media(max-width:680px) {
+.app {
+display:block;
+padding:13px 12px 80px;
+}
+
+.side {
+display:none;
+}
+
+.top h1 {
+font-size:27px;
+}
+
+.hero {
+padding:23px 19px;
+}
+
+.hero h2 {
+font-size:35px;
+}
+
+.hero:after {
+right:-3%;
+font-size:180px;
+}
+
+.art.one:after,
+.art.two:after {
+font-size:31px;
+}
+
+.mobile {
+position:fixed;
+z-index:5;
+bottom:0;
+left:0;
+right:0;
+display:flex;
+justify-content:space-around;
+background:#111218ee;
+backdrop-filter:blur(15px);
+border-top:1px solid var(--line);
+padding:10px 4px calc(10px + env(safe-area-inset-bottom));
+}
+
+.mobile button {
+background:none;
+border:0;
+color:#a6a7ae;
+font-size:10px;
+display:grid;
+gap:3px;
+place-items:center;
+}
+
+.mobile button span {
+font-size:20px;
+}
+
+.mobile .add {
+background:var(--accent);
+color:#171512;
+width:40px;
+height:40px;
+border-radius:12px;
+font-size:22px;
+}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="side">
+<div class="logo">
+<div class="mark">K</div>
+<span>kayb<span>gram</span></span>
+</div>
+
+<nav class="nav">
+<button class="active" data-page="Home">⌂ &nbsp; Home</button>
+<button data-page="Explore">⌕ &nbsp; Explore</button>
+<button data-page="Messages">◌ &nbsp; Messages</button>
+<button data-page="Notifications">♧ &nbsp; Notifications</button>
+<button data-page="Saved">◇ &nbsp; Saved</button>
+<button data-page="Profile">◎ &nbsp; My profile</button>
+<button class="new" id="create">＋ &nbsp; Create a post</button>
+</nav>
+
+<div class="user">
+<div class="avatar">K</div>
+<div>
+<strong style="font-size:12px">Your profile</strong>
+<div class="muted">@yourhandle</div>
+</div>
+</div>
+</aside>
+
+<main>
+<header class="top">
+<div>
+<div class="label">A MORE CONSIDERED SOCIAL SPACE</div>
+<h1>Good to see you.</h1>
+</div>
+
+<div style="display:flex;gap:8px">
+<button class="icon" id="themeToggle" aria-label="Switch to light mode" title="Switch theme">☼</button>
+<button class="icon" id="alert">♧</button>
+</div>
+</header>
+
+<section class="hero">
+<div class="label">WELCOME TO KAYBGRAM</div>
+<h2>Your life.<br><em>Your perspective.</em></h2>
+<p>A refined space for the people, ideas and moments worth keeping close.</p>
+<button class="cta" id="heroCreate">Share a moment ↗</button>
+</section>
+
+<div class="head">
+<h3>Stories <span style="color:var(--muted);font-weight:400"> / people you follow</span></h3>
+<button class="link" id="stories">View all ↗</button>
+</div>
+
+<section class="stories">
+<div class="story"><div class="ring"><div>＋</div></div>Your story</div>
+<div class="story"><div class="ring"><div>AM</div></div>Amara</div>
+<div class="story"><div class="ring"><div>JO</div></div>Joseph</div>
+<div class="story"><div class="ring"><div>NI</div></div>Nia</div>
+<div class="story"><div class="ring"><div>TE</div></div>Tee</div>
+<div class="story"><div class="ring"><div>SA</div></div>Sami</div>
+</section>
+
+<div class="head">
+<h3>Curated for you</h3>
+<button class="link" id="sort">Latest ↓</button>
+</div>
+
+<section class="composer" id="composer">
+<div class="compose-row">
+<div class="avatar">K</div>
+<textarea id="text" placeholder="What would you like to share?" rows="1"></textarea>
+</div>
+
+<div class="compose-bottom">
+<div>
+<button class="smallbtn" id="choose">▧ Photo / video</button>
+<input type="file" id="file" accept="image/*,video/*" hidden>
+</div>
+<button class="publish" id="publish">Publish ↗</button>
+</div>
+
+<div id="picked" class="muted" style="display:none;padding-top:8px"></div>
+</section>
+
+<section class="feed" id="feed">
+
+<article class="post">
+<div class="posthead">
+<div class="avatar">AM</div>
+<div class="who">
+<strong>Amara M.</strong>
+<div class="muted">@amaraincolour · 18 min</div>
+</div>
+<span>···</span>
+</div>
+
+<div class="copy">A reminder to take up space, even on the days you feel small. What are you making room for this week? ✨</div>
+
+<div class="art one">
+<small>NOTES TO SELF / 001</small>
+</div>
+
+<div class="foot">
+<button class="like">♡ &nbsp;248</button>
+<button class="comment">◌ &nbsp;32</button>
+<button class="share">↗ &nbsp;Share</button>
+<button class="save">◇</button>
+</div>
+</article>
+
+<article class="post">
+<div class="posthead">
+<div class="avatar" style="background:linear-gradient(135deg,#a4a4a9,#53545b);color:#fff">JO</div>
+<div class="who">
+<strong>Jo Rivers</strong>
+<div class="muted">@jorivers · 1 hr</div>
+</div>
+<span>···</span>
+</div>
+
+<div class="copy">Make it with intention. Share it with the world. Keep going.</div>
+
+<div class="art two">
+<small>CREATIVE JOURNAL / 014</small>
+</div>
+
+<div class="foot">
+<button class="like">♡ &nbsp;96</button>
+<button class="comment">◌ &nbsp;11</button>
+<button class="share">↗ &nbsp;Share</button>
+<button class="save">◇</button>
+</div>
+</article>
+
+</section>
+</main>
+
+<aside class="right">
+<div class="widget">
+<input class="search" id="search" placeholder="⌕  Search Kaybgram">
+</div>
+
+<div class="widget">
+<h3>Trending conversations</h3>
+<div class="trend">01 &nbsp; #MadeByMe<small>2.4k moments</small></div>
+<div class="trend">02 &nbsp; #SoftLifeSeason<small>1.8k moments</small></div>
+<div class="trend">03 &nbsp; #NaijaCreatives<small>980 moments</small></div>
+<div class="trend">04 &nbsp; #LittleWins<small>760 moments</small></div>
+</div>
+
+<div class="widget">
+<h3>Suggested people</h3>
+
+<div class="person">
+<div class="avatar">NI</div>
+<div class="info">
+<strong>Nia Okafor</strong>
+<div class="muted">Style · culture</div>
+</div>
+<button class="follow">Follow +</button>
+</div>
+
+<div class="person">
+<div class="avatar" style="background:#686d7c;color:white">TE</div>
+<div class="info">
+<strong>Tee Creates</strong>
+<div class="muted">Digital artist</div>
+</div>
+<button class="follow">Follow +</button>
+</div>
+
+<div class="person">
+<div class="avatar">SA</div>
+<div class="info">
+<strong>Sami Bello</strong>
+<div class="muted">Music · everyday</div>
+</div>
+<button class="follow">Follow +</button>
+</div>
+</div>
+
+<div class="note">Designed with intention.<br>© 2026 Kaybgram</div>
+</aside>
+</div>
+
+<nav class="mobile">
+<button class="active" data-page="Home"><span>⌂</span>Home</button>
+<button data-page="Explore"><span>⌕</span>Explore</button>
+<button class="add" id="mobileCreate">＋</button>
+<button data-page="Notifications"><span>♧</span>Alerts</button>
+<button data-page="Profile"><span>◎</span>Profile</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+<script>
+const $ = id => document.getElementById(id);
+
+const toast = message => {
+const t = $('toast');
+t.textContent = message;
+t.classList.add('show');
+setTimeout(() => t.classList.remove('show'), 2200);
+};
+
+function go() {
+$('composer').scrollIntoView({
+behavior:'smooth',
+block:'center'
+});
+$('text').focus();
+}
+
+['create','heroCreate','mobileCreate'].forEach(id => {
+$(id).addEventListener('click',go);
+});
+
+$('choose').onclick = () => $('file').click();
+
+$('file').onchange = e => {
+if(e.target.files[0]) {
+$('picked').style.display = 'block';
+$('picked').textContent = 'Selected: ' + e.target.files[0].name;
+}
+};
+
+$('publish').onclick = () => {
+let val = $('text').value.trim();
+let f = $('file').files[0];
+
+if(!val && !f) {
+return toast('Write something or choose media first.');
+}
+
+let p = document.createElement('article');
+p.className = 'post';
+
+let safe = val.replace(/[&<>"']/g, c => ({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
+}[c]));
+
+let media = f && f.type.startsWith('image/')
+? `<img src="${URL.createObjectURL(f)}" style="width:calc(100% - 24px);margin:0 12px;border-radius:12px;max-height:440px;object-fit:cover">`
+: '';
+
+p.innerHTML = `
+<div class="posthead">
+<div class="avatar">K</div>
+<div class="who">
+<strong>You</strong>
+<div class="muted">@yourhandle · just now</div>
+</div>
+</div>
+<div class="copy">${safe}</div>
+${media}
+<div class="foot">
+<button class="like">♡ &nbsp;0</button>
+<button class="share">↗ &nbsp;Share</button>
+<button class="save">◇</button>
+</div>
+`;
+
+$('feed').prepend(p);
+$('text').value = '';
+$('file').value = '';
+$('picked').style.display = 'none';
+
+toast('Post added to this preview.');
+p.scrollIntoView({behavior:'smooth'});
+};
+
+document.addEventListener('click',e => {
+let b = e.target.closest('.like');
+
+if(b) {
+let liked = b.dataset.liked === '1';
+b.dataset.liked = liked ? '0' : '1';
+b.style.color = liked ? '' : 'var(--accent)';
+
+let n = parseInt(b.textContent.match(/\d+/)?.[0] || 0);
+b.textContent = (liked ? '♡ ' : '♥ ') + (n + (liked ? -1 : 1));
+}
+
+if(e.target.closest('.save')) {
+toast('Saved in this preview.');
+}
+
+if(e.target.closest('.share')) {
+if(navigator.share) {
+navigator.share({
+title:'Kaybgram',
+text:'Visit Kaybgram',
+url:location.href
+}).catch(() => {});
+} else {
+toast('Copy your website link to share Kaybgram.');
+}
+}
+
+let f = e.target.closest('.follow');
+
+if(f) {
+f.textContent = f.textContent.includes('Following')
+? 'Follow +'
+: 'Following ✓';
+
+toast('Follow state changed in this preview.');
+}
+
+let n = e.target.closest('[data-page]');
+
+if(n) {
+document.querySelectorAll('[data-page]').forEach(x => {
+x.classList.remove('active');
+});
+
+document.querySelectorAll(`[data-page="${n.dataset.page}"]`).forEach(x => {
+x.classList.add('active');
+});
+
+if(n.dataset.page !== 'Home') {
+toast(n.dataset.page + ' will work when the backend is connected.');
+}
+}
+});
+
+$('alert').onclick = () => toast('You are all caught up.');
+
+$('stories').onclick = () => toast('Stories are design previews for now.');
+
+$('sort').onclick = () => toast('Feed sorting will be added with the backend.');
+
+$('search').oninput = e => {
+let q = e.target.value.toLowerCase();
+
+document.querySelectorAll('#feed .post').forEach(p => {
+p.style.display = p.innerText.toLowerCase().includes(q)
+? 'block'
+: 'none';
+});
+};
+
+// Dark/Light theme switch
+const themeButton = document.getElementById('themeToggle');
+
+themeButton.addEventListener('click',() => {
+document.body.classList.toggle('light-theme');
+
+const light = document.body.classList.contains('light-theme');
+
+themeButton.textContent = light ? '☾' : '☼';
+
+themeButton.setAttribute(
+'aria-label',
+light ? 'Switch to dark mode' : 'Switch to light mode'
+);
+
+themeButton.title = light ? 'Switch to dark mode' : 'Switch to light mode';
+
+try {
+localStorage.setItem('kaybgram-theme',light ? 'light' : 'dark');
+} catch(e) {}
+});
+
+// Remember the visitor's chosen theme
+try {
+if(localStorage.getItem('kaybgram-theme') === 'light') {
+document.body.classList.add('light-theme');
+themeButton.textContent = '☾';
+themeButton.setAttribute('aria-label','Switch to dark mode');
+}
+} catch(e) {}
+</script>
+</body>
+  </html>
