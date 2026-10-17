@@ -239,6 +239,7 @@
       } catch (error) {
         message.textContent =
           "Something went wrong. Please try again.";
+
       } finally {
         loginButton.disabled = false;
       }
@@ -251,6 +252,7 @@
       if (!email) {
         message.textContent =
           "Enter your email address above first.";
+
         emailInput.focus();
         return;
       }
@@ -285,6 +287,7 @@
       } catch (error) {
         message.textContent =
           "Something went wrong. Please try again.";
+
       } finally {
         forgotButton.disabled = false;
       }
