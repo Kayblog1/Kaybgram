@@ -1,1056 +1,1664 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#111111">
-<title>Kaybgram Feed</title><style>
-:root {
-  --bg:#111;
-  --card:#1d1d1d;
-  --gold:#e7b84b;
-  --text:#fff;
-  --muted:#bbb;
-  --border:#393939;
-}
-
-* {
-  box-sizing:border-box;
-}
-
-[hidden] {
-  display:none !important;
-}
-
-html,body {
-  margin:0;
-  padding:0;
-  width:100%;
-  max-width:100%;
-  overflow-x:hidden;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-a {
-  color:var(--gold);
-  text-decoration:none;
-}
-
-button,input,textarea {
-  font:inherit;
-}
-
-button {
-  cursor:pointer;
-}
-
-.header {
-  padding:13px;
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-}
-
-.header-inner {
-  max-width:850px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.logo {
-  color:var(--gold);
-  font-size:23px;
-  font-weight:bold;
-  letter-spacing:1px;
-}
-
-.account-buttons {
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-}
-
-.account-buttons a,
-.account-buttons button {
-  padding:8px 10px;
-  border:1px solid var(--gold);
-  border-radius:7px;
-  background:transparent;
-  color:white;
-  font-size:12px;
-}
-<!DOCTYPE html><html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#111111">
-<title>Kaybgram Feed</title><style>
-:root {
-  --bg:#111;
-  --card:#1d1d1d;
-  --gold:#e7b84b;
-  --text:#fff;
-  --muted:#bbb;
-  --border:#393939;
-}
-
-* {
-  box-sizing:border-box;
-}
-
-[hidden] {
-  display:none !important;
-}
-
-html,body {
-  margin:0;
-  padding:0;
-  width:100%;
-  max-width:100%;
-  overflow-x:hidden;
-  background:var(--bg);
-  color:var(--text);
-  font-family:Arial,Helvetica,sans-serif;
-}
-
-a {
-  color:var(--gold);
-  text-decoration:none;
-}
-
-button,input,textarea {
-  font:inherit;
-}
-
-button {
-  cursor:pointer;
-}
-
-.header {
-  padding:13px;
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-}
-
-.header-inner {
-  max-width:850px;
-  margin:auto;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  flex-wrap:wrap;
-}
-
-.logo {
-  color:var(--gold);
-  font-size:23px;
-  font-weight:bold;
-  letter-spacing:1px;
-}
-
-.account-buttons {
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-}
-
-.account-buttons a,
-.account-buttons button {
-  padding:8px 10px;
-  border:1px solid var(--gold);
-  border-radius:7px;
-  background:transparent;
-  color:white;
-  font-size:12px;
-}
-
-nav {
-  display:flex;
-  justify-content:center;
-  gap:22px;
-  padding:14px 12px;
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-  overflow-x:auto;
-}
-
-nav a {
-  flex:0 0 auto;
-  color:var(--muted);
-  font-size:14px;
-  white-space:nowrap;
-}
-
-nav a.active {
-  color:var(--gold);
-  font-weight:bold;
-}
-
-main {
-  width:100%;
-  max-width:680px;
-  margin:20px auto;
-  padding:0 12px;
-}
-
-.card {
-  width:100%;
-  min-width:0;
-  padding:16px;
-  margin-bottom:15px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow-wrap:anywhere;
-}
-
-h1 {
-  margin:0 0 8px;
-  font-size:25px;
-}
-
-h2 {
-  margin:0 0 12px;
-  font-size:19px;
-}
-
-h3 {
-  margin:0 0 4px;
-  font-size:15px;
-}
-
-p {
-  line-height:1.6;
-}
-
-.muted {
-  color:var(--muted);
-}
-
-.gold-button {
-  display:inline-block;
-  padding:11px 14px;
-  border:1px solid var(--gold);
-  border-radius:7px;
-  background:var(--gold);
-  color:#111;
-  font-weight:bold;
-}
-
-textarea,input[type="text"] {
-  display:block;
-  width:100%;
-  min-width:0;
-  padding:12px;
-  background:#111;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:8px;
-}
-
-textarea {
-  min-height:95px;
-  margin:8px 0 12px;
-  resize:vertical;
-}
-
-input[type="file"] {
-  display:block;
-  width:100%;
-  max-width:100%;
-  margin:12px 0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.notice {
-  display:none;
-  margin:10px 0;
-  padding:10px;
-  color:var(--gold);
-  border:1px solid var(--gold);
-  border-radius:7px;
-  overflow-wrap:anywhere;
-}
-
-.notice.show {
-  display:block;
-}
-
-.post-header {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
-}
-
-.avatar {
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:var(--gold);
-  color:#111;
-  border-radius:50%;
-  font-weight:bold;
-}
-
-.post-image {
-  display:block;
-  width:100%;
-  max-width:100%;
-  max-height:450px;
-  object-fit:contain;
-  margin-top:10px;
-  border-radius:8px;
-}
-
-.post-actions {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-
-.post-actions button {
-  padding:9px 10px;
-  color:white;
-  background:transparent;
-  border:1px solid var(--border);
-  border-radius:7px;
-}
-
-.post-actions .liked {
-  color:#ff6685;
-  border-color:#ff6685;
-}
-
-.comment-area {
-  display:none;
-  margin-top:14px;
-}
-
-.comment-area.open {
-  display:block;
-}
-
-.comment-area input {
-  margin:10px 0;
-}
-
-.comment-list p {
-  padding:7px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.footer {
-  padding:24px 12px;
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  border-top:1px solid var(--border);
-}
-
-@media(max-width:380px) {
-  .header-inner {
-    align-items:flex-start;
-  }
-
-  .logo {
-    font-size:20px;
-  }
-
-  nav {
-    justify-content:flex-start;
-    gap:20px;
-  }
-
-  main {
-    margin-top:13px;
-    padding:0 9px;
-  }
-
-  .card {
-    padding:13px;
-  }
-
-  h1 {
-    font-size:22px;
-  }
-}
-</style></head><body><header class="header">
-  <div class="header-inner">
-    <a class="logo" href="index.html">KAYBGRAM</a><div class="account-buttons">
-  <a href="login.html" id="loginButton">Sign In</a>
-  <a href="signup.html" id="joinButton">Join</a>
-  <button type="button" id="signoutButton" hidden>
-    Sign Out
-  </button>
-</div>
-
-  </div>
-</header><nav aria-label="Main navigation">
-  <a href="index.html">Home</a>
-  <a href="stories.html">Stories</a>
-  <a href="app.html" class="active">Feed</a>
-  <a href="chat.html">Chat</a>
-  <a href="music.html">Music</a>
-</nav><main>  <section class="card">
-    <h1>Your Feed</h1>
-    <p class="muted">
-      Share your moments and see what's happening in your community.
-    </p>
-    <p id="accountMessage" class="muted">
-      Checking your account...
-    </p>
-  </section>  <section class="card" id="createPostCard" hidden>
-    <h2>Create a post</h2><div id="notice" class="notice" role="status"></div>
-
-<form id="postForm">
-  <textarea
-    id="caption"
-    maxlength="2000"
-    placeholder="What's happening in your world?"
-    aria-label="Write your post"
-  ></textarea>
-
-  <label for="photo" class="muted">
-    Add a photo (optional)
-  </label>
-
-  <input
-    type="file"
-    id="photo"
-    accept="image/*"
-  >
-
-  <button type="submit" class="gold-button" id="publishButton">
-    Publish post
-  </button>
-</form>
-
-  </section>  <section>
-    <h2>Community posts</h2><div id="feed">
-  <article class="card post">
-    <div class="post-header">
-      <div class="avatar">K</div>
-      <div>
-        <h3>Kaybgram Team</h3>
-        <span class="muted">Welcome to Kaybgram</span>
-      </div>
-    </div>
-
-    <p>
-      Welcome to our community! Share your moments,
-      connect with people, and make new friends.
-    </p>
-
-    <div class="post-actions">
-      <button type="button" class="like-button">♡ Like</button>
-      <button type="button" class="comment-button">Comment</button>
-      <button type="button" class="share-button">Share</button>
-    </div>
-
-    <div class="comment-area">
-      <div class="comment-list"></div>
-
-      <input
-        type="text"
-        class="comment-input"
-        placeholder="Write a comment..."
-        maxlength="500"
-        aria-label="Write a comment"
-      >
-
-      <button type="button" class="gold-button send-comment">
-        Send comment
-      </button>￼Enter
-nav {
-  display:flex;
-  justify-content:center;
-  gap:22px;
-  padding:14px 12px;
-  background:var(--card);
-  border-bottom:1px solid var(--border);
-  overflow-x:auto;
-}
-
-nav a {
-  flex:0 0 auto;
-  color:var(--muted);
-  font-size:14px;
-  white-space:nowrap;
-}
-
-nav a.active {
-  color:var(--gold);
-  font-weight:bold;
-}
-
-main {
-  width:100%;
-  max-width:680px;
-  margin:20px auto;
-  padding:0 12px;
-}
-
-.card {
-  width:100%;
-  min-width:0;
-  padding:16px;
-  margin-bottom:15px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  overflow-wrap:anywhere;
-}
-
-h1 {
-  margin:0 0 8px;
-  font-size:25px;
-}
-
-h2 {
-  margin:0 0 12px;
-  font-size:19px;
-}
-
-h3 {
-  margin:0 0 4px;
-  font-size:15px;
-}
-
-p {
-  line-height:1.6;
-}
-
-.muted {
-  color:var(--muted);
-}
-
-.gold-button {
-  display:inline-block;
-  padding:11px 14px;
-  border:1px solid var(--gold);
-  border-radius:7px;
-  background:var(--gold);
-  color:#111;
-  font-weight:bold;
-}
-
-textarea,input[type="text"] {
-  display:block;
-  width:100%;
-  min-width:0;
-  padding:12px;
-  background:#111;
-  color:white;
-  border:1px solid var(--border);
-  border-radius:8px;
-}
-
-textarea {
-  min-height:95px;
-  margin:8px 0 12px;
-  resize:vertical;
-}
-
-input[type="file"] {
-  display:block;
-  width:100%;
-  max-width:100%;
-  margin:12px 0;
-  color:var(--muted);
-  font-size:13px;
-}
-
-.notice {
-lay:none;
-  margin:10px 0;
-  padding:10px;
-  color:var(--gold);
-  border:1px solid var(--gold);
-  border-radius:7px;
-  overflow-wrap:anywhere;
-}
-
-.notice.show {
-  display:block;
-}
-
-.post-header {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:12px;
-}
-
-.avatar {
-  width:42px;
-  height:42px;
-  flex:0 0 42px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:var(--gold);
-  color:#111;
-  border-radius:50%;
-  font-weight:bold;
-}
-
-.post-image {
-  display:block;
-  width:100%;
-  max-width:100%;
-  max-height:450px;
-  object-fit:contain;
-  margin-top:10px;
-  border-radius:8px;
-}
-
-.post-actions {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:14px;
-}
-
-.post-actions button {
-  padding:9px 10px;
-  color:white;
-  background:transparent;
-  border:1px solid var(--border);
-  border-radius:7px;
-}
-
-.post-actions .liked {
-  color:#ff6685;
-  border-color:#ff6685;
-}
-
-.comment-area {
-  display:none;
-  margin-top:14px;
-}
-
-.comment-area.open {
-  display:block;
-}
-
-.comment-area input {
-  margin:10px 0;
-}
-
-.comment-list p {
-  padding:7px 0;
-  border-bottom:1px solid var(--border);
-}
-
-.footer {
-  padding:24px 12px;
-  text-align:center;
-  color:var(--muted);
-  font-size:13px;
-  border-top:1px solid var(--border);
-}
-
-@media(max-width:380px) {
-  .header-inner {
-    align-items:flex-start;
-  }
-
-  .logo {
-    font-size:20px;
-  }
-
-  nav {
-    justify-content:flex-start;
-    gap:20px;
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <title>Kaybgram Feed</title>
+
+  <style>
+    :root {
+      --bg: #111111;
+      --card: #1d1d1d;
+      --gold: #e7b84b;
+      --text: #ffffff;
+      --muted: #bdbdbd;
+      --border: #393939;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    [hidden] {
+      display: none !important;
+    }
+
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      line-height: 1.5;
+    }
+
+    a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .header {
+      padding: 13px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: var(--gold);
+      font-size: 23px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .account-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .account-buttons a,
+    .account-buttons button {
+      padding: 8px 10px;
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      background: transparent;
+      color: white;
+      font-size: 12px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      padding: 14px 12px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    nav a {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    nav a.active {
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    main {
+      width: 100%;
+      max-width: 680px;
+      margin: 20px auto;
+      padding: 0 12px;
+    }
+
+    .card {
+      width: 100%;
+      min-width: 0;
+      padding: 16px;
+      margin-bottom: 15px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 19px;
+    }
+
+    h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .gold-button {
+      display: inline-block;
+      padding: 11px 14px;
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      background: var(--gold);
+      color: #111111;
+      font-weight: bold;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      background: #111111;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    textarea {
+      min-height: 95px;
+      margin: 8px 0 12px;
+      resize: vertical;
+    }
+
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin: 12px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .notice {
+      display: none;
+      margin: 10px 0;
+      padding: 10px;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .notice.show {
+      display: block;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--gold);
+      color: #111111;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+
+    .post-image {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      max-height: 450px;
+      object-fit: contain;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .post-actions button {
+      padding: 9px 10px;
+      color: white;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+    }
+
+    .post-actions .liked {
+      color: #ff6685;
+      border-color: #ff6685;
+    }
+
+    .comment-area {
+      display: none;
+      margin-top: 14px;
+    }
+
+    .comment-area.open {
+      display: block;
+    }
+
+    .comment-area input {
+      margin: 10px 0;
+    }
+
+    .comment-list p {
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer {
+      padding: 24px 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 380px) {
+      .header-inner {
+        align-items: flex-start;
       }
 
-main {
-margin-top:13px;
-padding:0 9px;
-}
+      .logo {
+        font-size: 20px;
+      }
 
-.card {
-padding:13px;
-}
+      nav {
+        justify-content: flex-start;
+        gap: 20px;
+      }
 
-h1 {
-font-size:22px;
-}
-}
-</style>
+      main {
+        margin-top: 13px;
+        padding: 0 9px;
+      }
 
-</head><body><header class="header">
-  <div class="header-inner">
-    <a class="logo" href="index.html">KAYBGRAM</a><div class="account-buttons">
-  <a href="login.html" id="loginButton">Sign In</a>
-  <a href="signup.html" id="joinButton">Join</a>
-  <button type="button" id="signoutButton" hidden>
-    Sign Out
-  </button>
-</div>
+      .card {
+        padding: 13px;
+      }
 
-  </div>
-</header><nav aria-label="Main navigation">
-  <a href="index.html">Home</a>
-  <a href="stories.html">Stories</a>
-  <a href="app.html" class="active">Feed</a>
-  <a href="chat.html">Chat</a>
-  <a href="music.html">Music</a>
-</nav><main>  <section class="card">
-    <h1>Your Feed</h1>
-    <p class="muted">
-      Share your moments and see what's happening in your community.
-    </p>
-    <p id="accountMessage" class="muted">
-      Checking your account...
-    </p>
-  </section>  <section class="card" id="createPostCard" hidden>
-    <h2>Create a post</h2><div id="notice" class="notice" role="status"></div>
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
 
-<form id="postForm">
-  <textarea
-    id="caption"
-    maxlength="2000"
-    placeholder="What's happening in your world?"
-    aria-label="Write your post"
-  ></textarea>
+<body>
 
-  <label for="photo" class="muted">
-    Add a photo (optional)
-  </label>
+  <header class="header">
+    <div class="header-inner">
 
-  <input type="file" id="photo" accept="image/*">
+      <a class="logo" href="index.html">KAYBGRAM</a>
 
-  <button type="submit" class="gold-button" id="publishButton">
-    Publish post
-  </button>
-</form>
+      <div class="account-buttons">
+        <a href="login.html" id="loginButton">Sign In</a>
 
-  </section>  <section>
-    <h2>Community posts</h2><div id="feed">
-  <article class="card post">
-    <div class="post-header">
-      <div class="avatar">K</div>
-      <div>
-        <h3>Kaybgram Team</h3>
-        <span class="muted">Welcome to Kaybgram</span>
+        <a href="signup.html" id="joinButton">Join</a>
+
+        <button
+          type="button"
+          id="signoutButton"
+          hidden
+        >
+          Sign Out
+        </button>
       </div>
+
     </div>
+  </header>
 
-    <p>
-      Welcome to our community! Share your moments,
-      connect with people, and make new friends.
-    </p>
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="stories.html">Stories</a>
+    <a href="app.html" class="active">Feed</a>
+    <a href="chat.html">Chat</a>
+    <a href="music.html">Music</a>
+  </nav>
 
-    <div class="post-actions">
-      <button type="button" class="like-button">♡ Like</button>
-      <button type="button" class="comment-button">Comment</button>
-      <button type="button" class="share-button">Share</button>
-    </div>
+  <main>
 
-    <div class="comment-area">
-      <div class="comment-list"></div>
+    <section class="card">
+      <h1>Your Feed</h1>
 
-      <input
-        type="text"
-        class="comment-input"
-        placeholder="Write a comment..."
-        maxlength="500"
-        aria-label="Write a comment"
-      >
+      <p class="muted">
+        Share your moments and see what's happening
+        in your community.
+      </p>
 
-      <button type="button" class="gold-button send-comment">
-        Send comment
-      </button>
-    </div>
-  </article>
-</div>
+      <p id="accountMessage" class="muted" aria-live="polite">
+        Checking your account...
+      </p>
+    </section>
 
-  </section></main><footer class="footer">
-  Kaybgram · Connect with care.
+    <!-- Only signed-in users can see this section -->
+    <section class="card" id="createPostCard" hidden>
+
+      <h2>Create a post</h2>
+
+      <div
+        id="notice"
+        class="notice"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      <form id="postForm">
+
+        <textarea
+          id="caption"
+          maxlength="2000"
+          placeholder="What's happening in your world?"
+          aria-label="Write your post"
+        ></textarea>
+
+        <label for="photo" class="muted">
+          Add a photo (optional)
+        </label>
+
+        <input
+          type="file"
+          id="photo"
+          accept="image/*"
+        >
+
+        <button
+          type="submit"
+          class="gold-button"
+          id="publishButton"
+        >
+          Publish post
+        </button>
+
+      </form>
+
+    </section>
+
+    <section>
+      <h2>Community posts</h2>
+
+      <div id="feed">
+
+        <article class="card post">
+
+          <div class="post-header">
+            <div class="avatar">K</div>
+
+            <div>
+              <h3>Kaybgram Team</h3>
+              <span class="muted">
+                Welcome to Kaybgram
+              </span>
+            </div>
+          </div>
+
+          <p>
+            Welcome to our community! Share your moments,
+            connect with people, and make new friends.
+          </p>
+
+          <div class="post-actions">
+            <button type="button" class="like-button">
+              ♡ Like
+            </button>
+
+            <button type="button" class="comment-button">
+              Comment
+            </button>
+
+            <button type="button" class="share-button">
+              Share
+            </button>
+          </div>
+
+          <div class="comment-area">
+            <div class="comment-list"></div>
+
+            <input
+              type="text"
+              class="comment-input"
+              placeholder="Write a comment..."
+              maxlength="500"
+              aria-label="Write a comment"
+            >
+
+            <button
+              type="button"
+              class="gold-button send-comment"
+            >
+              Send comment
+            </button>
+          </div>
+
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    Kaybgram · Connect with care.
   </footer>
-  
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="supabase.js"></script>
 
-<script>
-(function() {
-  const loginButton = document.getElementById("loginButton");
-  const joinButton = document.getElementById("joinButton");
-  const signoutButton = document.getElementById("signoutButton");
-  const accountMessage = document.getElementById("accountMessage");
-  const createPostCard = document.getElementById("createPostCard");
-  const postForm = document.getElementById("postForm");
-  const captionInput = document.getElementById("caption");
-  const photoInput = document.getElementById("photo");
-  const publishButton = document.getElementById("publishButton");
-  const feed = document.getElementById("feed");
-  const notice = document.getElementById("notice");
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
 
-  let currentUser = null;
-  let signingOut = false;
+  <script>
+    const loginButton =
+      document.getElementById("loginButton");
 
-  function showNotice(message) {
-    if (notice) {
+    const joinButton =
+      document.getElementById("joinButton");
+
+    const signoutButton =
+      document.getElementById("signoutButton");
+
+    const accountMessage =
+      document.getElementById("accountMessage");
+
+    const createPostCard =
+      document.getElementById("createPostCard");
+
+    const postForm =
+      document.getElementById("postForm");
+
+    const captionInput =
+      document.getElementById("caption");
+
+    const photoInput =
+      document.getElementById("photo");
+
+    const publishButton =
+      document.getElementById("publishButton");
+
+    const feed =
+      document.getElementById("feed");
+
+    const notice =
+      document.getElementById("notice");
+
+    let currentUser = null;
+    let authReady = false;
+
+    function showNotice(message) {
       notice.textContent = message;
-      notice.hidden = false;
-    }
-  }
-
-  function updateAccount(user) {
-    currentUser = user || null;
-
-    const signedIn = Boolean(currentUser);
-
-    if (loginButton) loginButton.hidden = signedIn;
-    if (joinButton) joinButton.hidden = signedIn;
-    if (signoutButton) signoutButton.hidden = !signedIn;
-    if (createPostCard) createPostCard.hidden = !signedIn;
-
-    if (postForm) postForm.hidden = !signedIn;
-    if (accountMessage) {
-      accountMessage.textContent = signedIn
-        ? "You are signed in. Welcome to Kaybgram!"
-        : "Please sign in to create a post.";
-    }
-  }
-
-  async function checkSession() {
-    const client = window.supabaseClient;
-
-    if (!client) {
-      updateAccount(null);
-      showNotice("Connection unavailable. Please check supabase.js.");
-      return;
+      notice.classList.add("show");
     }
 
-    const result = await client.auth.getSession();
+    function updateAccount(user) {
+      currentUser = user || null;
 
-    if (result.error) {
-      updateAccount(null);
-      showNotice("Unable to check your login. Please sign in again.");
-      return;
+      const signedIn = Boolean(currentUser);
+
+      loginButton.hidden = signedIn;
+      joinButton.hidden = signedIn;
+      signoutButton.hidden = !signedIn;
+
+      // Hide the entire posting form when signed out.
+      createPostCard.hidden = !signedIn;
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111111">
+  <title>Kaybgram Feed</title>
+
+  <style>
+    :root {
+      --bg: #111111;
+      --card: #1d1d1d;
+      --gold: #e7b84b;
+      --text: #ffffff;
+      --muted: #bdbdbd;
+      --border: #393939;
     }
 
-    updateAccount(result.data.session
-      ? result.data.session.user
-      : null);
+    * {
+      box-sizing: border-box;
+    }
 
-    client.auth.onAuthStateChange(function(event, session) {
-      if (signingOut) return;
-      updateAccount(session ? session.user : null);
-    });
-  }
+    [hidden] {
+      display: none !important;
+    }
 
-  if (loginButton) {
-    loginButton.addEventListener("click", function() {
-      window.location.href = "login.html";
-    });
-  }
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-  if (joinButton) {
-    joinButton.addEventListener("click", function() {
-      window.location.href = "signup.html";
-    });
-  }
+    body {
+      line-height: 1.5;
+    }
 
-  if (signoutButton) {
+    a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .header {
+      padding: 13px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      width: 100%;
+      max-width: 850px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: var(--gold);
+      font-size: 23px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .account-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .account-buttons a,
+    .account-buttons button {
+      padding: 8px 10px;
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      background: transparent;
+      color: white;
+      font-size: 12px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 22px;
+      padding: 14px 12px;
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      overflow-x: auto;
+    }
+
+    nav a {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    nav a.active {
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    main {
+      width: 100%;
+      max-width: 680px;
+      margin: 20px auto;
+      padding: 0 12px;
+    }
+
+    .card {
+      width: 100%;
+      min-width: 0;
+      padding: 16px;
+      margin-bottom: 15px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 25px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 19px;
+    }
+
+    h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    p {
+      line-height: 1.6;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .gold-button {
+      display: inline-block;
+      padding: 11px 14px;
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      background: var(--gold);
+      color: #111111;
+      font-weight: bold;
+    }
+
+    textarea,
+    input[type="text"] {
+      width: 100%;
+      min-width: 0;
+      padding: 12px;
+      background: #111111;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    textarea {
+      min-height: 95px;
+      margin: 8px 0 12px;
+      resize: vertical;
+    }
+
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      margin: 12px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .notice {
+      display: none;
+      margin: 10px 0;
+      padding: 10px;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      border-radius: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .notice.show {
+      display: block;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .avatar {
+      width: 42px;
+      height: 42px;
+      flex: 0 0 42px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--gold);
+      color: #111111;
+      border-radius: 50%;
+      font-weight: bold;
+    }
+
+    .post-image {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+      max-height: 450px;
+      object-fit: contain;
+      margin-top: 10px;
+      border-radius: 8px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .post-actions button {
+      padding: 9px 10px;
+      color: white;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 7px;
+    }
+
+    .post-actions .liked {
+      color: #ff6685;
+      border-color: #ff6685;
+    }
+
+    .comment-area {
+      display: none;
+      margin-top: 14px;
+    }
+
+    .comment-area.open {
+      display: block;
+    }
+
+    .comment-area input {
+      margin: 10px 0;
+    }
+
+    .comment-list p {
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer {
+      padding: 24px 12px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 380px) {
+      .header-inner {
+        align-items: flex-start;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      nav {
+        justify-content: flex-start;
+        gap: 20px;
+      }
+
+      main {
+        margin-top: 13px;
+        padding: 0 9px;
+      }
+
+      .card {
+        padding: 13px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="header">
+    <div class="header-inner">
+
+      <a class="logo" href="index.html">KAYBGRAM</a>
+
+      <div class="account-buttons">
+        <a href="login.html" id="loginButton">Sign In</a>
+
+        <a href="signup.html" id="joinButton">Join</a>
+
+        <button
+          type="button"
+          id="signoutButton"
+          hidden
+        >
+          Sign Out
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <nav aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="stories.html">Stories</a>
+    <a href="app.html" class="active">Feed</a>
+    <a href="chat.html">Chat</a>
+    <a href="music.html">Music</a>
+  </nav>
+
+  <main>
+
+    <section class="card">
+      <h1>Your Feed</h1>
+
+      <p class="muted">
+        Share your moments and see what's happening
+        in your community.
+      </p>
+
+      <p id="accountMessage" class="muted" aria-live="polite">
+        Checking your account...
+      </p>
+    </section>
+
+    <!-- Only signed-in users can see this section -->
+    <section class="card" id="createPostCard" hidden>
+
+      <h2>Create a post</h2>
+
+      <div
+        id="notice"
+        class="notice"
+        role="status"
+        aria-live="polite"
+      ></div>
+
+      <form id="postForm">
+
+        <textarea
+          id="caption"
+          maxlength="2000"
+          placeholder="What's happening in your world?"
+          aria-label="Write your post"
+        ></textarea>
+
+        <label for="photo" class="muted">
+          Add a photo (optional)
+        </label>
+
+        <input
+          type="file"
+          id="photo"
+          accept="image/*"
+        >
+
+        <button
+          type="submit"
+          class="gold-button"
+          id="publishButton"
+        >
+          Publish post
+        </button>
+
+      </form>
+
+    </section>
+
+    <section>
+      <h2>Community posts</h2>
+
+      <div id="feed">
+
+        <article class="card post">
+
+          <div class="post-header">
+            <div class="avatar">K</div>
+
+            <div>
+              <h3>Kaybgram Team</h3>
+              <span class="muted">
+                Welcome to Kaybgram
+              </span>
+            </div>
+          </div>
+
+          <p>
+            Welcome to our community! Share your moments,
+            connect with people, and make new friends.
+          </p>
+
+          <div class="post-actions">
+            <button type="button" class="like-button">
+              ♡ Like
+            </button>
+
+            <button type="button" class="comment-button">
+              Comment
+            </button>
+
+            <button type="button" class="share-button">
+              Share
+            </button>
+          </div>
+
+          <div class="comment-area">
+            <div class="comment-list"></div>
+
+            <input
+              type="text"
+              class="comment-input"
+              placeholder="Write a comment..."
+              maxlength="500"
+              aria-label="Write a comment"
+            >
+
+            <button
+              type="button"
+              class="gold-button send-comment"
+            >
+              Send comment
+            </button>
+          </div>
+
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    Kaybgram · Connect with care.
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <script>
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const joinButton =
+      document.getElementById("joinButton");
+
+    const signoutButton =
+      document.getElementById("signoutButton");
+
+    const accountMessage =
+      document.getElementById("accountMessage");
+
+    const createPostCard =
+      document.getElementById("createPostCard");
+
+    const postForm =
+      document.getElementById("postForm");
+
+    const captionInput =
+      document.getElementById("caption");
+
+    const photoInput =
+      document.getElementById("photo");
+
+    const publishButton =
+      document.getElementById("publishButton");
+
+    const feed =
+      document.getElementById("feed");
+
+    const notice =
+      document.getElementById("notice");
+
+    let currentUser = null;
+    let authReady = false;
+
+    function showNotice(message) {
+      notice.textContent = message;
+      notice.classList.add("show");
+    }
+
+    function updateAccount(user) {
+      currentUser = user || null;
+
+      const signedIn = Boolean(currentUser);
+
+      loginButton.hidden = signedIn;
+      joinButton.hidden = signedIn;
+      signoutButton.hidden = !signedIn;
+
+      // Hide the entire posting form when signed out.
+      createPostCard.hidden = !signedIn;
+
+      // Prevent publishing until authentication is checked.
+      publishButton.disabled = !signedIn || !authReady;
+
+      if (signedIn) {
+        const name =
+          currentUser.user_metadata?.username ||
+          currentUser.user_metadata?.full_name ||
+          currentUser.email ||
+          "Kaybgram member";
+
+        accountMessage.textContent = "Signed in as " + name;
+      } else {
+        accountMessage.textContent =
+          "You are not signed in. Sign in to create a post.";
+      }
+    }
+
+    async function checkSession() {
+      const client = window.supabaseClient;
+
+      if (!client) {
+        authReady = true;
+        updateAccount(null);
+
+        accountMessage.textContent =
+          "Supabase connection unavailable. Please check supabase.js.";
+
+        return;
+      }
+
+      try {
+        const result = await client.auth.getSession();
+
+        if (result.error) {
+          throw result.error;
+        }
+
+        authReady = true;
+
+        updateAccount(
+          result.data.session?.user || null
+        );
+
+        client.auth.onAuthStateChange(
+          function(event, session) {
+            authReady = true;
+            updateAccount(session?.user || null);
+          }
+        );
+
+      } catch (error) {
+        console.error("Account check failed:", error);
+
+        authReady = true;
+        updateAccount(null);
+
+        accountMessage.textContent =
+          "Unable to check your account. Refresh the page and try again.";
+      }
+    }
+
     signoutButton.addEventListener("click", async function() {
       const client = window.supabaseClient;
 
       if (!client) {
-        showNotice("Connection unavailable. Please try again.");
+        showNotice("Supabase connection unavailable.");
         return;
       }
 
       signoutButton.disabled = true;
-      signingOut = true;
 
-      const result = await client.auth.signOut();
+      try {
+        const result = await client.auth.signOut();
 
-      if (result.error) {
-        signingOut = false;
+        if (result.error) {
+          throw result.error;
+        }
+
+        // Hide the posting form immediately.
+        authReady = true;
+        updateAccount(null);
+
+        // Return to the homepage after signing out.
+        window.location.replace("index.html");
+
+      } catch (error) {
+        console.error("Sign out failed:", error);
+
+        showNotice(
+          "Sign out failed. Please try again."
+        );
+
         signoutButton.disabled = false;
-        showNotice("Sign out failed. Please try again.");
-        return;
+      }
+    });
+
+    function attachActions(article) {
+      const like =
+        article.querySelector(".like-button");
+
+      const comment =
+        article.querySelector(".comment-button");
+
+      const share =
+        article.querySelector(".share-button");
+
+      const commentArea =
+        article.querySelector(".comment-area");
+
+      const commentInput =
+        article.querySelector(".comment-input");
+
+      const commentList =
+        article.querySelector(".comment-list");
+
+      const sendComment =
+        article.querySelector(".send-comment");
+
+      if (like) {
+        like.addEventListener("click", function() {
+          const liked = like.classList.toggle("liked");
+
+          like.textContent = liked ? "♥ Liked" : "♡ Like";
+        });
       }
 
-      updateAccount(null);
-      window.location.replace("index.html");
-    });
-  }
+      if (comment && commentArea) {
+        comment.addEventListener("click", function() {
+          commentArea.classList.toggle("open");
 
-  function attachActions(article) {
-    const likeButton = article.querySelector(".likeButton");
-    const commentButton = article.querySelector(".commentButton");
-    const shareButton = article.querySelector(".shareButton");
-    const commentArea = article.querySelector(".commentArea");
-    const commentInput = article.querySelector(".commentInput");
-    const commentsList = article.querySelector(".commentsList");
+          if (commentArea.classList.contains("open")) {
+            commentInput?.focus();
+          }
+        });
+      }
 
-    if (likeButton) {
-      likeButton.addEventListener("click", function() {
-        const liked = likeButton.dataset.liked === "true";
-        likeButton.dataset.liked = String(!liked);
-        likeButton.textContent = liked ? "♡ Like" : "♥ Liked";
-      });
-    }
+      function addComment() {
+        const message = commentInput?.value.trim();
 
-    if (commentButton) {
-      commentButton.addEventListener("click", function() {
-        if (commentArea) {
-          commentArea.hidden = !commentArea.hidden;
+        if (!message) {
+          showNotice("Write a comment first.");
+          return;
         }
-      });
-    }
 
-    if (commentInput && commentsList) {
-      commentInput.addEventListener("keydown", function(event) {
-        if (event.key !== "Enter") return;
+        const paragraph = document.createElement("p");
+        paragraph.textContent = "You: " + message;
 
-        event.preventDefault();
-
-        const message = commentInput.value.trim();
-        if (!message) return;
-
-        const comment = document.createElement("p");
-        comment.textContent = message;
-        commentsList.appendChild(comment);
-
+        commentList.appendChild(paragraph);
         commentInput.value = "";
-      });
-    }
+      }
 
-    if (shareButton) {
-      shareButton.addEventListener("click", async function() {
-        try {
-          await navigator.clipboard.writeText(window.location.href);
-          showNotice("Kaybgram link copied!");
-        } catch (error) {
-          showNotice("Copy the website address from your browser.");
+      sendComment?.addEventListener("click", addComment);
+
+      commentInput?.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          addComment();
         }
       });
+
+      if (share) {
+        share.addEventListener("click", async function() {
+          try {
+            if (navigator.share) {
+              await navigator.share({
+                title: "Kaybgram",
+                text: "Connect with me on Kaybgram!",
+                url: location.href
+              });
+            } else if (navigator.clipboard) {
+              await navigator.clipboard.writeText(location.href);
+              showNotice("Kaybgram page address copied.");
+            } else {
+              showNotice(
+                "Copy your Kaybgram page address to share it."
+              );
+            }
+          } catch (error) {
+            // The user may cancel the share window.
+          }
+        });
+      }
     }
-  }
 
-  document.querySelectorAll("#feed .post").forEach(attachActions);
+    document
+      .querySelectorAll("#feed .post")
+      .forEach(attachActions);
 
-   if (postForm) {
     postForm.addEventListener("submit", function(event) {
       event.preventDefault();
 
-      if (!currentUser || signingOut) {
+      // Never allow a signed-out visitor to publish.
+      if (!currentUser || !authReady) {
+        updateAccount(null);
         showNotice("Please sign in before creating a post.");
         return;
       }
 
-      const caption = captionInput.value.trim();
-      const photo = photoInput.files[0];
+      const text = captionInput.value.trim();
+      const file = photoInput.files[0];
 
-      if (!caption && !photo) {
-        showNotice("Please write something or choose a photo.");
+      if (!text && !file) {
+        showNotice("Write a post or select a photo first.");
         return;
       }
 
-      if (photo && !photo.type.startsWith("image/")) {
-        showNotice("Please choose a valid image.");
+      if (file && !file.type.startsWith("image/")) {
+        showNotice("Please choose an image file.");
         return;
       }
 
       const article = document.createElement("article");
       article.className = "card post";
 
-      const heading = document.createElement("h3");
-      heading.textContent =
-        currentUser.email || "Kaybgram Member";
+      const header = document.createElement("div");
+      header.className = "post-header";
 
-      article.appendChild(heading);
+      const avatar = document.createElement("div");
+      avatar.className = "avatar";
 
-      const time = document.createElement("p");
-      time.className = "postTime";
-      time.textContent = "Just now";
-      article.appendChild(time);
+      const displayName =
+        currentUser.user_metadata?.username ||
+        currentUser.user_metadata?.full_name ||
+        currentUser.email ||
+        "You";
 
-      if (caption) {
+      avatar.textContent = displayName.charAt(0).toUpperCase();
+
+      const author = document.createElement("div");
+
+      const title = document.createElement("h3");
+      title.textContent = displayName;
+
+      const date = document.createElement("span");
+      date.className = "muted";
+      date.textContent = "Just now";
+
+      author.append(title, date);
+      header.append(avatar, author);
+      article.appendChild(header);
+
+      if (text) {
         const paragraph = document.createElement("p");
-        paragraph.textContent = caption;
+        paragraph.textContent = text;
         article.appendChild(paragraph);
       }
 
-      if (photo) {
+      if (file) {
         const image = document.createElement("img");
-        image.src = URL.createObjectURL(photo);
-        image.alt = "Post image";
-        image.className = "postImage";
+
+        image.className = "post-image";
+        image.alt = "Post photo";
+        image.src = URL.createObjectURL(file);
+
         article.appendChild(image);
       }
 
       const actions = document.createElement("div");
-      actions.className = "postActions";
+      actions.className = "post-actions";
 
-      const likeButton = document.createElement("button");
-      likeButton.type = "button";
-      likeButton.className = "likeButton";
-      likeButton.textContent = "♡ Like";
+      actions.innerHTML = `
+        <button type="button" class="like-button">♡ Like</button>
+        <button type="button" class="comment-button">Comment</button>
+        <button type="button" class="share-button">Share</button>
+      `;
 
-      const commentButton = document.createElement("button");
-      commentButton.type = "button";
-      commentButton.className = "commentButton";
-      commentButton.textContent = "Comment";
-
-      const shareButton = document.createElement("button");
-      shareButton.type = "button";
-      shareButton.className = "shareButton";
-      shareButton.textContent = "Share";
-
-      actions.appendChild(likeButton);
-      actions.appendChild(commentButton);
-      actions.appendChild(shareButton);
       article.appendChild(actions);
 
-      const commentArea = document.createElement("div");
-      commentArea.className = "commentArea";
-      commentArea.hidden = true;
+      const comments = document.createElement("div");
+      comments.className = "comment-area";
 
-      const commentInput = document.createElement("input");
-      commentInput.type = "text";
-      commentInput.className = "commentInput";
-      commentInput.placeholder = "Write a comment...";
+      comments.innerHTML = `
+        <div class="comment-list"></div>
+        <input
+          type="text"
+          class="comment-input"
+          placeholder="Write a comment..."
+          maxlength="500"
+          aria-label="Write a comment"
+        >
+        <button type="button" class="gold-button send-comment">
+          Send comment
+        </button>
+      `;
 
-      const commentsList = document.createElement("div");
-      commentsList.className = "commentsList";
+      article.appendChild(comments);
 
-      commentArea.appendChild(commentInput);
-      commentArea.appendChild(commentsList);
-      article.appendChild(commentArea);
+      feed.prepend(article);
 
       attachActions(article);
-      feed.prepend(article);
 
       captionInput.value = "";
       photoInput.value = "";
 
       showNotice(
-        "Post added to this page. It will not be saved permanently yet."
+        "Post added to this page. It is not saved permanently yet."
       );
     });
-  }
 
-  checkSession();
-})();
-</script>
+    checkSession();
+  </script>
 
 </body>
+</html>￼Enter      // Prevent publishing until authentication is checked.
+      publishButton.disabled = !signedIn || !authReady;
+
+      if (signedIn) {
+        const name =
+          currentUser.user_metadata?.username ||
+          currentUser.user_metadata?.full_name ||
+          currentUser.email ||
+          "Kaybgram member";
+
+        accountMessage.textContent = "Signed in as " + name;
+      } else {
+        accountMessage.textContent =
+          "You are not signed in. Sign in to create a post.";
+      }
+    }
+
+    async function checkSession() {
+      const client = window.supabaseClient;
+
+      if (!client) {
+        authReady = true;
+        updateAccount(null);
+
+        accountMessage.textContent =
+          "Supabase connection unavailable. Please check supabase.js.";
+
+        return;
+      }
+
+      try {
+        const result = await client.auth.getSession();
+
+        if (result.error) {
+          throw result.error;
+        }
+
+        authReady = true;
+
+        updateAccount(
+          result.data.session?.user || null
+        );
+
+        client.auth.onAuthStateChange(
+          function(event, session) {
+            authReady = true;
+            updateAccount(session?.user || null);
+          }
+        );
+
+      } catch (error) {
+        console.error("Account check failed:", error);
+
+        authReady = true;
+        updateAccount(null);
+
+        accountMessage.textContent =
+          "Unable to check your account. Refresh the page and try again.";
+      }
+    }
+
+    signoutButton.addEventListener("click", async function() {
+      const client = window.supabaseClient;
+
+      if (!client) {
+        showNotice("Supabase connection unavailable.");
+        return;
+      }
+
+      signoutButton.disabled = true;
+
+      try {
+        const result = await client.auth.signOut();
+
+        if (result.error) {
+          throw result.error;
+        }
+
+        // Hide the posting form immediately.
+        authReady = true;
+        updateAccount(null);
+
+        // Return to the homepage after signing out.
+        window.location.replace("index.html");
+
+      } catch (error) {
+        console.error("Sign out failed:", error);
+
+        showNotice(
+          "Sign out failed. Please try again."
+        );
+
+        signoutButton.disabled = false;
+      }
+    });
+
+    function attachActions(article) {
+      const like =
+        article.querySelector(".like-button");
+
+      const comment =
+  article.querySelector(".comment-button");
+
+      const share =
+        article.querySelector(".share-button");
+
+      const commentArea =
+        article.querySelector(".comment-area");
+
+      const commentInput =
+        article.querySelector(".comment-input");
+
+      const commentList =
+        article.querySelector(".comment-list");
+
+      const sendComment =
+        article.querySelector(".send-comment");
+
+      if (like) {
+        like.addEventListener("click", function() {
+          const liked = like.classList.toggle("liked");
+
+          like.textContent = liked ? "♥ Liked" : "♡ Like";
+        });
+      }
+
+      if (comment && commentArea) {
+        comment.addEventListener("click", function() {
+          commentArea.classList.toggle("open");
+
+          if (commentArea.classList.contains("open")) {
+            commentInput?.focus();
+          }
+        });
+      }
+
+      function addComment() {
+        const message = commentInput?.value.trim();
+
+        if (!message) {
+          showNotice("Write a comment first.");
+          return;
+        }
+
+        const paragraph = document.createElement("p");
+        paragraph.textContent = "You: " + message;
+
+        commentList.appendChild(paragraph);
+        commentInput.value = "";
+      }
+
+      sendComment?.addEventListener("click", addComment);
+
+      commentInput?.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          addComment();
+        }
+      });
+
+      if (share) {
+        share.addEventListener("click", async function() {
+          try {
+            if (navigator.share) {
+              await navigator.share({
+                title: "Kaybgram",
+                text: "Connect with me on Kaybgram!",
+                url: location.href
+              });
+            } else if (navigator.clipboard) {
+              await navigator.clipboard.writeText(location.href);
+              showNotice("Kaybgram page address copied.");
+            } else {
+              showNotice(
+                "Copy your Kaybgram page address to share it."
+              );
+            }
+          } catch (error) {
+            // The user may cancel the share window.
+          }
+        });
+      }
+    }
+
+    document
+      .querySelectorAll("#feed .post")
+      .forEach(attachActions);
+
+    postForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      // Never allow a signed-out visitor to publish.
+      if (!currentUser || !authReady) {
+        updateAccount(null);
+        showNotice("Please sign in before creating a post.");
+        return;
+      }
+
+      const text = captionInput.value.trim();
+      const file = photoInput.files[0];
+
+      if (!text && !file) {
+
+showNotice("Write a post or select a photo first.");
+return;
+}
+
+  if (file && !file.type.startsWith("image/")) {
+    showNotice("Please choose an image file.");
+    return;
+  }
+
+  const article = document.createElement("article");
+  article.className = "card post";
+
+  const header = document.createElement("div");
+  header.className = "post-header";
+
+  const avatar = document.createElement("div");
+  avatar.className = "avatar";
+
+  const displayName =
+    currentUser.user_metadata?.username ||
+    currentUser.user_metadata?.full_name ||
+    currentUser.email ||
+    "You";
+
+  avatar.textContent = displayName.charAt(0).toUpperCase();
+
+  const author = document.createElement("div");
+  const title = document.createElement("h3");
+  title.textContent = displayName;
+
+  const date = document.createElement("span");
+  date.className = "muted";
+  date.textContent = "Just now";
+
+  author.append(title, date);
+  header.append(avatar, author);
+  article.appendChild(header);
+
+  if (text) {
+    const paragraph = document.createElement("p");
+    paragraph.textContent = text;
+    article.appendChild(paragraph);
+  }
+
+  if (file) {
+    const image = document.createElement("img");
+    image.className = "post-image";
+    image.alt = "Post photo";
+    image.src = URL.createObjectURL(file);
+    article.appendChild(image);
+  }
+
+  const actions = document.createElement("div");
+  actions.className = "post-actions";
+  actions.innerHTML = `
+    <button type="button" class="like-button">♡ Like</button>
+    <button type="button" class="comment-button">Comment</button>
+    <button type="button" class="share-button">Share</button>
+  `;
+  article.appendChild(actions);
+
+  const comments = document.createElement("div");
+  comments.className = "comment-area";
+  comments.innerHTML = `
+    <div class="comment-list"></div>
+    <input type="text" class="comment-input"
+      placeholder="Write a comment..." maxlength="500">
+    <button type="button" class="gold-button send-comment">
+      Send comment
+    </button>
+  `;
+  article.appendChild(comments);
+
+  feed.prepend(article);
+  attachActions(article);
+
+  captionInput.value = "";
+  photoInput.value = "";
+
+  showNotice(
+    "Post added to this page. It is not saved permanently yet."
+  );
+});
+
+checkSession();
+
+  </script></body>
 </html>
