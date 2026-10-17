@@ -819,6 +819,7 @@ font-size:22px;
     if (signoutButton) signoutButton.hidden = !signedIn;
     if (createPostCard) createPostCard.hidden = !signedIn;
 
+    if (postForm) postForm.hidden = !signedIn;
     if (accountMessage) {
       accountMessage.textContent = signedIn
         ? "You are signed in. Welcome to Kaybgram!"
