@@ -673,3 +673,112 @@ lay:none;
   nav {
     justify-content:flex-start;
     gap:20px;
+
+      }
+
+main {
+margin-top:13px;
+padding:0 9px;
+}
+
+.card {
+padding:13px;
+}
+
+h1 {
+font-size:22px;
+}
+}
+</style>
+
+</head><body><header class="header">
+  <div class="header-inner">
+    <a class="logo" href="index.html">KAYBGRAM</a><div class="account-buttons">
+  <a href="login.html" id="loginButton">Sign In</a>
+  <a href="signup.html" id="joinButton">Join</a>
+  <button type="button" id="signoutButton" hidden>
+    Sign Out
+  </button>
+</div>
+
+  </div>
+</header><nav aria-label="Main navigation">
+  <a href="index.html">Home</a>
+  <a href="stories.html">Stories</a>
+  <a href="app.html" class="active">Feed</a>
+  <a href="chat.html">Chat</a>
+  <a href="music.html">Music</a>
+</nav><main>  <section class="card">
+    <h1>Your Feed</h1>
+    <p class="muted">
+      Share your moments and see what's happening in your community.
+    </p>
+    <p id="accountMessage" class="muted">
+      Checking your account...
+    </p>
+  </section>  <section class="card" id="createPostCard" hidden>
+    <h2>Create a post</h2><div id="notice" class="notice" role="status"></div>
+
+<form id="postForm">
+  <textarea
+    id="caption"
+    maxlength="2000"
+    placeholder="What's happening in your world?"
+    aria-label="Write your post"
+  ></textarea>
+
+  <label for="photo" class="muted">
+    Add a photo (optional)
+  </label>
+
+  <input type="file" id="photo" accept="image/*">
+
+  <button type="submit" class="gold-button" id="publishButton">
+    Publish post
+  </button>
+</form>
+
+  </section>  <section>
+    <h2>Community posts</h2><div id="feed">
+  <article class="card post">
+    <div class="post-header">
+      <div class="avatar">K</div>
+      <div>
+        <h3>Kaybgram Team</h3>
+        <span class="muted">Welcome to Kaybgram</span>
+      </div>
+    </div>
+
+    <p>
+      Welcome to our community! Share your moments,
+      connect with people, and make new friends.
+    </p>
+
+    <div class="post-actions">
+      <button type="button" class="like-button">♡ Like</button>
+      <button type="button" class="comment-button">Comment</button>
+      <button type="button" class="share-button">Share</button>
+    </div>
+
+    <div class="comment-area">
+      <div class="comment-list"></div>
+
+      <input
+        type="text"
+        class="comment-input"
+        placeholder="Write a comment..."
+        maxlength="500"
+        aria-label="Write a comment"
+      >
+
+      <button type="button" class="gold-button send-comment">
+        Send comment
+      </button>
+    </div>
+  </article>
+</div>
+
+  </section></main><footer class="footer">
+  Kaybgram · Connect with care.
+  </footer>
+  
