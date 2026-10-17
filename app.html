@@ -945,3 +945,111 @@ font-size:22px;
   }
 
   document.querySelectorAll("#feed .post").forEach(attachActions);
+
+   if (postForm) {
+    postForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      if (!currentUser || signingOut) {
+        showNotice("Please sign in before creating a post.");
+        return;
+      }
+
+      const caption = captionInput.value.trim();
+      const photo = photoInput.files[0];
+
+      if (!caption && !photo) {
+        showNotice("Please write something or choose a photo.");
+        return;
+      }
+
+      if (photo && !photo.type.startsWith("image/")) {
+        showNotice("Please choose a valid image.");
+        return;
+      }
+
+      const article = document.createElement("article");
+      article.className = "card post";
+
+      const heading = document.createElement("h3");
+      heading.textContent =
+        currentUser.email || "Kaybgram Member";
+
+      article.appendChild(heading);
+
+      const time = document.createElement("p");
+      time.className = "postTime";
+      time.textContent = "Just now";
+      article.appendChild(time);
+
+      if (caption) {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = caption;
+        article.appendChild(paragraph);
+      }
+
+      if (photo) {
+        const image = document.createElement("img");
+        image.src = URL.createObjectURL(photo);
+        image.alt = "Post image";
+        image.className = "postImage";
+        article.appendChild(image);
+      }
+
+      const actions = document.createElement("div");
+      actions.className = "postActions";
+
+      const likeButton = document.createElement("button");
+      likeButton.type = "button";
+      likeButton.className = "likeButton";
+      likeButton.textContent = "♡ Like";
+
+      const commentButton = document.createElement("button");
+      commentButton.type = "button";
+      commentButton.className = "commentButton";
+      commentButton.textContent = "Comment";
+
+      const shareButton = document.createElement("button");
+      shareButton.type = "button";
+      shareButton.className = "shareButton";
+      shareButton.textContent = "Share";
+
+      actions.appendChild(likeButton);
+      actions.appendChild(commentButton);
+      actions.appendChild(shareButton);
+      article.appendChild(actions);
+
+      const commentArea = document.createElement("div");
+      commentArea.className = "commentArea";
+      commentArea.hidden = true;
+
+      const commentInput = document.createElement("input");
+      commentInput.type = "text";
+      commentInput.className = "commentInput";
+      commentInput.placeholder = "Write a comment...";
+
+      const commentsList = document.createElement("div");
+      commentsList.className = "commentsList";
+
+      commentArea.appendChild(commentInput);
+      commentArea.appendChild(commentsList);
+      article.appendChild(commentArea);
+
+      attachActions(article);
+      feed.prepend(article);
+
+      captionInput.value = "";
+      photoInput.value = "";
+
+      showNotice(
+        "Post added to this page. It will not be saved permanently yet."
+      );
+    });
+  }
+
+  checkSession();
+})();
+</script>
+
+</body>
+</html>
