@@ -782,3 +782,166 @@ font-size:22px;
   Kaybgram · Connect with care.
   </footer>
   
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+(function() {
+  const loginButton = document.getElementById("loginButton");
+  const joinButton = document.getElementById("joinButton");
+  const signoutButton = document.getElementById("signoutButton");
+  const accountMessage = document.getElementById("accountMessage");
+  const createPostCard = document.getElementById("createPostCard");
+  const postForm = document.getElementById("postForm");
+  const captionInput = document.getElementById("captionInput");
+  const photoInput = document.getElementById("photoInput");
+  const publishButton = document.getElementById("publishButton");
+  const feed = document.getElementById("feed");
+  const notice = document.getElementById("notice");
+
+  let currentUser = null;
+  let signingOut = false;
+
+  function showNotice(message) {
+    if (notice) {
+      notice.textContent = message;
+      notice.hidden = false;
+    }
+  }
+
+  function updateAccount(user) {
+    currentUser = user || null;
+
+    const signedIn = Boolean(currentUser);
+
+    if (loginButton) loginButton.hidden = signedIn;
+    if (joinButton) joinButton.hidden = signedIn;
+    if (signoutButton) signoutButton.hidden = !signedIn;
+    if (createPostCard) createPostCard.hidden = !signedIn;
+
+    if (accountMessage) {
+      accountMessage.textContent = signedIn
+        ? "You are signed in. Welcome to Kaybgram!"
+        : "Please sign in to create a post.";
+    }
+  }
+
+  async function checkSession() {
+    const client = window.supabaseClient;
+
+    if (!client) {
+      updateAccount(null);
+      showNotice("Connection unavailable. Please check supabase.js.");
+      return;
+    }
+
+    const result = await client.auth.getSession();
+
+    if (result.error) {
+      updateAccount(null);
+      showNotice("Unable to check your login. Please sign in again.");
+      return;
+    }
+
+    updateAccount(result.data.session
+      ? result.data.session.user
+      : null);
+
+    client.auth.onAuthStateChange(function(event, session) {
+      if (signingOut) return;
+      updateAccount(session ? session.user : null);
+    });
+  }
+
+  if (loginButton) {
+    loginButton.addEventListener("click", function() {
+      window.location.href = "login.html";
+    });
+  }
+
+  if (joinButton) {
+    joinButton.addEventListener("click", function() {
+      window.location.href = "signup.html";
+    });
+  }
+
+  if (signoutButton) {
+    signoutButton.addEventListener("click", async function() {
+      const client = window.supabaseClient;
+
+      if (!client) {
+        showNotice("Connection unavailable. Please try again.");
+        return;
+      }
+
+      signoutButton.disabled = true;
+      signingOut = true;
+
+      const result = await client.auth.signOut();
+
+      if (result.error) {
+        signingOut = false;
+        signoutButton.disabled = false;
+        showNotice("Sign out failed. Please try again.");
+        return;
+      }
+
+      updateAccount(null);
+      window.location.replace("index.html");
+    });
+  }
+
+  function attachActions(article) {
+    const likeButton = article.querySelector(".likeButton");
+    const commentButton = article.querySelector(".commentButton");
+    const shareButton = article.querySelector(".shareButton");
+    const commentArea = article.querySelector(".commentArea");
+    const commentInput = article.querySelector(".commentInput");
+    const commentsList = article.querySelector(".commentsList");
+
+    if (likeButton) {
+      likeButton.addEventListener("click", function() {
+        const liked = likeButton.dataset.liked === "true";
+        likeButton.dataset.liked = String(!liked);
+        likeButton.textContent = liked ? "♡ Like" : "♥ Liked";
+      });
+    }
+
+    if (commentButton) {
+      commentButton.addEventListener("click", function() {
+        if (commentArea) {
+          commentArea.hidden = !commentArea.hidden;
+        }
+      });
+    }
+
+    if (commentInput && commentsList) {
+      commentInput.addEventListener("keydown", function(event) {
+        if (event.key !== "Enter") return;
+
+        event.preventDefault();
+
+        const message = commentInput.value.trim();
+        if (!message) return;
+
+        const comment = document.createElement("p");
+        comment.textContent = message;
+        commentsList.appendChild(comment);
+
+        commentInput.value = "";
+      });
+    }
+
+    if (shareButton) {
+      shareButton.addEventListener("click", async function() {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          showNotice("Kaybgram link copied!");
+        } catch (error) {
+          showNotice("Copy the website address from your browser.");
+        }
+      });
+    }
+  }
+
+  document.querySelectorAll("#feed .post").forEach(attachActions);
