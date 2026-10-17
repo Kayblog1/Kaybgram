@@ -1,18 +1,13 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#111111">
-  <title>Login - Kaybgram</title>  <style>
-    :root {
-      --background: #111111;
-      --surface: #1d1d1d;
-      --text: #ffffff;
-      --muted: #bdbdbd;
-      --gold: #e7b84b;
-      --border: #393939;
-    }
 
+  <title>Login - Kaybgram</title>
+
+  <style>
     * {
       box-sizing: border-box;
     }
@@ -20,133 +15,235 @@
     body {
       margin: 0;
       min-height: 100vh;
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       padding: 20px;
-      background: var(--background);
-      color: var(--text);
+      background: #111111;
+      color: #ffffff;
       font-family: Arial, sans-serif;
     }
 
-    .login-card {
+    .container {
       width: 100%;
       max-width: 400px;
       padding: 28px;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: var(--surface);
+      background: #1d1d1d;
+      border-radius: 14px;
     }
 
     h1 {
-      margin-top: 0;
-      color: var(--gold);
       text-align: center;
+      margin-bottom: 10px;
     }
 
-    p {
-      color: var(--muted);
-      line-height: 1.5;
+    .subtitle {
+      color: #bbbbbb;
       text-align: center;
-    }
-
-    label {
-      display: block;
-      margin: 16px 0 7px;
-      font-weight: bold;
+      margin-bottom: 25px;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      border: 1px solid var(--border);
+      padding: 14px;
+      margin-bottom: 15px;
+      border: 1px solid #444444;
       border-radius: 8px;
-      background: var(--background);
-      color: var(--text);
+      background: #292929;
+      color: #ffffff;
       font-size: 16px;
     }
 
     button {
       width: 100%;
-      margin-top: 20px;
-      padding: 13px;
+      padding: 14px;
       border: none;
       border-radius: 8px;
-      background: var(--gold);
+      background: #ffffff;
       color: #111111;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+    }
+
+    .forgot {
+      margin-top: 15px;
+      background: transparent;
+      color: #8ab4ff;
+      border: 1px solid #444444;
+    }
+
+    .signup {
+      text-align: center;
+      margin-top: 22px;
+      color: #bbbbbb;
+    }
+
     a {
-      color: var(--gold);
+      color: #8ab4ff;
+      text-decoration: none;
     }
 
     #message {
+      margin-top: 18px;
+      line-height: 1.5;
       overflow-wrap: anywhere;
+      text-align: center;
     }
-  </style></head><body>
-  <main class="login-card">
+  </style>
+</head>
+
+<body>
+
+  <main class="container">
+
     <h1>Kaybgram</h1>
-    <p>Welcome back! Log in to your account.</p><form id="loginForm">
-  <label for="email">Email address</label>
-  <input
-    id="email"
-    type="email"
-    autocomplete="email"
-    required
-  >
 
-  <label for="password">Password</label>
-  <input
-    id="password"
-    type="password"
-    autocomplete="current-password"
-    required
-  >
+    <p class="subtitle">Log in to your account</p>
 
-  <button type="submit">Log in</button>
-  <p id="message" role="status"></p>
-</form>
+    <form id="loginForm">
 
-<p>Don't have an account?
-  <a href="signup.html">Join Kaybgram</a>
-</p>
+      <input
+        type="email"
+        id="email"
+        placeholder="Email address"
+        autocomplete="email"
+        required
+      >
 
-<p><a href="index.html">Back to home</a></p>
+      <input
+        type="password"
+        id="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+      >
 
-  </main>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <script src="supabase.js"></script>  <script>
+      <button type="submit" id="loginButton">
+        Login
+      </button>
+
+    </form>
+
+    <button type="button" class="forgot" id="forgotButton">
+      Forgot Password?
+    </button>
+
+    <p id="message" role="status"></p>
+
+    <p class="signup">
+      Don't have an account?
+      <a href="signup.html">Sign Up</a>
+    </p>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase.js"></script>
+
+  <script>
     const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("email");
+    const passwordInput = document.getElementById("password");
+    const loginButton = document.getElementById("loginButton");
+    const forgotButton = document.getElementById("forgotButton");
     const message = document.getElementById("message");
 
+    const RESET_URL =
+      "https://kayblog1.github.io/Kaybgram/reset-password.html";
+
+    // LOGIN
     loginForm.addEventListener("submit", async function(event) {
       event.preventDefault();
 
-      message.textContent = "Logging in...";
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
+      const email = emailInput.value.trim();
+      const password = passwordInput.value;
 
       if (!window.supabaseClient) {
         message.textContent =
-          "Connection setup is incomplete. Please try again later.";
+          "Connection error. Please try again later.";
         return;
       }
 
-      const { data, error } =
-        await window.supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: password
-        });
+      loginButton.disabled = true;
+      message.textContent = "Logging in...";
 
-      if (error) {
-        message.textContent = error.message;
-        return;
+      try {
+        const { data, error } =
+          await window.supabaseClient.auth.signInWithPassword({
+            email: email,
+            password: password
+          });
+
+        if (error) {
+          message.textContent =
+            "Login failed: " + error.message;
+          return;
+        }
+
+        message.textContent =
+          "Login successful! Opening Kaybgram...";
+
+        window.location.href = "app.html";
+
+      } catch (error) {
+        message.textContent =
+          "Something went wrong. Please try again.";
+      } finally {
+        loginButton.disabled = false;
       }
-
-      message.textContent = "Login successful! Opening Kaybgram...";
-
-      window.location.href = "app.html";
     });
-  </script></body>
-</html>
+
+    // FORGOT PASSWORD
+    forgotButton.addEventListener("click", async function() {
+      const email = emailInput.value.trim();
+
+      if (!email) {
+        message.textContent =
+          "Enter your email address above first.";
+        emailInput.focus();
+        return;
+      }
+
+      if (!window.supabaseClient) {
+        message.textContent =
+          "Connection error. Please try again later.";
+        return;
+      }
+
+      forgotButton.disabled = true;
+      message.textContent = "Sending password-reset email...";
+
+      try {
+        const { error } =
+          await window.supabaseClient.auth.resetPasswordForEmail(
+            email,
+            {
+              redirectTo: RESET_URL
+            }
+          );
+
+        if (error) {
+          message.textContent =
+            "Unable to send reset email: " + error.message;
+          return;
+        }
+
+        message.textContent =
+          "If an account exists for this email, a password-reset link will be sent. Check your inbox and spam folder.";
+
+      } catch (error) {
+        message.textContent =
+          "Something went wrong. Please try again.";
+      } finally {
+        forgotButton.disabled = false;
+      }
+    });
+  </script>
+
+</body>
+  </html>
